@@ -1,0 +1,27 @@
+{
+    "name": "famelo/boxed-command",
+    "description": "A tool to simplify building PHARs.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marc Neuhaus",
+            "email": "apocalip@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/console": "~2.1",
+        "symfony/finder": "~2.1",
+        "symfony/process": "~2.1",
+        "symfony/filesystem": "~2.1",
+        "kherge/amend": "3.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Famelo\\Beard": "src"
+        }
+    },
+    "bin": [
+        "bin/beard"
+    ]
+}
