@@ -53,6 +53,17 @@ class Reset extends Command {
 	 * @override
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
+		$this->output = $output;
+		$confirmation = $this->getHelperSet()->get('dialog')->ask(
+			$output,
+			'<error>Are you sure? This will reset all repositories to its tracked remote repository, removing any non-pushed local changes. Please confirm with "YES":</error> ',
+			'NO'
+		);
+		if (strtolower($confirmation) !== 'yes') {
+			$output->writeln('<comment>Aborting...</comment>');
+			return;
+		}
+
 		$baseDir = getcwd();
 		$clean = TRUE;
 		exec(sprintf('find %s -name ".git"', $baseDir), $gitWorkingCopies, $status);
