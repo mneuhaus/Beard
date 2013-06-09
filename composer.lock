@@ -3,8 +3,48 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a9fb7c184191c940f37d0c0eaa0a5e32",
+    "hash": "5fec7e7a8dd8c4a9453fd91d33e582d6",
     "packages": [
+        {
+            "name": "camspiers/json-pretty",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:camspiers/json-pretty.git",
+                "reference": "0.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/camspiers/json-pretty/archive/0.1.0.zip",
+                "reference": "0.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "pimple/pimple": "1.0.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Camspiers": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cam Spiers",
+                    "email": "cameron@heyday.co.nz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides support for json pretty printing in php 5.3",
+            "time": "2013-01-28 01:00:57"
+        },
         {
             "name": "herrera-io/json",
             "version": "1.0.2",
@@ -120,6 +160,57 @@
                 "update"
             ],
             "time": "2013-03-20 19:51:14"
+        },
+        {
+            "name": "herrera-io/version",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/herrera-io/php-version.git",
+                "reference": "0.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/herrera-io/php-version/zipball/0.1.0",
+                "reference": "0.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "herrera-io/phpunit-test-case": "1.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Herrera\\Version": "src/lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Herrera",
+                    "email": "kevin@herrera.io",
+                    "homepage": "http://kevin.herrera.io"
+                }
+            ],
+            "description": "A library for creating, editing, and comparing semantic versioning numbers.",
+            "homepage": "http://github.com/herrera-io/php-version",
+            "keywords": [
+                "semantic",
+                "version"
+            ],
+            "time": "2013-05-12 23:23:18"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -276,6 +367,52 @@
             "description": "A parsing and comparison library for semantic versioning.",
             "homepage": "http://github.com/kherge/Version",
             "time": "2012-08-16 10:13:03"
+        },
+        {
+            "name": "pimple/pimple",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/fabpot/Pimple.git",
+                "reference": "v1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/fabpot/Pimple/archive/v1.0.1.zip",
+                "reference": "v1.0.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pimple": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
+            "homepage": "http://pimple.sensiolabs.org",
+            "keywords": [
+                "container",
+                "dependency injection"
+            ],
+            "time": "2012-11-11 08:32:34"
         },
         {
             "name": "seld/jsonlint",

@@ -1,5 +1,5 @@
 {
-    "alias": "give.phar",
+    "alias": "box.phar",
     "chmod": "0755",
     "directories": ["src"],
     "files": [
@@ -12,11 +12,11 @@
             "in": "vendor"
         }
     ],
-    "main": "bin/main",
+    "main": "bin/beard",
     "git-version": "git_tag",
-    "output": "Repository/give-@git-version@.phar",
+    "output": "Repository/beard-@git-version@.phar",
     "replacements": {
-        "manifest_url": "https://raw.github.com/mneuhaus/Give-Repository/master/manifest.json"
+        "manifest_url": "https://raw.github.com/mneuhaus/Beard-Versions/master/manifest.json"
     },
     "stub": true
 }
