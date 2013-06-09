@@ -50,7 +50,7 @@ $manifest = array();
 
 foreach ($files as $file) {
 	if (substr($file, 0, 6) === 'beard-') {
-		$sha1 = sha1_file($file);
+		$sha1 = sha1_file('Repository/' . $file);
 		preg_match('/beard-([0-9\.]*).phar/', $file, $match);
 		$manifest[] = array(
 			'name' => 'beard.phar',
