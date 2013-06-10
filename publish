@@ -40,6 +40,8 @@ echo PHP_EOL;
 
 echo 'create new phar' . PHP_EOL;
 system('box build');
+system('rm Repository/beard-current.phar');
+system('cp Repository/beard-' . $composerMetadata->version . '.phar Repository/beard-current.phar');
 echo PHP_EOL;
 
 
