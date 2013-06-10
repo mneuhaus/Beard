@@ -46,17 +46,7 @@ class Patch extends Command {
 	protected function configure() {
 		parent::configure();
 		$this->setName('patch');
-		$this->setDescription('patch and update respositories based on beard.json');
-		// $this->addArgument(
-		// 	'action',
-		// 	InputArgument::REQUIRED,
-		// 	'The action to execute.'
-		// );
-		// $this->addArgument(
-		// 		'name',
-		// 		InputArgument::REQUIRED,
-		// 		'The name'
-		// );
+		$this->setDescription('Patch and update respositories based on beard.json');
 	}
 
 	/**

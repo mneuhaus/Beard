@@ -20,17 +20,6 @@ class Application extends Base {
 	 * @override
 	 */
 	public function __construct($name = 'Beard', $version = '@git_tag@') {
-		// // convert errors to exceptions
-		// set_error_handler(
-		// 	function ($code, $message, $file, $line) {
-		// 		if (error_reporting() & $code) {
-		// 			throw new ErrorException($message, 0, $code, $file, $line);
-		// 		}
-		// 		// @codeCoverageIgnoreStart
-		// 	}
-		// 	// @codeCoverageIgnoreEnd
-		// );
-
 		parent::__construct($name, $version);
 	}
 

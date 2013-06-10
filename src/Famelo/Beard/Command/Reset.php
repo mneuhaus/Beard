@@ -46,7 +46,7 @@ class Reset extends Command {
 	protected function configure() {
 		parent::configure();
 		$this->setName('reset');
-		$this->setDescription('patch and update respositories based on beard.json');
+		$this->setDescription('Reset all repositories beneath this directory, removing any unpushed changes and applied patches');
 	}
 
 	/**
