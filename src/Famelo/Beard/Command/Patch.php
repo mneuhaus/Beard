@@ -142,7 +142,16 @@ class Patch extends Command {
 				$this->output->write('<comment>Already picked</comment>' . chr(10));
 			} else {
 				echo $output;
-				system('git cherry-pick -x --strategy=recursive -X theirs FETCH_HEAD');
+				$gitVersion = $this->executeShellCommand('git --version');
+				switch ($gitVersion) {
+					case 'git version 1.7.3.4':
+						system('git cherry-pick -x --strategy=recursive FETCH_HEAD');
+						break;
+
+					default:
+						system('git cherry-pick -x --strategy=recursive -X theirs FETCH_HEAD');
+						break;
+				}
 			}
 		}
 	}

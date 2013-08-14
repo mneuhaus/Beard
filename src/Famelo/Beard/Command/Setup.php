@@ -62,7 +62,7 @@ class Setup extends Command {
 		foreach ($gitWorkingCopies as $path) {
 			$output = NULL;
 			$config = file_get_contents($path . '/config');
-			preg_match('/url = git:\/\/git.typo3.org\/FLOW3\/Packages\/(.+).git/', $config, $matches);
+			preg_match('/url = git:\/\/git.typo3.org\/Packages\/(.+).git/', $config, $matches);
 			if (count($matches) > 0) {
 				$this->addGerritRemote($path);
 				$this->addChangeIdCommitHook($path);
@@ -90,11 +90,11 @@ class Setup extends Command {
 		$configTemplate = '
 [remote "gerrit"]
 	fetch = +refs/heads/*:refs/remotes/origin/*
-	url = git://git.typo3.org/FLOW3/Packages/{package}.git
+	url = git://git.typo3.org/Packages/{package}.git
 	push = HEAD:refs/for/master
 ';
 		$config = file_get_contents($path . '/config');
-		preg_match('/url = git:\/\/git.typo3.org\/FLOW3\/Packages\/(.+).git/', $config, $matches);
+		preg_match('/url = git:\/\/git.typo3.org\/Packages\/(.+).git/', $config, $matches);
 		if (count($matches) > 0 && !stristr($config, '[remote "gerrit"]')) {
 			$config .= str_replace('{package}', $matches[1], $configTemplate);
 			file_put_contents($path . '/config', $config);
