@@ -47,6 +47,7 @@ class Reset extends Command {
 		parent::configure();
 		$this->setName('reset');
 		$this->setDescription('Reset all repositories beneath this directory, removing any unpushed changes and applied patches');
+		$this->addOption('noConfirmation', null, InputOption::VALUE_NONE, 'Skip the safety question');
 	}
 
 	/**
@@ -54,14 +55,17 @@ class Reset extends Command {
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$this->output = $output;
-		$confirmation = $this->getHelperSet()->get('dialog')->ask(
-			$output,
-			'<error>Are you sure? This will reset all repositories to its tracked remote repository, removing any non-pushed local changes. Please confirm with "YES":</error> ',
-			'NO'
-		);
-		if (strtolower($confirmation) !== 'yes') {
-			$output->writeln('<comment>Aborting...</comment>');
-			return;
+
+		if ($input->getOption('noConfirmation') === FALSE) {
+			$confirmation = $this->getHelperSet()->get('dialog')->ask(
+				$output,
+				'<error>Are you sure? This will reset all repositories to its tracked remote repository, removing any non-pushed local changes. Please confirm with "YES":</error> ',
+				'NO'
+			);
+			if (strtolower($confirmation) !== 'yes') {
+				$output->writeln('<comment>Aborting...</comment>');
+				return;
+			}
 		}
 
 		$baseDir = getcwd();
