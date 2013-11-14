@@ -66,6 +66,14 @@ class Configuration
 		return array();
 	}
 
+	public function getDatabase() {
+		if (isset($this->raw->database)) {
+			return get_object_vars($this->raw->database);
+		}
+
+		return array();
+	}
+
 }
 
 ?>

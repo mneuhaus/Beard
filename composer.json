@@ -14,7 +14,9 @@
 		"symfony\/finder": "~2.1",
 		"symfony\/process": "~2.1",
 		"symfony\/filesystem": "~2.1",
-		"kherge\/amend": "3.*"
+		"kherge\/amend": "3.*",
+		"doctrine/dbal": "*",
+		"jdorn/sql-formatter": "*"
 	},
 	"autoload": {
 		"psr-0": {

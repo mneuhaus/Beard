@@ -28,6 +28,8 @@ class Application extends Base {
 	 */
 	protected function getDefaultCommands() {
 		$commands = parent::getDefaultCommands();
+		$commands[] = new Command\DbRestore();
+		$commands[] = new Command\DbDump();
 		$commands[] = new Command\Patch();
 		$commands[] = new Command\Status();
 		$commands[] = new Command\Reset();
