@@ -96,15 +96,12 @@ class DbDump extends Command {
 	}
 
 	public function getConfig() {
-		$config = array('driver' => 'pdo_mysql');
-		switch (true) {
-			case file_exists('beard.json'):
-					$helper = $this->getHelper('config');
-					$config = array_merge($config, $helper->loadFile('beard.json')->getDatabase());
-					if (isset($config['dbname'])) {
-						break;
-					}
+		$config = array(
+			'driver' => 'pdo_mysql',
+			'baseDir' => '.'
+		);
 
+		switch (true) {
 			case file_exists('typo3conf/LocalConfiguration.php'):
 					$typo3Settings = include_once('typo3conf/LocalConfiguration.php');
 
@@ -115,7 +112,24 @@ class DbDump extends Command {
 						'host' => $typo3Settings['DB']['host']
 					));
 				break;
+
+			case file_exists('wp-config.php'):
+					include_once('wp-config.php');
+
+					$config = array_merge($config, array(
+						'dbname' => DB_NAME,
+						'user' => DB_USER,
+						'password' => DB_PASSWORD,
+						'host' => DB_HOST
+					));
+				break;
 		}
+
+		if (file_exists('beard.json')) {
+			$helper = $this->getHelper('config');
+			$config = array_merge($config, $helper->loadFile('beard.json')->getDatabase());
+		}
+
 		return $config;
 	}
 
