@@ -187,6 +187,9 @@ deny from all
 		if (isset($this->config['password'])) {
 			$command[] = '-p' . $this->config['password'];
 		}
+		if (isset($this->config['host'])) {
+			$command[] = '-h' . $this->config['host'];
+		}
 
 		$command[] = $this->config['dbname'];
 
