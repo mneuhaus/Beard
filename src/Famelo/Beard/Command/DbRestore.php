@@ -21,7 +21,7 @@ require_once(__DIR__ . '/../../../../vendor/jdorn/sql-formatter/lib/SqlFormatter
  * Builds a new Phar.
  *
  */
-class DbRestore extends Command {
+class DbRestore extends DbDump {
 	/**
 	 * The configuration settings.
 	 *
@@ -78,40 +78,6 @@ class DbRestore extends Command {
 		}
 
 		$this->restoreDatabase();
-	}
-
-	public function getConfig() {
-		$config = array('driver' => 'pdo_mysql');
-		switch (true) {
-			case file_exists('beard.json'):
-					$helper = $this->getHelper('config');
-					$config = array_merge($config, $helper->loadFile('beard.json')->getDatabase());
-					if (isset($config['dbname'])) {
-						break;
-					}
-
-			case file_exists('typo3conf/LocalConfiguration.php'):
-					$typo3Settings = include_once('typo3conf/LocalConfiguration.php');
-
-					$config = array_merge($config, array(
-						'dbname' => $typo3Settings['DB']['database'],
-						'user' => $typo3Settings['DB']['username'],
-						'password' => $typo3Settings['DB']['password'],
-						'host' => $typo3Settings['DB']['host']
-					));
-				break;
-		}
-		return $config;
-	}
-
-	public function executeShellCommand($command) {
-		$output = '';
-		$fp = popen($command, 'r');
-		while (($line = fgets($fp)) !== FALSE) {
-			$output .= $line;
-		}
-		pclose($fp);
-		return trim($output);
 	}
 
 	public function restoreDatabase() {
