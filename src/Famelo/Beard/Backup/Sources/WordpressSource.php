@@ -27,7 +27,11 @@ class WordpressSource extends Finder {
     );
 
     public function __construct($configuration = NULL) {
-        include_once('wp-load.php');
+        $config = file_get_contents('wp-config.php');
+        preg_match_all('/define\([^;]*;/', $config, $matches);
+        foreach ($matches[0] as $match) {
+            eval($match);
+        }
 
         $this->sources['Database'] = array_merge($this->sources['Database'], array(
             'dbname' => DB_NAME,
