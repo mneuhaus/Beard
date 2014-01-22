@@ -18,13 +18,16 @@
 		"doctrine\/dbal": "*",
 		"jdorn\/sql-formatter": "*",
 		"frenkynet\/flysystem": "*",
-		"alchemy\/zippy": "*"
+		"alchemy\/zippy": "*",
+		"pimple/pimple": "*",
+		"camspiers/json-pretty": "*"
 	},
 	"autoload": {
 		"psr-0": {
 			"Famelo\\Beard": "src"
 		}
 	},
+    "minimum-stability": "dev",
 	"bin": [
 		"bin\/beard"
 	],
