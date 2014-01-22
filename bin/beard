@@ -17,6 +17,28 @@ if ($uri = Phar::running()) {
 $app = new Famelo\Beard\Application();
 $app->run();
 
+function path() {
+    $paths = func_get_args();
+
+    $prefix = '';
+    $suffix = '';
+
+    if (substr(current($paths), 0, 1) == DIRECTORY_SEPARATOR) {
+        $prefix = DIRECTORY_SEPARATOR;
+    }
+
+    if (substr(end($paths), -1, 1) == DIRECTORY_SEPARATOR) {
+        $suffix = DIRECTORY_SEPARATOR;
+    }
+
+    foreach ($paths as $key => $path) {
+        $paths[$key] = trim($path, DIRECTORY_SEPARATOR);
+    }
+    $path = $prefix . implode(DIRECTORY_SEPARATOR, $paths) . $suffix;
+
+    return $path;
+}
+
 /**
  * Finds the Composer autoloader and returns it.
  *

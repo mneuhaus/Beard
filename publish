@@ -16,6 +16,7 @@ switch(isset($argv[1]) ? $argv[1] : 'patch') {
 	case 'patch': $builder->incrementPatch(); break;
 	case 'minor': $builder->incrementMinor(); break;
 	case 'major': $builder->incrementMajor(); break;
+	default: 'unknown version strategy (patch|minor|major)'
 }
 
 $composerMetadata->version = Dumper::toString($builder);

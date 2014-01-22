@@ -16,7 +16,9 @@
 		"symfony\/filesystem": "~2.1",
 		"kherge\/amend": "3.*",
 		"doctrine\/dbal": "*",
-		"jdorn\/sql-formatter": "*"
+		"jdorn\/sql-formatter": "*",
+		"frenkynet/flysystem": "*",
+		"alchemy/zippy": "*"
 	},
 	"autoload": {
 		"psr-0": {

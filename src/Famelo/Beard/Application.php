@@ -34,6 +34,7 @@ class Application extends Base {
 		$commands[] = new Command\Status();
 		$commands[] = new Command\Reset();
 		$commands[] = new Command\Setup();
+		$commands[] = new Command\Backup();
 
 		if (('@' . 'git_tag@') !== $this->getVersion()) {
 			$command = new Amend\Command('update');
