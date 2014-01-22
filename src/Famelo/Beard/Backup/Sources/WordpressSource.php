@@ -27,7 +27,7 @@ class WordpressSource extends Finder {
     );
 
     public function __construct($configuration = NULL) {
-        include_once('wp-config.php');
+        include_once('wp-load.php');
 
         $this->sources['Database'] = array_merge($this->sources['Database'], array(
             'dbname' => DB_NAME,
