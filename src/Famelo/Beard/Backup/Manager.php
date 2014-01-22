@@ -136,8 +136,17 @@ class Manager {
 			$filemanager = new Filesystem($adapter);
 			if (!$filemanager->has($this->name)) {
 				$filemanager->createDir($this->name);
+				if ($output->isVeryVerbose()) {
+    				$this->output->writeln('Creating directroy: ' . $this->name);
+				}
+			}
+			if ($this->output->isVeryVerbose()) {
+    			var_dump($destination);
 			}
 			foreach ($this->gatheredFiles as $uploadFile) {
+				if ($this->output->isVeryVerbose()) {
+    				$this->output->writeln('Uploading File: ' . basename($uploadFile));
+				}
 				$filemanager->write(path($this->name, basename($uploadFile)), file_get_contents($uploadFile));
 			}
 			$backups = $filemanager->listPaths($this->name);
