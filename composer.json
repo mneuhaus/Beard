@@ -19,17 +19,17 @@
 		"jdorn\/sql-formatter": "*",
 		"frenkynet\/flysystem": "*",
 		"alchemy\/zippy": "*",
-		"pimple/pimple": "*",
-		"camspiers/json-pretty": "*"
+		"pimple\/pimple": "*",
+		"camspiers\/json-pretty": "*"
 	},
 	"autoload": {
 		"psr-0": {
 			"Famelo\\Beard": "src"
 		}
 	},
-    "minimum-stability": "dev",
+	"minimum-stability": "dev",
 	"bin": [
 		"bin\/beard"
 	],
-	"version": "0.7.2"
+	"version": "0.7.3"
 }
