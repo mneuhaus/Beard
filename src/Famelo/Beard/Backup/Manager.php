@@ -5,8 +5,8 @@ namespace Famelo\Beard\Backup;
 use Alchemy\Zippy\Zippy;
 use Famelo\Beard\Backup\Sources\FilesSource;
 use Famelo\Beard\Backup\Sources\WordpressSource;
-use Flysystem\Adapter\Ftp;
-use Flysystem\Filesystem;
+use League\Flysystem\Adapter\Ftp;
+use League\Flysystem\Filesystem;
 
 
 /**
@@ -47,7 +47,8 @@ class Manager {
 	 */
 	protected $gatheredFiles = array();
 
-	public function __construct($config = NULL) {
+	public function __construct($config = NULL, $output = NULL) {
+		$this->output = $output;
 		if (is_array($config)) {
 			if (isset($config['sources'])) {
 				foreach($config['sources'] as $name => $source) {
@@ -86,6 +87,9 @@ class Manager {
 
 	public function gatherFiles($sources) {
 		foreach ($sources as $sourceName => $source) {
+			if ($this->output->isVerbose()) {
+				$this->output->writeln('Gathering Files from ' . $sourceName);
+			}
 			$class = '\Famelo\Beard\Backup\Sources\\' .  ucfirst($source['type']) . 'Source';
 			$source = new $class($source);
 
@@ -111,6 +115,9 @@ class Manager {
 
 	public function compressIfSpecified() {
 		if ($this->compression !== NULL) {
+			if ($this->output->isVerbose()) {
+				$this->output->writeln('Compressing Files');
+			}
 			$zippy = Zippy::load();
 			$archivePath = $this->tmpPath . '.' . $this->compression;
 			$archive = $zippy->create($archivePath, array(
@@ -122,6 +129,9 @@ class Manager {
 
 	public function moveToDestination() {
 		foreach ($this->destinations as $name => $destination) {
+			if ($this->output->isVerbose()) {
+				$this->output->writeln('Moving Files to: ' . $name);
+			}
 			$adapter = new $destination['adapter']($destination);
 			$filemanager = new Filesystem($adapter);
 			if (!$filemanager->has($this->name)) {

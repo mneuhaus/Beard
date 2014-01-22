@@ -52,7 +52,7 @@ class Backup extends Command {
 		$this->output = $output;
 		$this->input = $input;
 
-		$manager = new Manager($this->getConfig());
+		$manager = new Manager($this->getConfig(), $output);
 		$manager->run();
 	}
 
