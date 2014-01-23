@@ -9,7 +9,7 @@ $skipBuilding = FALSE;
 $skipManifestUpdate = FALSE;
 $skipRelease = FALSE;
 $skipReleaseUpload = FALSE;
-$releaseId = 158973;
+// $releaseId = 158973;
 
 echo 'Passwort for ' . $username . ': ';
 $password = trim(fgets(STDIN, 4096));
@@ -119,6 +119,7 @@ if ($skipRelease === FALSE) {
 if ($skipReleaseUpload === FALSE) {
 	$fileName = 'beard-' . $versionNumber . '.phar';
 	$uri = 'https://uploads.github.com/repos/' . $username . '/' . $repository . '/releases/' . $releaseId . '/assets?name=' . $fileName;
+	var_dump($uri);
 
 	curl_setopt($ch, CURLOPT_URL, $uri);
 	curl_setopt ($ch, CURLOPT_HTTPHEADER, Array("Content-Type: text/plain"));
