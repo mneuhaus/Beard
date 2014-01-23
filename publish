@@ -35,6 +35,11 @@ if ($skipBuilding === FALSE) {
 
 	file_put_contents('composer.json', $jsonPretty->prettify($composerMetadata));
 
+	$readme = file_get_contents('Readme.md');
+	$releaseFile = 'https://github.com/mneuhaus/Beard/releases/download/' . $composerMetadata->version . '/beard-' . $composerMetadata->version . '.phar';
+	$readme = preg_replace('/curl .*beard-([0-9\.A-z]*).phar > beard.phar/', 'curl -s ' . $releaseFile . ' > beard.phar', $readme);
+	file_put_contents('Readme.md', $readme);
+
 	echo 'Update and commit version in composer.json' . PHP_EOL;
 	system('git add composer.json');
 	system('git commit -m "' . $composerMetadata->version . '"');
