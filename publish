@@ -9,7 +9,7 @@ $skipBuilding = FALSE;
 $skipManifestUpdate = FALSE;
 $skipRelease = FALSE;
 $skipReleaseUpload = FALSE;
-// $releaseId = 158973;
+// $releaseId = 158990;
 
 echo 'Passwort for ' . $username . ': ';
 $password = trim(fgets(STDIN, 4096));
