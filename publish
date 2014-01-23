@@ -5,6 +5,14 @@ require 'vendor/autoload.php';
 
 $username = 'mneuhaus';
 $repository = 'Beard';
+$skipBuilding = FALSE;
+$skipManifestUpdate = FALSE;
+$skipRelease = FALSE;
+$skipReleaseUpload = FALSE;
+$releaseId = 158973;
+
+echo 'Passwort for ' . $username . ': ';
+$password = trim(fgets(STDIN, 4096));
 
 use Herrera\Version\Dumper;
 use Herrera\Version\Parser;
@@ -15,103 +23,107 @@ $composerMetadata = json_decode(file_get_contents('composer.json'));
 $composerMetadata->version = isset($composerMetadata->version) ? $composerMetadata->version : '0.0.0';
 $builder = Parser::toBuilder($composerMetadata->version);
 
-switch(isset($argv[1]) ? $argv[1] : 'patch') {
-	case 'patch': $builder->incrementPatch(); break;
-	case 'minor': $builder->incrementMinor(); break;
-	case 'major': $builder->incrementMajor(); break;
-	default: echo 'unknown version strategy (patch|minor|major)'; exit();
+if ($skipBuilding === FALSE) {
+	switch(isset($argv[1]) ? $argv[1] : 'patch') {
+		case 'patch': $builder->incrementPatch(); break;
+		case 'minor': $builder->incrementMinor(); break;
+		case 'major': $builder->incrementMajor(); break;
+		default: echo 'unknown version strategy (patch|minor|major)'; exit();
+	}
+
+	$composerMetadata->version = Dumper::toString($builder);
+
+	file_put_contents('composer.json', $jsonPretty->prettify($composerMetadata));
+
+	echo 'Update and commit version in composer.json' . PHP_EOL;
+	system('git add composer.json');
+	system('git commit -m "' . $composerMetadata->version . '"');
+	echo PHP_EOL;
+
+	echo 'tag current state with provided version number' . PHP_EOL;
+	system('git tag "' . $composerMetadata->version . '"');
+	echo PHP_EOL;
+
+
+	echo 'push tags to github' . PHP_EOL;
+	system('git push origin master');
+	system('git push origin --tags');
+	echo PHP_EOL;
+
+
+	echo 'create new phar' . PHP_EOL;
+	system('box build');
+	system('rm Repository/beard-current.phar');
+	system('cp Repository/beard-' . $composerMetadata->version . '.phar Repository/beard-current.phar');
+	echo PHP_EOL;
 }
 
-$composerMetadata->version = Dumper::toString($builder);
+if ($skipManifestUpdate === FALSE) {
+	echo 'update manifest' . PHP_EOL;
+	$files = scandir('Repository');
 
-file_put_contents('composer.json', $jsonPretty->prettify($composerMetadata));
+	$manifest = array();
 
-echo 'Update and commit version in composer.json' . PHP_EOL;
-system('git add composer.json');
-system('git commit -m "' . $composerMetadata->version . '"');
-echo PHP_EOL;
-
-echo 'tag current state with provided version number' . PHP_EOL;
-system('git tag "' . $composerMetadata->version . '"');
-echo PHP_EOL;
-
-
-echo 'push tags to github' . PHP_EOL;
-system('git push origin master');
-system('git push origin --tags');
-echo PHP_EOL;
-
-
-echo 'create new phar' . PHP_EOL;
-system('box build');
-system('rm Repository/beard-current.phar');
-system('cp Repository/beard-' . $composerMetadata->version . '.phar Repository/beard-current.phar');
-echo PHP_EOL;
-
-
-echo 'update manifest' . PHP_EOL;
-$files = scandir('Repository');
-
-$manifest = array();
-
-foreach ($files as $file) {
-	if (substr($file, 0, 6) === 'beard-') {
-		$sha1 = sha1_file('Repository/' . $file);
-		preg_match('/beard-([0-9\.]*).phar/', $file, $match);
-		if (isset($match[1])) {
-			$manifest[] = array(
-				'name' => 'beard.phar',
-				'sha1' => $sha1,
-				'url' => 'https://github.com/mneuhaus/Beard/releases/download/' . $match[1] . '/' . $file,
-				// 'url' => 'https://raw.github.com/mneuhaus/Beard-Versions/master/' . $file,
-				'version' => $match[1]
-			);
+	foreach ($files as $file) {
+		if (substr($file, 0, 6) === 'beard-') {
+			$sha1 = sha1_file('Repository/' . $file);
+			preg_match('/beard-([0-9\.]*).phar/', $file, $match);
+			if (isset($match[1])) {
+				$manifest[] = array(
+					'name' => 'beard.phar',
+					'sha1' => $sha1,
+					'url' => 'https://github.com/mneuhaus/Beard/releases/download/' . $match[1] . '/' . $file,
+					// 'url' => 'https://raw.github.com/mneuhaus/Beard-Versions/master/' . $file,
+					'version' => $match[1]
+				);
+			}
 		}
 	}
+
+	file_put_contents('Repository/manifest.json', $jsonPretty->prettify($manifest));
+	file_put_contents('releases.json', $jsonPretty->prettify($manifest));
+
+	echo PHP_EOL;
+
+	echo 'commit and push repository' . PHP_EOL;
+	system('git add .');
+	system('git commit -a -m "Added Version: ' . $composerMetadata->version . '"');
+	system('git push origin master');
+
+	echo 'commit and push repository' . PHP_EOL;
+	chdir('Repository');
+	system('git add .');
+	system('git commit -a -m "Added Version: ' . $composerMetadata->version . '"');
+	system('git push origin master');
 }
 
-file_put_contents('Repository/manifest.json', $jsonPretty->prettify($manifest));
-file_put_contents('releases.json', $jsonPretty->prettify($manifest));
-
-echo PHP_EOL;
-
-echo 'commit and push repository' . PHP_EOL;
-system('git add .');
-system('git commit -a -m "Added Version: ' . $composerMetadata->version . '"');
-system('git push origin master');
-
-echo 'commit and push repository' . PHP_EOL;
-chdir('Repository');
-system('git add .');
-system('git commit -a -m "Added Version: ' . $composerMetadata->version . '"');
-system('git push origin master');
-
 $versionNumber = $composerMetadata->version;
-
 $ch = curl_init();
-echo 'Passwort for ' . $username . ': ';
-$password = trim(fgets(STDIN, 4096));
-
-curl_setopt($ch, CURLOPT_USERPWD, $username . ':' . $password);
-curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/' . $username . '/' . $repository . '/releases');
 curl_setopt($ch, CURLOPT_USERAGENT, 'Release Script for ' . $username . '/' . $repository . '');
-curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-$release = array(
-	'tag_name' => $versionNumber,
-	'name' => 'Release: ' . $versionNumber
-);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_USERPWD, $username . ':' . $password);
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($release));
 
-$release = json_decode(curl_exec($ch));
+if ($skipRelease === FALSE) {
+	curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/' . $username . '/' . $repository . '/releases');
+	$release = array(
+		'tag_name' => $versionNumber,
+		'name' => 'Release: ' . $versionNumber
+	);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($release));
 
-$releaseId = $release->id;
-$fileName = 'beard-' . $versionNumber . '.phar';
-$uri = 'https://uploads.github.com/repos/' . $username . '/' . $repository . '/releases/' . $releaseId . '/assets?name=' . $fileName;
+	$release = json_decode(curl_exec($ch));
+	$releaseId = $release->id;
+}
 
-curl_setopt($ch, CURLOPT_URL, $uri);
-curl_setopt ($ch, CURLOPT_HTTPHEADER, Array("Content-Type: text/plain"));
-curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents('Repository/' . $fileName));
+if ($skipReleaseUpload === FALSE) {
+	$fileName = 'beard-' . $versionNumber . '.phar';
+	$uri = 'https://uploads.github.com/repos/' . $username . '/' . $repository . '/releases/' . $releaseId . '/assets?name=' . $fileName;
 
-$result = curl_exec($ch);
-curl_close($ch);
+	curl_setopt($ch, CURLOPT_URL, $uri);
+	curl_setopt ($ch, CURLOPT_HTTPHEADER, Array("Content-Type: text/plain"));
+	curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents('Repository/' . $fileName));
+
+	$result = curl_exec($ch);
+	curl_close($ch);
+}
