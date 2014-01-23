@@ -95,6 +95,7 @@ if ($skipManifestUpdate === FALSE) {
 	system('git add .');
 	system('git commit -a -m "Added Version: ' . $composerMetadata->version . '"');
 	system('git push origin master');
+	chdir('../');
 }
 
 $versionNumber = $composerMetadata->version;
