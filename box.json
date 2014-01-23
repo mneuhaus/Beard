@@ -16,7 +16,7 @@
     "git-version": "git_tag",
     "output": "Repository/beard-@git-version@.phar",
     "replacements": {
-        "manifest_url": "https://raw.github.com/mneuhaus/Beard-Versions/master/manifest.json"
+        "manifest_url": "https://raw.github.com/mneuhaus/Beard/master/releases.json"
     },
     "stub": true
 }
