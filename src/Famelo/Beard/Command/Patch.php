@@ -72,10 +72,11 @@ class Patch extends Command {
 						$change = new \StdClass();
 						$change->type = 'gerrit';
 						$change->name = $name;
-						$change->change_id = $changeId;
 						$change->gerrit_git = 'git.typo3.org';
 						$change->gerrit_api_endpoint = 'https://review.typo3.org/';
 						$change->path = $path;
+						$change->change_id = $changeId;
+						$change->patch_set = NULL;
 
 						$this->applyChange($change);
 					}
@@ -129,12 +130,26 @@ class Patch extends Command {
 		$commits = $this->executeShellCommand('git log -n30');
 		$changeInformation = $this->fetchChangeInformation($change);
 
+		if (strpos($change->change_id, ',') !== FALSE) {
+			list($changeId, $patchSet) = explode(',', $change->change_id);
+			$change->change_id = $changeId;
+			$change->patch_set = $patchSet;
+		}
+
 		if ($changeInformation->status == 'MERGED') {
 			$this->output->write('<comment>This change has been merged!</comment>' . chr(10));
 		} elseif ($changeInformation->status == 'ABANDONED') {
 			$this->output->write('<error>This change has been abandoned!</error>' . chr(10));
 		} else {
-			$command = 'git fetch --quiet git://' . $change->gerrit_git . '/' . $changeInformation->project . ' ' . $changeInformation->revisions->{$changeInformation->current_revision}->fetch->git->ref . '';
+			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->git->ref;
+			if ($change->patch_set !== NULL) {
+				$explodedRef = explode('/', $ref);
+				array_pop($explodedRef);
+				$explodedRef[] = $change->patch_set;
+				$ref = implode('/', $explodedRef);
+			}
+
+			$command = 'git fetch --quiet git://' . $change->gerrit_git . '/' . $changeInformation->project . ' ' . $ref . '';
 			$output = $this->executeShellCommand($command);
 
 			$commit = $this->executeShellCommand('git log --format="%H" -n1 FETCH_HEAD');
