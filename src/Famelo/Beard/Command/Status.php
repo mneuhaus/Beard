@@ -79,7 +79,9 @@ class Status extends Command {
 				} elseif ($output[1] === '# Changes not staged for commit:') {
 					$this->output->writeln('<error>' . $path . ' has local changes</error>');
 				} else {
-					$this->output->writeln('<comment>' . $path . ' ' . $output[1] . '</comment>');
+					if ($this->output->isVerbose()) {
+						$this->output->writeln('<comment>' . $path . ' ' . $output[1] . '</comment>');
+					}
 				}
 
 				foreach ($output as $outputLine) {
