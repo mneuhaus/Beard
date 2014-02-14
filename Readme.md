@@ -2,7 +2,7 @@
 
 ## Download to local directory
 ```
-curl -s https://github.com/mneuhaus/Beard/releases/download/0.7.10/beard-0.7.10.phar > beard.phar
+curl -s https://github.com/mneuhaus/Beard/releases/download/0.7.11/beard-0.7.11.phar > beard.phar
 chmod +x beard.phar
 ```
 
