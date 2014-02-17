@@ -67,7 +67,7 @@ class Status extends Command {
 
 			$path = str_replace($baseDir . '/', '', dirname($gitWorkingCopy));
 
-			if ($output[1] === 'nothing to commit (working directory clean)') {
+			if (stristr($output[1], 'nothing to commit')) {
 				if ($verbose === TRUE) {
 					$this->output->writeln('<info>' . $path . ' is clean</info>');
 				}
@@ -79,9 +79,7 @@ class Status extends Command {
 				} elseif ($output[1] === '# Changes not staged for commit:') {
 					$this->output->writeln('<error>' . $path . ' has local changes</error>');
 				} else {
-					if ($this->output->isVerbose()) {
-						$this->output->writeln('<comment>' . $path . ' ' . $output[1] . '</comment>');
-					}
+					$this->output->writeln('<comment>' . $path . ' ' . $output[1] . '</comment>');
 				}
 
 				foreach ($output as $outputLine) {
@@ -93,13 +91,6 @@ class Status extends Command {
 						}
 					}
 				}
-
-				// chdir($path);
-				// $commits = $this->executeShellCommand('git log -n10');
-				// if (stristr($commits, '(cherry picked from commit') !== FALSE) {
-				// 	var_dump($commits);
-				// }
-				// chdir($baseDir);
 			}
 		}
 	}
