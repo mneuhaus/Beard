@@ -136,11 +136,15 @@ class Patch extends Command {
 			$change->patch_set = $patchSet;
 		}
 
+		$merge = TRUE;
+
 		if ($changeInformation->status == 'MERGED') {
 			$this->output->write('<comment>This change has been merged!</comment>' . chr(10));
 		} elseif ($changeInformation->status == 'ABANDONED') {
 			$this->output->write('<error>This change has been abandoned!</error>' . chr(10));
-		} else {
+		}
+
+		if ($merge === TRUE) {
 			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->git->ref;
 			if ($change->patch_set !== NULL) {
 				$explodedRef = explode('/', $ref);
