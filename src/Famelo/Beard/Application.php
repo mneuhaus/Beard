@@ -2,13 +2,10 @@
 
 namespace Famelo\Beard;
 
-use ErrorException;
 use KevinGH\Amend;
 use Famelo\Beard\Command;
 use Famelo\Beard\Helper;
 use Symfony\Component\Console\Application as Base;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\ArgvInput;
 
 /**
  * Sets up the application.
@@ -16,6 +13,7 @@ use Symfony\Component\Console\Input\ArgvInput;
  * @author Kevin Herrera <kevin@herrera.io>
  */
 class Application extends Base {
+
 	/**
 	 * @override
 	 */

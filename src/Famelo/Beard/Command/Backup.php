@@ -2,26 +2,19 @@
 
 namespace Famelo\Beard\Command;
 
-use Doctrine\DBAL\DriverManager;
 use Famelo\Beard\Backup\Manager;
 use Famelo\Beard\Configuration;
 use Herrera\Json\Json;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\ProcessBuilder;
-use Traversable;
 
 /**
- * Builds a new Phar.
+ * Backup command.
  *
  */
 class Backup extends Command {
+
 	/**
 	 * The configuration settings.
 	 *
@@ -56,12 +49,19 @@ class Backup extends Command {
 		$manager->run();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getConfig() {
 		$json = new Json();
 		$configuration = $this->convertToArray($json->decodeFile('backup.json'));
 		return $configuration;
 	}
 
+	/**
+	 * @param mixed $data
+	 * @return array
+	 */
 	public function convertToArray($data) {
 		if (is_object($data)) {
 			$data = get_object_vars($data);

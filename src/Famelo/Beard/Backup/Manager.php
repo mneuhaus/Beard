@@ -3,9 +3,6 @@
 namespace Famelo\Beard\Backup;
 
 use Alchemy\Zippy\Zippy;
-use Famelo\Beard\Backup\Sources\FilesSource;
-use Famelo\Beard\Backup\Sources\WordpressSource;
-use League\Flysystem\Adapter\Ftp;
 use League\Flysystem\Filesystem;
 
 

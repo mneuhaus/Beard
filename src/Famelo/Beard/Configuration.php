@@ -2,14 +2,7 @@
 
 namespace Famelo\Beard;
 
-use ArrayIterator;
 use Herrera\Box\Compactor\CompactorInterface;
-use InvalidArgumentException;
-use Phar;
-use RuntimeException;
-use SplFileInfo;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\Process;
 
 /**
  * Manages the configuration settings.
@@ -42,6 +35,9 @@ class Configuration
 		$this->raw = $raw;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getDefaults() {
 		if (isset($this->raw->defaults)) {
 			return $this->raw->defaults;
@@ -50,10 +46,13 @@ class Configuration
 		return array();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getChanges() {
 		if (isset($this->raw->changes)) {
 			$changes = $this->raw->changes;
-			foreach ($changes as $key => $change) {
+			foreach ($changes as $change) {
 				foreach ($this->getDefaults() as $key => $value) {
 					if (!isset($change->$key)) {
 						$change->$key = $value;
@@ -66,6 +65,9 @@ class Configuration
 		return array();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getDatabase() {
 		if (isset($this->raw->database)) {
 			return get_object_vars($this->raw->database);

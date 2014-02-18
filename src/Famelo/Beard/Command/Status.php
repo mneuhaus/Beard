@@ -1,37 +1,15 @@
 <?php
-
 namespace Famelo\Beard\Command;
 
-use Famelo\Beard\Configuration;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
-use Traversable;
 
 /**
- * Builds a new Phar.
+ * Status command.
  *
  */
 class Status extends Command {
-	/**
-	 * The Box instance.
-	 *
-	 * @var Box
-	 */
-	private $box;
-
-	/**
-	 * The configuration settings.
-	 *
-	 * @var Configuration
-	 */
-	private $config;
 
 	/**
 	 * The output handler.
@@ -54,11 +32,9 @@ class Status extends Command {
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$this->output = $output;
-		$this->input = $input;
 
 		$baseDir = getcwd();
 
-		$clean = TRUE;
 		exec(sprintf('find %s -name ".git"', $baseDir), $gitWorkingCopies, $status);
 		foreach ($gitWorkingCopies as $gitWorkingCopy) {
 			$output = NULL;
@@ -72,8 +48,6 @@ class Status extends Command {
 					$this->output->writeln('<info>' . $path . ' is clean</info>');
 				}
 			} else {
-				$clean = FALSE;
-
 				if ($output[0] === '# Not currently on any branch.') {
 					$this->output->writeln('<error>' . $path . ' is not on a branch and has local changes</error>');
 				} elseif ($output[1] === '# Changes not staged for commit:') {
