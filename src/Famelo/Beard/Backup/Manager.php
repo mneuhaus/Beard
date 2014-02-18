@@ -3,9 +3,6 @@
 namespace Famelo\Beard\Backup;
 
 use Alchemy\Zippy\Zippy;
-use Famelo\Beard\Backup\Sources\FilesSource;
-use Famelo\Beard\Backup\Sources\WordpressSource;
-use League\Flysystem\Adapter\Ftp;
 use League\Flysystem\Filesystem;
 
 
@@ -136,7 +133,7 @@ class Manager {
 			$filemanager = new Filesystem($adapter);
 			if (!$filemanager->has($this->name)) {
 				$filemanager->createDir($this->name);
-				if ($output->isVeryVerbose()) {
+				if ($this->output->isVeryVerbose()) {
     				$this->output->writeln('Creating directroy: ' . $this->name);
 				}
 			}

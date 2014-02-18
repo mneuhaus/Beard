@@ -2,36 +2,15 @@
 
 namespace Famelo\Beard\Command;
 
-use Famelo\Beard\Configuration;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
-use Traversable;
 
 /**
- * Builds a new Phar.
+ * Patch command.
  *
  */
 class Patch extends Command {
-	/**
-	 * The Box instance.
-	 *
-	 * @var Box
-	 */
-	private $box;
-
-	/**
-	 * The configuration settings.
-	 *
-	 * @var Configuration
-	 */
-	private $config;
 
 	/**
 	 * The output handler.
@@ -41,12 +20,17 @@ class Patch extends Command {
 	private $output;
 
 	/**
+	 * @var string
+	 */
+	protected $baseDir;
+
+	/**
 	 * @override
 	 */
 	protected function configure() {
 		parent::configure();
 		$this->setName('patch');
-		$this->setDescription('Patch and update respositories based on beard.json');
+		$this->setDescription('Patch and update repositories based on beard.json');
 	}
 
 	/**
@@ -54,7 +38,6 @@ class Patch extends Command {
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$this->output = $output;
-		$this->input = $input;
 		$this->baseDir = getcwd();
 
 		$configFile = 'beard.json';
@@ -146,7 +129,7 @@ class Patch extends Command {
 
 		if ($merge === TRUE) {
 			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->git->ref;
-			if ($change->patch_set !== NULL) {
+			if (isset($change->patch_set)) {
 				$explodedRef = explode('/', $ref);
 				array_pop($explodedRef);
 				$explodedRef[] = $change->patch_set;
@@ -175,6 +158,10 @@ class Patch extends Command {
 		}
 	}
 
+	/**
+	 * @param \stdClass $change
+	 * @return void
+	 */
 	public function applyDiffChange($change) {
 		$file = $this->baseDir . '/' . $change->file;
 		if (!file_exists($this->baseDir . '/' . $change->file)) {
@@ -184,6 +171,10 @@ class Patch extends Command {
 		echo $output;
 	}
 
+	/**
+	 * @param string $command
+	 * @return string
+	 */
 	public function executeShellCommand($command) {
 		$output = '';
 		$fp = popen($command, 'r');
@@ -195,7 +186,7 @@ class Patch extends Command {
 	}
 
 	/**
-	 * @param integer $changeId The numeric change id, not the hash
+	 * @param \stdClass $change The change object
 	 * @return mixed
 	 */
 	public function fetchChangeInformation($change) {
