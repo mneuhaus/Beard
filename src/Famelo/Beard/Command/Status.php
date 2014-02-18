@@ -68,7 +68,7 @@ class Status extends Command {
 			$path = str_replace($baseDir . '/', '', dirname($gitWorkingCopy));
 
 			if (stristr($output[1], 'nothing to commit')) {
-				if ($verbose === TRUE) {
+				if ($this->output->isVerbose()) {
 					$this->output->writeln('<info>' . $path . ' is clean</info>');
 				}
 			} else {

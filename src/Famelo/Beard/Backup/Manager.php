@@ -136,7 +136,7 @@ class Manager {
 			$filemanager = new Filesystem($adapter);
 			if (!$filemanager->has($this->name)) {
 				$filemanager->createDir($this->name);
-				if ($output->isVeryVerbose()) {
+				if ($this->output->isVeryVerbose()) {
     				$this->output->writeln('Creating directroy: ' . $this->name);
 				}
 			}

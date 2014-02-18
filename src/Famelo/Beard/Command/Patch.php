@@ -146,7 +146,7 @@ class Patch extends Command {
 
 		if ($merge === TRUE) {
 			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->git->ref;
-			if ($change->patch_set !== NULL) {
+			if (isset($change->patch_set)) {
 				$explodedRef = explode('/', $ref);
 				array_pop($explodedRef);
 				$explodedRef[] = $change->patch_set;

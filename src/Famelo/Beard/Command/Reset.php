@@ -80,7 +80,7 @@ class Reset extends Command {
 			$path = str_replace($baseDir . '/', '', dirname($gitWorkingCopy));
 
 			if ($output[1] === 'nothing to commit (working directory clean)') {
-				if ($verbose === TRUE) {
+				if ($this->output->isVerbose()) {
 					$this->output->writeln('<info>' . $path . ' is clean</info>');
 				}
 			} else {
