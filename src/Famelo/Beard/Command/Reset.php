@@ -52,9 +52,9 @@ class Reset extends Command {
 		exec(sprintf('find %s -name ".git"', $baseDir), $gitWorkingCopies, $status);
 
 		foreach ($gitWorkingCopies as $gitWorkingCopy) {
-			$output = NULL;
 			chdir(dirname($gitWorkingCopy));
 			$cmd = sprintf('git status', dirname($gitWorkingCopy));
+			$output = NULL;
 			exec($cmd, $output, $return);
 			$path = str_replace($baseDir . '/', '', dirname($gitWorkingCopy));
 
@@ -63,12 +63,23 @@ class Reset extends Command {
 					$this->output->writeln('<info>' . $path . ' is clean</info>');
 				}
 			} else {
+				$this->output->writeln(PHP_EOL . '<info>' . $path . '</info>');
 				$cmd = sprintf('git branch -vv');
+				$output = NULL;
 				exec($cmd, $output, $return);
 				$branches = implode(chr(10), $output);
-				preg_match('/\* (.+) [a-z0-9]* \[(([^\]]+)\/[^\]:]+)/', $branches, $match);
-				echo $this->executeShellCommand('git fetch ' . $match[3]) . chr(10);
-				echo $this->executeShellCommand('git reset --hard ' . $match[2]) . chr(10);
+				preg_match('/\* (?:.+) [a-z0-9]+ \[(([^\]]+)\/[^\]:]+)/', $branches, $matches);
+				if (isset($matches[1]) && isset($matches[2])) {
+					$this->executeShellCommand('git fetch ' . $matches[2]);
+					$this->output->write($this->executeShellCommand('git reset --hard ' . $matches[1]), TRUE);
+				} else {
+					preg_match('/\* (?:\(detached from ([0-9.]+)\)) [a-z0-9]+ .+/', $branches, $matches);
+					if (isset($matches[1])) {
+						$this->output->write($this->executeShellCommand('git reset --hard ' . $matches[1]), TRUE);
+					} else {
+						$this->output->writeln('Could not determine branch to reset to.');
+					}
+				}
 			}
 			chdir($baseDir);
 		}
