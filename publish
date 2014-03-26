@@ -11,6 +11,8 @@ $skipRelease = FALSE;
 $skipReleaseUpload = FALSE;
 // $releaseId = 158990;
 
+ini_set('phar.readonly', FALSE);
+
 echo 'Passwort for ' . $username . ': ';
 $password = trim(fgets(STDIN, 4096));
 
