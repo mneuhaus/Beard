@@ -21,8 +21,8 @@
 		"alchemy\/zippy": "*",
 		"pimple\/pimple": "*",
 		"camspiers\/json-pretty": "*",
-		"nikic/php-parser": "*",
-		"doctrine/common": "*"
+		"nikic\/php-parser": "*",
+		"doctrine\/common": "*"
 	},
 	"autoload": {
 		"psr-0": {
@@ -33,5 +33,5 @@
 	"bin": [
 		"bin\/beard"
 	],
-	"version": "0.8.0"
+	"version": "0.9.0"
 }
