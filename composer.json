@@ -20,7 +20,9 @@
 		"frenkynet\/flysystem": "*",
 		"alchemy\/zippy": "*",
 		"pimple\/pimple": "*",
-		"camspiers\/json-pretty": "*"
+		"camspiers\/json-pretty": "*",
+		"nikic/php-parser": "*",
+		"doctrine/common": "*"
 	},
 	"autoload": {
 		"psr-0": {

@@ -38,22 +38,26 @@ class Status extends Command {
 		exec(sprintf('find %s -name ".git"', $baseDir), $gitWorkingCopies, $status);
 		foreach ($gitWorkingCopies as $gitWorkingCopy) {
 			$output = NULL;
-			$cmd = sprintf('cd %s && git status', dirname($gitWorkingCopy));
+			$path = str_replace($baseDir . '/', '', dirname($gitWorkingCopy));
+			if (substr($path, 0, strlen('Data/Surf')) == 'Data/Surf')  {
+				continue;
+			}
+			$cmd = sprintf('cd "%s" && git status', dirname($gitWorkingCopy));
 			exec($cmd, $output, $return);
 
-			$path = str_replace($baseDir . '/', '', dirname($gitWorkingCopy));
-
-			if (stristr($output[1], 'nothing to commit')) {
+			if (isset($output[0]) && stristr($output[1], 'nothing to commit')) {
 				if ($this->output->isVerbose()) {
 					$this->output->writeln('<info>' . $path . ' is clean</info>');
 				}
 			} else {
-				if ($output[0] === '# Not currently on any branch.') {
+				if (isset($output[0]) && $output[0] === '# Not currently on any branch.') {
 					$this->output->writeln('<error>' . $path . ' is not on a branch and has local changes</error>');
-				} elseif ($output[1] === '# Changes not staged for commit:') {
+				} elseif (isset($output[1]) && $output[1] === '# Changes not staged for commit:') {
 					$this->output->writeln('<error>' . $path . ' has local changes</error>');
 				} else {
-					$this->output->writeln('<comment>' . $path . ' ' . $output[1] . '</comment>');
+					if (isset($output[1])) {
+						$this->output->writeln('<comment>' . $path . ' ' . $output[1] . '</comment>');
+					}
 				}
 
 				foreach ($output as $outputLine) {
