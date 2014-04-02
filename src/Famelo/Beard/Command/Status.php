@@ -45,14 +45,14 @@ class Status extends Command {
 			$cmd = sprintf('cd "%s" && git status', dirname($gitWorkingCopy));
 			exec($cmd, $output, $return);
 
-			if (isset($output[0]) && stristr($output[1], 'nothing to commit')) {
+			if (in_array('nothing to commit, working directory clean', $output)) {
 				if ($this->output->isVerbose()) {
 					$this->output->writeln('<info>' . $path . ' is clean</info>');
 				}
 			} else {
-				if (isset($output[0]) && $output[0] === '# Not currently on any branch.') {
+				if (in_array('Not currently on any branch.', $output)) {
 					$this->output->writeln('<error>' . $path . ' is not on a branch and has local changes</error>');
-				} elseif (isset($output[1]) && $output[1] === '# Changes not staged for commit:') {
+				} elseif (in_array('Changes not staged for commit:', $output)) {
 					$this->output->writeln('<error>' . $path . ' has local changes</error>');
 				} else {
 					if (isset($output[1])) {
@@ -61,7 +61,7 @@ class Status extends Command {
 				}
 
 				foreach ($output as $outputLine) {
-					if (preg_match('/^#\t/', $outputLine)) {
+					if (preg_match('/^#*\t/', $outputLine)) {
 						if (strpos($outputLine, ':') === FALSE) {
 							$this->output->writeln(str_replace("\t", "\tuntracked:  ", $outputLine));
 						} else {
