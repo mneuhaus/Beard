@@ -128,7 +128,7 @@ class Patch extends Command {
 		}
 
 		if ($merge === TRUE) {
-			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->git->ref;
+			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->{'anonymous http'}->ref;
 			if (isset($change->patch_set)) {
 				$explodedRef = explode('/', $ref);
 				array_pop($explodedRef);
