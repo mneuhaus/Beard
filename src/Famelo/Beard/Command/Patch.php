@@ -102,7 +102,7 @@ class Patch extends Command {
 			case 'patch':
 			case 'diff': $this->applyDiffChange($change);
 				break;
-			default: $this->output->write('woot?');
+			default: $this->output->write('woot? Sorry, i don\'t know that kind of type: ' . $change->type);
 		}
 
 		chdir($this->baseDir);
@@ -110,7 +110,6 @@ class Patch extends Command {
 	}
 
 	public function applyGerritChange($change) {
-		$commits = $this->executeShellCommand('git log -n30');
 		$changeInformation = $this->fetchChangeInformation($change);
 
 		if (strpos($change->change_id, ',') !== FALSE) {
@@ -140,22 +139,59 @@ class Patch extends Command {
 			$output = $this->executeShellCommand($command);
 
 			$commit = $this->executeShellCommand('git log --format="%H" -n1 FETCH_HEAD');
-			if (stristr($commits, '(cherry picked from commit ' . $commit . ')') !== FALSE) {
+
+			if ($this->isCommitAlreadyPicked($commit) === TRUE) {
 				$this->output->write('<comment>Already picked</comment>' . chr(10));
 			} else {
 				echo $output;
 				$gitVersion = $this->executeShellCommand('git --version');
+
 				switch ($gitVersion) {
 					case 'git version 1.7.3.4':
-						system('git cherry-pick -x --strategy=recursive FETCH_HEAD');
+						system('git cherry-pick --strategy=recursive FETCH_HEAD');
 						break;
 
 					default:
-						system('git cherry-pick -x --strategy=recursive -X theirs FETCH_HEAD');
+						system('git cherry-pick --strategy=recursive -X theirs FETCH_HEAD');
 						break;
 				}
+				$cherryPickHash = $this->executeShellCommand('git log --format="%H" -n1 HEAD');
+				$this->storePickedCommitHash($commit, $cherryPickHash);
 			}
 		}
+	}
+
+	public function storePickedCommitHash($revisionHash, $cherryPickHash) {
+		$file = $this->baseDir . '/beard.lock';
+		$commits = $this->getStoredCommits();
+
+		$commits[$revisionHash] = $cherryPickHash;
+
+		file_put_contents($file, json_encode($commits, JSON_PRETTY_PRINT));
+	}
+
+	public function isCommitAlreadyPicked($revisionHash) {
+		$commits = $this->getStoredCommits();
+
+		if (isset($commits[$revisionHash]) === FALSE){
+			return FALSE;
+		}
+
+		$commitLog = $this->executeShellCommand('git log -n30');
+		return stristr($commitLog, 'commit ' . $commits[$revisionHash]) !== FALSE;
+	}
+
+	public function getStoredCommits() {
+		$file = $this->baseDir . '/beard.lock';
+
+		$commits = array();
+		if (is_file($file)) {
+			$commits = json_decode(file_get_contents($file), TRUE);
+		}
+		if (!is_array($commits)) {
+			$commits = array();
+		}
+		return $commits;
 	}
 
 	/**
