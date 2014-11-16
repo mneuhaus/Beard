@@ -24,37 +24,40 @@ $composerMetadata->version = isset($composerMetadata->version) ? $composerMetada
 $builder = Parser::toBuilder($composerMetadata->version);
 
 if ($skipBuilding === FALSE) {
-	switch(isset($argv[1]) ? $argv[1] : 'patch') {
+	$mode = isset($argv[1]) ? $argv[1] : 'patch';
+	switch($mode) {
+		case 'force-rebuild': break;
 		case 'patch': $builder->incrementPatch(); break;
 		case 'minor': $builder->incrementMinor(); break;
 		case 'major': $builder->incrementMajor(); break;
 		default: echo 'unknown version strategy (patch|minor|major)'; exit();
 	}
 
-	$composerMetadata->version = Dumper::toString($builder);
+	if ($mode !== 'force-rebuild') {
+		$composerMetadata->version = Dumper::toString($builder);
 
-	file_put_contents('composer.json', $jsonPretty->prettify($composerMetadata));
+		file_put_contents('composer.json', $jsonPretty->prettify($composerMetadata));
 
-	$readme = file_get_contents('Readme.md');
-	$releaseFile = 'https://github.com/mneuhaus/Beard/releases/download/' . $composerMetadata->version . '/beard-' . $composerMetadata->version . '.phar';
-	$readme = preg_replace('/curl .*beard-([0-9\.A-z]*).phar > beard.phar/', 'curl -s ' . $releaseFile . ' > beard.phar', $readme);
-	file_put_contents('Readme.md', $readme);
+		$readme = file_get_contents('Readme.md');
+		$releaseFile = 'https://github.com/mneuhaus/Beard/releases/download/' . $composerMetadata->version . '/beard-' . $composerMetadata->version . '.phar';
+		$readme = preg_replace('/curl .*beard-([0-9\.A-z]*).phar > beard.phar/', 'curl -s ' . $releaseFile . ' > beard.phar', $readme);
+		file_put_contents('Readme.md', $readme);
 
-	echo 'Update and commit version in composer.json' . PHP_EOL;
-	system('git add composer.json');
-	system('git commit -m "' . $composerMetadata->version . '"');
-	echo PHP_EOL;
+		echo 'Update and commit version in composer.json' . PHP_EOL;
+		system('git add composer.json');
+		system('git commit -m "' . $composerMetadata->version . '"');
+		echo PHP_EOL;
 
-	echo 'tag current state with provided version number' . PHP_EOL;
-	system('git tag "' . $composerMetadata->version . '"');
-	echo PHP_EOL;
+		echo 'tag current state with provided version number' . PHP_EOL;
+		system('git tag "' . $composerMetadata->version . '"');
+		echo PHP_EOL;
 
 
-	echo 'push tags to github' . PHP_EOL;
-	system('git push origin master');
-	system('git push origin --tags');
-	echo PHP_EOL;
-
+		echo 'push tags to github' . PHP_EOL;
+		system('git push origin master');
+		system('git push origin --tags');
+		echo PHP_EOL;
+	}
 
 	echo 'create new phar' . PHP_EOL;
 	system('box build');
