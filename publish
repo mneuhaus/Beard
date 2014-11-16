@@ -61,9 +61,9 @@ if ($skipBuilding === FALSE) {
 	}
 
 	echo 'create new phar' . PHP_EOL;
-	system('box build');
 	system('rm Repository/beard-current.phar');
-	system('cp Repository/beard-' . $composerMetadata->version . '.phar Repository/beard-current.phar');
+	system('box build');
+	system('cp Repository/beard-current.phar Repository/beard-' . $composerMetadata->version . '.phar');
 	echo PHP_EOL;
 }
 
