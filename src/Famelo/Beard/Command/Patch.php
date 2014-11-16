@@ -75,7 +75,11 @@ class Patch extends Command {
 
 			$this->baseDir = getcwd();
 			foreach ($config->getChanges() as $change) {
-				$this->applyChange($change);
+				if (isset($change->path) && $change->path !== NULL) {
+					$this->applyChange($change);
+				} else {
+					$this->applyGerritTopic($change);
+				}
 			}
 		}
 	}
@@ -109,6 +113,48 @@ class Patch extends Command {
 		$this->output->writeln('');
 	}
 
+	public function findPath($gerritChange, $paths) {
+		if (isset($paths[$gerritChange->project])) {
+			return $paths[$gerritChange->project];
+		}
+
+		if (stristr($gerritChange->project, 'Packages/')) {
+			$project = str_replace('Packages/', '', $gerritChange->project);
+			$packageFolders = scandir('Packages');
+			foreach ($packageFolders as $packageFolder) {
+				if (substr($packageFolder, 0, 1) === '.') {
+					continue;
+				}
+				$possiblePath = 'Packages/' . $packageFolder . '/' . $project;
+				if (is_dir($possiblePath)) {
+					return $possiblePath;
+				}
+			}
+		}
+		$this->output->writeln('<comment>Could not find a path for the Package ' . $gerritChange->project . ', please configure the path in the topic:paths configuration</comment>');
+
+		return NULL;
+	}
+
+	public function applyGerritTopic($topic) {
+		$changes = $this->fetchTopicChanges($topic);
+		$paths = array();
+		if (isset($topic->paths)) {
+			$paths = get_object_vars($topic->paths);
+		}
+		foreach ($changes as $gerritChange) {
+			$change = clone $topic;
+			$change->name = $gerritChange->subject;
+			$change->type = 'gerrit';
+			$change->change_id = $gerritChange->_number;
+			$change->path = $this->findPath($gerritChange, $paths);
+			if ($change->path !== NULL) {
+				$this->output->writeln('');
+				$this->applyChange($change);
+			}
+		}
+	}
+
 	public function applyGerritChange($change) {
 		$changeInformation = $this->fetchChangeInformation($change);
 
@@ -128,12 +174,14 @@ class Patch extends Command {
 
 		if ($merge === TRUE) {
 			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->{'anonymous http'}->ref;
+			var_dump($ref);
 			if (isset($change->patch_set)) {
 				$explodedRef = explode('/', $ref);
 				array_pop($explodedRef);
 				$explodedRef[] = $change->patch_set;
 				$ref = implode('/', $explodedRef);
 			}
+			var_dump($ref);
 
 			$command = 'git fetch --quiet git://' . $change->gerrit_git . '/' . $changeInformation->project . ' ' . $ref . '';
 			$output = $this->executeShellCommand($command);
@@ -228,11 +276,26 @@ class Patch extends Command {
 	public function fetchChangeInformation($change) {
 		$output = file_get_contents($change->gerrit_api_endpoint . 'changes/?q=' . intval($change->change_id) . '&o=CURRENT_REVISION');
 
-			// Remove first line
+		// Remove first line
 		$output = substr($output, strpos($output, "\n") + 1);
-			// trim []
+		// trim []
 		$output = ltrim($output, '[');
 		$output = rtrim(rtrim($output), ']');
+
+		$data = json_decode($output);
+		return $data;
+	}
+
+	/**
+	 * @param \stdClass $change The change object
+	 * @return mixed
+	 */
+	public function fetchTopicChanges($change) {
+		$branch = isset($change->branch) ? $change->branch : 'master';
+		$output = file_get_contents($change->gerrit_api_endpoint . 'changes/?q=status:open+topic:' . $change->topic . '+branch:' . $branch);
+
+		// Remove first line
+		$output = substr($output, strpos($output, "\n") + 1);
 
 		$data = json_decode($output);
 		return $data;
