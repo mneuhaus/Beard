@@ -32,19 +32,42 @@ gerrit changes or other patches.
     },
     "changes": [
         {
-            "name": "[WIP][FEATURE] Improve resolving of view",
+            "name": "Simple gerrit changeSet",
             "type": "gerrit",
             "path": "Packages/Framework/TYPO3.Flow",
             "change_id": "16392",
 
             // you can override the defaults here for each change
-        	// "gerrit_api_endpoint": "https://review.typo3.org/",
-        	// "gerrit_git": "git.typo3.org"
+            // "gerrit_api_endpoint": "https://review.typo3.org/",
+            // "gerrit_git": "git.typo3.org"
         },
         {
-            "name": "Some little change to composer.json",
+            "name": "Using a specific revision",
+            "type": "gerrit",
+            "path": "Packages/Framework/TYPO3.Flow",
+
+            "change_id": "16392,1",
+            // you can append the revision number with a comma after the changeId to use
+            // the specific revision instead of the latest on (changeId,revisioNumber)
+        },
+        {
+            "name": "Pull in a complete Gerrit Topic into all existing package directories",
+            "type": "gerrit",
+            "topic": "acl",
+            "branch": "master",
+            "paths": {
+                "Packages/TYPO3.Neos": "Packages/Application/TYPO3.Neos"
+                // You can specify the exact path for the gerrit project name
+                // if a path is missing here and the project is in the form of
+                // Packages/[PackageName] it will loop through the directories
+                // in Packages looking for a matching folder
+                // (Packages/[Application|Framework|Site|...]/[PackageName])
+            }
+        },
+        {
+            "name": "Some changes out of a diff file",
             "type": "diff",
-            "path": "Packages/Framework/TYPO3.FLOW3",
+            "path": "Packages/Framework/TYPO3.Flow",
             "file": "Patches/TYPO3.Flow3.diff"
         }
     ]
@@ -79,6 +102,16 @@ beard status
 beard update
 ```
 
+## Locking
+
+This command helps "locking" a package to a currently installed commit:
+The following example will look into the ```composer.lock``` file to find the currently installed
+commit hash and set that into the ```composer.json``` to "lock" this package to that commit.
+
+```
+beard lock typo3/flow
+```
+
 ## Similarity to Famelo.Gerrit
 
 If you know Famelo.Gerrit, the TYPO3.Flow package you might think this is already covered by that,
@@ -88,43 +121,3 @@ Main pro's to make it standalone are:
 - you can use it for almost any kind of project
 
 And just one more thing. "beard patch" will look and process your old "gerrit.json" for now as well :)
-
-## Experimental DB Dump && Restore
-
-(This functionality is quite new and experimental, don't come crying if you're data
-is messed up ;)
-
-You can dump your current database into a folder specified by the database settings
-in the beard.json file like this:
-
-```json
-{
-    "database": {
-        "dbname": "mydb",
-        "user": "myuser",
-        "password": "mypassword",
-        "host": "myhost",
-        "baseDir": "typo3conf",
-        "filename": "Template.sql",
-        "skip": "cache_.*,cf_.*,sys_log,tx_devlog,tx_extensionmanager_domain_model_extension"
-    }
-}
-```
-
-then you can dump your database with:
-
-```
-beard db:dump
-```
-
-and restore it with:
-
-```
-beard db:restore
-```
-
-### DB Hooks
-
-additionally bot the dump and restore command support and "--addHook" option
-to set up a git "pre-commit" hook for dumping and adding the the database and
-a "post-merge" hook for restoring from the dump in the git commit.
