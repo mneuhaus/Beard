@@ -220,5 +220,11 @@
 		"sha1": "5dc8634a3fb40d8bb0bf8783f8b04cb868ba8ac7",
 		"url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.0.0\/beard-1.0.0.phar",
 		"version": "1.0.0"
+	},
+	{
+		"name": "beard.phar",
+		"sha1": "0571fb94bbb5309ceecc598820ac0d74257ff411",
+		"url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.0.1\/beard-1.0.1.phar",
+		"version": "1.0.1"
 	}
 ]
