@@ -33,8 +33,9 @@ if ($skipBuilding === FALSE) {
 		default: echo 'unknown version strategy (patch|minor|major)'; exit();
 	}
 
+	$composerMetadata->version = Dumper::toString($builder);
+
 	if ($mode !== 'force-rebuild') {
-		$composerMetadata->version = Dumper::toString($builder);
 
 		file_put_contents('composer.json', $jsonPretty->prettify($composerMetadata));
 
