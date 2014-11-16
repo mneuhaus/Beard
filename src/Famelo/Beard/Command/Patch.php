@@ -174,14 +174,12 @@ class Patch extends Command {
 
 		if ($merge === TRUE) {
 			$ref = $changeInformation->revisions->{$changeInformation->current_revision}->fetch->{'anonymous http'}->ref;
-			var_dump($ref);
 			if (isset($change->patch_set)) {
 				$explodedRef = explode('/', $ref);
 				array_pop($explodedRef);
 				$explodedRef[] = $change->patch_set;
 				$ref = implode('/', $explodedRef);
 			}
-			var_dump($ref);
 
 			$command = 'git fetch --quiet git://' . $change->gerrit_git . '/' . $changeInformation->project . ' ' . $ref . '';
 			$output = $this->executeShellCommand($command);
