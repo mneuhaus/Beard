@@ -69,6 +69,8 @@ gerrit changes or other patches.
             "type": "diff",
             "path": "Packages/Framework/TYPO3.Flow",
             "file": "Patches/TYPO3.Flow3.diff"
+            // For creating a patchabel  *.diff file you have to use the option for no color
+            // git diff --no-color > TYPO3.Flow3.diff
         }
     ]
 }
