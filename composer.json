@@ -1,6 +1,6 @@
 {
 	"name": "famelo\/beard",
-	"description": "A tool to simplify building PHARs.",
+	"description": "cli helper for Flow development",
 	"license": "MIT",
 	"authors": [
 		{
