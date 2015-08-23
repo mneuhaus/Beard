@@ -19,6 +19,7 @@ class Application extends Base {
 	 */
 	public function __construct($name = 'Beard', $version = '@git_tag@') {
 		parent::__construct($name, $version);
+		define('BEARD_ROOT_DIR', __DIR__);
 	}
 
 	/**

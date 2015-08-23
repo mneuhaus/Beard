@@ -313,11 +313,23 @@ class Patch extends Command {
 			'Accept' => 'application/vnd.github.v3+json'
 		);
 
-		$request = \Requests::get($commitsUri, $headers);
+		$caCertTemp = tempnam(sys_get_temp_dir(), 'BeardCaCert');
+		$options = array(
+			'verify' => $caCertTemp
+		);
+
+		if (strlen(\Phar::running()) > 0) {
+			$caCertSource = \Phar::running() . '/vendor/rmccue/requests/library/Requests/Transport/cacert.pem';
+		} else {
+			$caCertSource = BEARD_ROOT_DIR . '/../../../vendor/rmccue/requests/library/Requests/Transport/cacert.pem';
+		}
+		copy($caCertSource, $caCertTemp);
+
+		$request = \Requests::get($commitsUri, $headers, $options);
 		$pullRequestCommits = json_decode($request->body);
 
 		$pullRequestUri = 'https://api.github.com/repos/' . $repository . '/pulls/' . $pullRequest;
-		$request = \Requests::get($pullRequestUri, $headers);
+		$request = \Requests::get($pullRequestUri, $headers, $options);
 		$pullRequest = json_decode($request->body);
 
 		$pullRequestRepositoryUri = $pullRequest->head->repo->full_name;

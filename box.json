@@ -10,6 +10,11 @@
             "name": "*.php",
             "exclude": ["Tests"],
             "in": "vendor"
+        },
+        {
+            "name": "*.pem",
+            "exclude": ["Tests"],
+            "in": "vendor"
         }
     ],
     "main": "bin/beard",
