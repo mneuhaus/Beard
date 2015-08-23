@@ -2,6 +2,8 @@
 
 namespace Famelo\Beard\Command;
 
+use Herrera\Version\Comparator;
+use Herrera\Version\Parser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -103,6 +105,8 @@ class Patch extends Command {
 		switch($change->type) {
 			case 'gerrit': $this->applyGerritChange($change);
 				break;
+			case 'github': $this->applyGithubChange($change);
+				break;
 			case 'patch':
 			case 'diff': $this->applyDiffChange($change);
 				break;
@@ -182,6 +186,7 @@ class Patch extends Command {
 			}
 
 			$command = 'git fetch --quiet git://' . $change->gerrit_git . '/' . $changeInformation->project . ' ' . $ref . '';
+
 			$output = $this->executeShellCommand($command);
 
 			$commit = $this->executeShellCommand('git log --format="%H" -n1 FETCH_HEAD');
@@ -251,6 +256,73 @@ class Patch extends Command {
 		}
 		$output = $this->executeShellCommand('git apply ' . $file . ' --verbose');
 		echo $output;
+	}
+
+	/**
+	 * @param \stdClass $change
+	 * @return void
+	 */
+	public function applyGithubChange($change) {
+		if (isset($change->commit)) {
+			$commits = array(
+				array(
+					'repository' => $change->repository,
+					'sha' => $change->commit
+				)
+			);
+		} elseif ($change->pull_request) {
+			$commits = $this->getPullRequestCommits($change->repository, $change->pull_request);
+		}
+
+		foreach ($commits as $commit) {
+			$repositoryUri = 'https://github.com/' . $commit['repository'] . '.git';
+			$sha = $commit['sha'];
+			if ($this->isCommitAlreadyPicked($sha) === TRUE) {
+				$this->output->write('<comment>Already picked</comment>' . chr(10));
+			} else {
+				$command = 'git fetch --quiet '. $repositoryUri . ' ' . $sha . '';
+				$output = $this->executeShellCommand($command);
+
+				echo $output;
+				$gitVersion = $this->getGitVersion();
+
+				if ($gitVersion < 1.8) {
+					system('git cherry-pick --strategy=recursive FETCH_HEAD');
+				} else {
+					system('git cherry-pick --strategy=recursive -X theirs FETCH_HEAD');
+				}
+
+				$cherryPickHash = $this->executeShellCommand('git log --format="%H" -n1 HEAD');
+				$this->storePickedCommitHash($sha, $cherryPickHash);
+			}
+		}
+	}
+
+	public function getGitVersion() {
+		$gitVersion = $this->executeShellCommand('git --version');
+		preg_match('/[(0-9)\.]+/', $gitVersion, $match);
+		$versionString = current($match);
+		$parts = explode('.', $versionString);
+		return $parts[0] + ($parts[1] / 10);
+	}
+
+	public function getPullRequestCommits($repository, $pullRequest) {
+		$client = new \Github\Client();
+		$commitsUri = 'https://api.github.com/repos/' . $repository . '/pulls/' . $pullRequest . '/commits';
+		$pullRequestCommits = json_decode($client->getHttpClient()->get($commitsUri)->getBody()->__toString());
+
+		$repositoryParts = explode('/', $repository);
+		$pullRequest = $client->api('pull_request')->show($repositoryParts[0], $repositoryParts[1], $pullRequest);
+
+		$pullRequestRepositoryUri = $pullRequest['head']['repo']['full_name'];
+		$commits = array();
+		foreach ($pullRequestCommits as $pullRequestCommit) {
+			$commits[] = array(
+				'repository' => $pullRequestRepositoryUri,
+				'sha' => $pullRequestCommit->sha
+			);
+		}
+		return $commits;
 	}
 
 	/**

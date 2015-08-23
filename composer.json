@@ -22,7 +22,8 @@
 		"pimple\/pimple": "*",
 		"camspiers\/json-pretty": "*",
 		"nikic\/php-parser": "*",
-		"doctrine\/common": "*"
+		"doctrine\/common": "*",
+		"knplabs/github-api": "^1.4@dev"
 	},
 	"autoload": {
 		"psr-0": {

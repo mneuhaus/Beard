@@ -71,6 +71,20 @@ gerrit changes or other patches.
             "file": "Patches/TYPO3.Flow3.diff"
             // For creating a patchabel  *.diff file you have to use the option for no color
             // git diff --no-color > TYPO3.Flow3.diff
+        },
+        {
+            "name": "some specific github commit",
+            "type": "github",
+            "repository": "kitsunet/neos-development-collection",
+            "commit": "cef11fdc9c9094ddaa204bd5a8b47005283817b5",
+            "path": "Packages/Framework"
+        },
+        {
+            "name": "all commits of a github pull-request",
+            "type": "github",
+            "repository": "neos/neos-development-collection",
+            "pull_request": "8",
+            "path": "Packages/Framework"
         }
     ]
 }
