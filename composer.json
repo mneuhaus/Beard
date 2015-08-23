@@ -23,7 +23,7 @@
 		"camspiers\/json-pretty": "*",
 		"nikic\/php-parser": "*",
 		"doctrine\/common": "*",
-		"knplabs\/github-api": "^1.4@dev"
+		"rmccue/requests": "dev-master"
 	},
 	"autoload": {
 		"psr-0": {

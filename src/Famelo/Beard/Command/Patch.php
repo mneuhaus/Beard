@@ -307,14 +307,20 @@ class Patch extends Command {
 	}
 
 	public function getPullRequestCommits($repository, $pullRequest) {
-		$client = new \Github\Client();
 		$commitsUri = 'https://api.github.com/repos/' . $repository . '/pulls/' . $pullRequest . '/commits';
-		$pullRequestCommits = json_decode($client->getHttpClient()->get($commitsUri)->getBody()->__toString());
 
-		$repositoryParts = explode('/', $repository);
-		$pullRequest = $client->api('pull_request')->show($repositoryParts[0], $repositoryParts[1], $pullRequest);
+		$headers = array(
+			'Accept' => 'application/vnd.github.v3+json'
+		);
 
-		$pullRequestRepositoryUri = $pullRequest['head']['repo']['full_name'];
+		$request = \Requests::get($commitsUri, $headers);
+		$pullRequestCommits = json_decode($request->body);
+
+		$pullRequestUri = 'https://api.github.com/repos/' . $repository . '/pulls/' . $pullRequest;
+		$request = \Requests::get($pullRequestUri, $headers);
+		$pullRequest = json_decode($request->body);
+
+		$pullRequestRepositoryUri = $pullRequest->head->repo->full_name;
 		$commits = array();
 		foreach ($pullRequestCommits as $pullRequestCommit) {
 			$commits[] = array(
