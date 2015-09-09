@@ -69,7 +69,7 @@ class Patch extends Command {
 				#var_dump($packages, $namespaces);
 				exit();
 			} else {
-				$this->output->write('<comment>No beard.json found!</comment>' . chr(10));
+				$this->output->writeln('<comment>No beard.json found!</comment>');
 				return;
 			}
 		} else {
@@ -171,9 +171,9 @@ class Patch extends Command {
 		$merge = TRUE;
 
 		if ($changeInformation->status == 'MERGED') {
-			$this->output->write('<comment>This change has been merged!</comment>' . chr(10));
+			$this->output->writeln('<comment>This change has been merged!</comment>');
 		} elseif ($changeInformation->status == 'ABANDONED') {
-			$this->output->write('<error>This change has been abandoned!</error>' . chr(10));
+			$this->output->writeln('<error>This change has been abandoned!</error>');
 		}
 
 		if ($merge === TRUE) {
@@ -192,7 +192,7 @@ class Patch extends Command {
 			$commit = $this->executeShellCommand('git log --format="%H" -n1 FETCH_HEAD');
 
 			if ($this->isCommitAlreadyPicked($commit) === TRUE) {
-				$this->output->write('<comment>Already picked</comment>' . chr(10));
+				$this->output->writeln('<comment>Already picked</comment>');
 			} else {
 				echo $output;
 				$gitVersion = $this->executeShellCommand('git --version');
@@ -252,7 +252,7 @@ class Patch extends Command {
 	public function applyDiffChange($change) {
 		$file = $this->baseDir . '/' . $change->file;
 		if (!file_exists($this->baseDir . '/' . $change->file)) {
-			$this->output->write('<error>The file ' . $change->file . ' doesn\'t exist!</error>' . chr(10));
+			$this->output->writeln('<error>The file ' . $change->file . ' doesn\'t exist!</error>');
 		}
 		$output = $this->executeShellCommand('git apply ' . $file . ' --verbose');
 		echo $output;
@@ -278,7 +278,7 @@ class Patch extends Command {
 			$repositoryUri = 'https://github.com/' . $commit['repository'] . '.git';
 			$sha = $commit['sha'];
 			if ($this->isCommitAlreadyPicked($sha) === TRUE) {
-				$this->output->write('<comment>Already picked</comment>' . chr(10));
+				$this->output->writeln('<comment>Already picked</comment>');
 			} else {
 				$command = 'git fetch --quiet '. $repositoryUri . ' ' . $sha . '';
 				$output = $this->executeShellCommand($command);
