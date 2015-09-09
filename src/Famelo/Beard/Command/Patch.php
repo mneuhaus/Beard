@@ -306,9 +306,12 @@ class Patch extends Command {
 		return $parts[0] + ($parts[1] / 10);
 	}
 
+	/**
+	 * @param string $repository
+	 * @param string $pullRequest
+	 * @return array
+	 */
 	public function getPullRequestCommits($repository, $pullRequest) {
-		$commitsUri = 'https://api.github.com/repos/' . $repository . '/pulls/' . $pullRequest . '/commits';
-
 		$headers = array(
 			'Accept' => 'application/vnd.github.v3+json'
 		);
@@ -325,14 +328,22 @@ class Patch extends Command {
 		}
 		copy($caCertSource, $caCertTemp);
 
+		$pullRequestUri = 'https://api.github.com/repos/' . $repository . '/pulls/' . $pullRequest;
+		$request = \Requests::get($pullRequestUri, $headers, $options);
+		$pullRequestData = json_decode($request->body);
+
+		if (!isset($pullRequestData->head)) {
+			$this->output->writeln(sprintf('<error>Fetching pull request "%s" from repository "%s" failed%s.</error>', $pullRequest, $repository, $pullRequestData->message ? sprintf(' with error "%s"', $pullRequestData->message) : ''));
+			$this->output->writeln(sprintf('<comment>%s</comment>', $pullRequestUri));
+			return array();
+		}
+
+		$pullRequestRepositoryUri = $pullRequestData->head->repo->full_name;
+
+		$commitsUri = $pullRequestUri . '/commits';
 		$request = \Requests::get($commitsUri, $headers, $options);
 		$pullRequestCommits = json_decode($request->body);
 
-		$pullRequestUri = 'https://api.github.com/repos/' . $repository . '/pulls/' . $pullRequest;
-		$request = \Requests::get($pullRequestUri, $headers, $options);
-		$pullRequest = json_decode($request->body);
-
-		$pullRequestRepositoryUri = $pullRequest->head->repo->full_name;
 		$commits = array();
 		foreach ($pullRequestCommits as $pullRequestCommit) {
 			$commits[] = array(
