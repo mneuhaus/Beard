@@ -174,7 +174,7 @@ task('release:addPharToRelease', function(){
 
 
 set('username', 'mneuhaus');
-set('repository', 'Beard-release-test');
+set('repository', 'Beard');
 
 task('release:patch', [
 	'release:askPasswort',
