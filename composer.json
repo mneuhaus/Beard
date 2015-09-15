@@ -1,38 +1,38 @@
 {
-	"name": "famelo\/beard",
-	"description": "cli helper for Flow development",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Marc Neuhaus",
-			"email": "apocalip@gmail.com"
-		}
-	],
-	"require": {
-		"php": ">=5.3.3",
-		"symfony\/console": "~2.1",
-		"symfony\/finder": "~2.1",
-		"symfony\/process": "~2.1",
-		"symfony\/filesystem": "~2.1",
-		"kherge\/amend": "3.*",
-		"doctrine\/dbal": "*",
-		"jdorn\/sql-formatter": "*",
-		"frenkynet\/flysystem": "*",
-		"alchemy\/zippy": "*",
-		"pimple\/pimple": "*",
-		"camspiers\/json-pretty": "*",
-		"nikic\/php-parser": "*",
-		"doctrine\/common": "*",
-		"rmccue\/requests": "dev-master"
-	},
-	"autoload": {
-		"psr-0": {
-			"Famelo\\Beard": "src"
-		}
-	},
-	"minimum-stability": "dev",
-	"bin": [
-		"bin\/beard"
-	],
-	"version": "1.1.4"
+    "name": "famelo\/beard",
+    "description": "cli helper for Flow development",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marc Neuhaus",
+            "email": "apocalip@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony\/console": "~2.1",
+        "symfony\/finder": "~2.1",
+        "symfony\/process": "~2.1",
+        "symfony\/filesystem": "~2.1",
+        "kherge\/amend": "3.*",
+        "doctrine\/dbal": "*",
+        "jdorn\/sql-formatter": "*",
+        "frenkynet\/flysystem": "*",
+        "alchemy\/zippy": "*",
+        "pimple\/pimple": "*",
+        "camspiers\/json-pretty": "*",
+        "nikic\/php-parser": "*",
+        "doctrine\/common": "*",
+        "rmccue\/requests": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Famelo\\Beard": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "bin": [
+        "bin\/beard"
+    ],
+    "version": "1.1.5"
 }
