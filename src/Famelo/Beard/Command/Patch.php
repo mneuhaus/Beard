@@ -264,32 +264,32 @@ class Patch extends Command {
 	 */
 	public function applyGithubChange($change) {
 		if (isset($change->commit)) {
-			$commits = array(
-				array(
-					'repository' => $change->repository,
-					'sha' => $change->commit
-				)
-			);
+			$repositoryUrl = 'https://github.com/' . $change->repository;
+			$commits = array($change->commit);
+			$ref = isset($change->ref) ? $change->ref : 'refs/heads/*:refs/remotes/_beard/*';
 		} elseif ($change->pull_request) {
-			$commits = $this->getPullRequestCommits($change->repository, $change->pull_request);
+			$pullRequestData = $this->getPullRequestData($change->repository, $change->pull_request);
+			$commits = $pullRequestData->commits;
+			$repositoryUrl = $pullRequestData->head->repo->clone_url;
+			$ref = $pullRequestData->head->ref;
+		} else {
+			$this->output->writeln('<error>Neither commit nor pull_request specified for change</error>');
+			return;
 		}
 
-		foreach ($commits as $commit) {
-			$repositoryUri = 'https://github.com/' . $commit['repository'] . '.git';
-			$sha = $commit['sha'];
+		$command = 'git fetch --quiet --force '. escapeshellarg($repositoryUrl) . ' ' . escapeshellarg($ref);
+		echo $this->executeShellCommand($command);
+
+		foreach ($commits as $sha) {
 			if ($this->isCommitAlreadyPicked($sha) === TRUE) {
 				$this->output->writeln('<comment>Already picked</comment>');
 			} else {
-				$command = 'git fetch --quiet '. $repositoryUri . ' ' . $sha . '';
-				$output = $this->executeShellCommand($command);
-
-				echo $output;
 				$gitVersion = $this->getGitVersion();
 
 				if ($gitVersion < 1.8) {
-					system('git cherry-pick --strategy=recursive FETCH_HEAD');
+					system('git cherry-pick --strategy=recursive ' . $sha);
 				} else {
-					system('git cherry-pick --strategy=recursive -X theirs FETCH_HEAD');
+					system('git cherry-pick --strategy=recursive -X theirs ' . $sha);
 				}
 
 				$cherryPickHash = $this->executeShellCommand('git log --format="%H" -n1 HEAD');
@@ -309,9 +309,9 @@ class Patch extends Command {
 	/**
 	 * @param string $repository
 	 * @param string $pullRequest
-	 * @return array
+	 * @return \stdClass
 	 */
-	public function getPullRequestCommits($repository, $pullRequest) {
+	public function getPullRequestData($repository, $pullRequest) {
 		$headers = array(
 			'Accept' => 'application/vnd.github.v3+json'
 		);
@@ -335,23 +335,18 @@ class Patch extends Command {
 		if (!isset($pullRequestData->head)) {
 			$this->output->writeln(sprintf('<error>Fetching pull request "%s" from repository "%s" failed%s.</error>', $pullRequest, $repository, $pullRequestData->message ? sprintf(' with error "%s"', $pullRequestData->message) : ''));
 			$this->output->writeln(sprintf('<comment>%s</comment>', $pullRequestUri));
-			return array();
+			return array($pullRequestData, array());
 		}
-
-		$pullRequestRepositoryUri = $pullRequestData->head->repo->full_name;
 
 		$commitsUri = $pullRequestUri . '/commits';
 		$request = \Requests::get($commitsUri, $headers, $options);
 		$pullRequestCommits = json_decode($request->body);
 
-		$commits = array();
+		$pullRequestData->commits = array();
 		foreach ($pullRequestCommits as $pullRequestCommit) {
-			$commits[] = array(
-				'repository' => $pullRequestRepositoryUri,
-				'sha' => $pullRequestCommit->sha
-			);
+			$pullRequestData->commits[] = $pullRequestCommit->sha;
 		}
-		return $commits;
+		return $pullRequestData;
 	}
 
 	/**

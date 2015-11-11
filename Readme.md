@@ -18,10 +18,10 @@ mv beard.phar /usr/local/bin/beard
 ### Patch
 
 You can create an beard.json in your main directory of your project
-where you can specify various patches and gerrit changes that you
-need to pull in for your project. This makes it easier to distribute
-development instances to other developers, that depend on pending
-gerrit changes or other patches.
+where you can specify various patches, gerrit changes or GitHub PRs
+that you need to pull in for your project. This makes it easier to
+distribute development instances to other developers, that depend on
+pending gerrit changes or other patches.
 
 **beard.json**
 ```
@@ -48,7 +48,7 @@ gerrit changes or other patches.
 
             "change_id": "16392,1",
             // you can append the revision number with a comma after the changeId to use
-            // the specific revision instead of the latest on (changeId,revisioNumber)
+            // the specific revision instead of the latest on (changeId,revisionNumber)
         },
         {
             "name": "Pull in a complete Gerrit Topic into all existing package directories",
@@ -69,7 +69,7 @@ gerrit changes or other patches.
             "type": "diff",
             "path": "Packages/Framework/TYPO3.Flow",
             "file": "Patches/TYPO3.Flow3.diff"
-            // For creating a patchabel  *.diff file you have to use the option for no color
+            // For creating a patchable  *.diff file you have to use the option for no color
             // git diff --no-color > TYPO3.Flow3.diff
         },
         {
@@ -77,14 +77,16 @@ gerrit changes or other patches.
             "type": "github",
             "repository": "kitsunet/neos-development-collection",
             "commit": "cef11fdc9c9094ddaa204bd5a8b47005283817b5",
+            "ref": "fix-foobar",
             "path": "Packages/Framework"
+            // the ref is optional, if not given, all heads of the repository will be fetched
         },
         {
             "name": "all commits of a github pull-request",
             "type": "github",
             "repository": "neos/neos-development-collection",
             "pull_request": "8",
-            "path": "Packages/Framework"
+            "path": "Packages/Neos"
         }
     ]
 }
@@ -112,13 +114,13 @@ The status command helps you to get an overview over all repositories beneath th
 beard status
 ```
 
-## Updating
+## Updating Beard
 
 ```
 beard update
 ```
 
-## Locking
+## Locking Packages
 
 This command helps "locking" a package to a currently installed commit:
 The following example will look into the ```composer.lock``` file to find the currently installed
@@ -133,7 +135,8 @@ beard lock typo3/flow
 If you know Famelo.Gerrit, the TYPO3.Flow package you might think this is already covered by that,
 which is true. Actually this tool is an evolution of Famelo.Gerrit, which i choose to make standalone.
 Main pro's to make it standalone are:
-- it works even with completely broken TYPO3.Flow project/installations
+
+- it works even with completely broken Flow project/installations
 - you can use it for almost any kind of project
 
 And just one more thing. "beard patch" will look and process your old "gerrit.json" for now as well :)
