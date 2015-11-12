@@ -272,6 +272,13 @@ class Patch extends Command {
 			$commits = $pullRequestData->commits;
 			$repositoryUrl = $pullRequestData->head->repo->clone_url;
 			$ref = $pullRequestData->head->ref;
+
+			if ($pullRequestData->merged === TRUE) {
+				$this->output->writeln('<comment>This PR has been merged!</comment>');
+			} elseif ($pullRequestData->state === 'closed') {
+				$this->output->writeln('<error>This PR has been closed unmerged!</error>');
+			}
+
 		} else {
 			$this->output->writeln('<error>Neither commit nor pull_request specified for change</error>');
 			return;
