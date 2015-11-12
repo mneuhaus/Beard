@@ -286,10 +286,16 @@ class Patch extends Command {
 			} else {
 				$gitVersion = $this->getGitVersion();
 
+				$returnCode = 0;
 				if ($gitVersion < 1.8) {
-					system('git cherry-pick --strategy=recursive ' . $sha);
+					system('git cherry-pick --strategy=recursive ' . $sha, $returnCode);
 				} else {
-					system('git cherry-pick --strategy=recursive -X theirs ' . $sha);
+					system('git cherry-pick --strategy=recursive -X theirs ' . $sha, $returnCode);
+				}
+				if ($returnCode !== 0) {
+					$this->output->writeln('<comment>Cherry pick failed, commit skipped!</comment>');
+					system('git cherry-pick --abort 2>/dev/null');
+					continue;
 				}
 
 				$cherryPickHash = $this->executeShellCommand('git log --format="%H" -n1 HEAD');
