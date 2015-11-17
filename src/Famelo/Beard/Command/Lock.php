@@ -1,13 +1,6 @@
 <?php
 namespace Famelo\Beard\Command;
 
-use Famelo\Beard\PHPParser\Printer\TYPO3;
-use Doctrine\Common\Inflector\Inflector;
-use PhpParser\BuilderFactory;
-use PhpParser\Error;
-use PhpParser\Lexer;
-use PhpParser\Parser;
-use PhpParser\Template;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
