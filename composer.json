@@ -14,16 +14,6 @@
         "symfony\/finder": "~2.1",
         "symfony\/process": "~2.1",
         "symfony\/filesystem": "~2.1",
-        "kherge\/amend": "3.*",
-        "doctrine\/dbal": "*",
-        "jdorn\/sql-formatter": "*",
-        "league\/flysystem": "*",
-        "alchemy\/zippy": "*",
-        "pimple\/pimple": "*",
-        "camspiers\/json-pretty": "*",
-        "nikic\/php-parser": "*",
-        "doctrine\/common": "*",
-        "rmccue\/requests": "dev-master"
     },
     "autoload": {
         "psr-0": {
