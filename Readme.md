@@ -149,7 +149,7 @@ Patch files:
 
 Gerrit changes:
 
-- The defaults for `gerrit_api_endpoint` and `gerrit_git` can be overridden for each change 
+- The defaults for `gerrit_api_endpoint` and `gerrit_git` can be overridden for each change
   by supplying new values for those keys.
 - You can append the patch set number with a comma after the change id to use the specific patch
   set instead of the latest: `"change_id": "16392,2"`
@@ -166,10 +166,6 @@ will probably not work at all.
 Running `beard list` will list all available commands. Help for a command can be displayed with
 `beard help <command>`.
 
-## backup - Backup the current directory
-
-(To be documented)
-
 ## lock - Lock package to currently used commit
 
 Adjusts the composer manifest to lock the given package to the SHA1 that is currently installed
@@ -184,11 +180,6 @@ Note: This will only work correctly of the package dependency is pointing to a b
 Reads the `beard.json` file and applies all patches as needed.
 
 `beard patch`
-
-## refactor - Refactor PHP Files to comply with TYPO3 CGL
-
-Flow and Neos adopted the PSR-2 coding standard, so this should not be used any longer.
-Using the php-cs-fixer is the better option (or let your IDE of choice do that for you).
 
 ## reset - Reset all repositories beneath this directory, removing any unpushed changes and applied patches
 
@@ -207,14 +198,6 @@ Since Flow and Neos moved to GitHub, this is no longer needed.
 The status command helps you to get an overview over all repositories beneath this directory.
 
 `beard status`
-
-## db:dump - Pull the database rows into local files
-
-(To be documented)
-
-## db:restore - Pull the database rows into local files
-
-(To be documented)
 
 # Similarity to Famelo.Gerrit
 
