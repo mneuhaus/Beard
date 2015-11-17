@@ -32,7 +32,6 @@ function getGithubCurl() {
 	curl_setopt($ch, CURLOPT_USERAGENT, 'Release Script for ' . get('username') . '/' . get('repository'));
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_USERPWD, get('username') . ':' . get('password'));
-	curl_setopt($ch, CURLOPT_URL, $uri);
 	return $ch;
 }
 
