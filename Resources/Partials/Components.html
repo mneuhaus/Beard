@@ -1,0 +1,31 @@
+<f:for each="{components}" as="componentConfiguration">
+	<f:if condition="{componentConfiguration.mandatory}">
+		<f:then>
+			<f:if condition="{componentConfiguration.instances}">
+				<f:for each="{componentConfiguration.instances}" as="component">
+					<f:render partial="Component" arguments="{component: component, className: componentConfiguration.className}" />
+				</f:for>
+			</f:if>
+		</f:then>
+		<f:else>
+			<!-- <div class="card-backdrop-header">{componentConfiguration.title}</div> -->
+			<div class="repeater" id="repeater{componentConfiguration.className -> s:format.classId()}" data-auto-add="0" data-placeholder="--template--">
+				<div class="repeater-items">
+					<f:for each="{componentConfiguration.instances}" as="component">
+						<div class="repeater-item">
+							<f:render partial="Component" arguments="{component: component, className: componentConfiguration.className, componentConfiguration: componentConfiguration}" />
+						</div>
+					</f:for>
+				</div>
+
+				<div class="repeater-item repeater-template">
+					<f:render partial="Component" arguments="{component: {id: '--template--'}, className: componentConfiguration.className}" />
+				</div>
+
+				<a href="#" class="btn-round repeater-item-add hidden">
+					<i class="material-icons">add</i>
+				</a>
+			</div>
+		</f:else>
+	</f:if>
+</f:for>

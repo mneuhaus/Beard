@@ -1,0 +1,14 @@
+{
+  "name": "famelo/soup",
+  "version": "1.0.0",
+  "main": [],
+  "dependencies": {
+    "jquery": "2.*",
+    "jquery-ui": "*",
+    "bootstrap": "3.*",
+    "font-awesome": "*",
+    "roboto-fontface": "*",
+    "matchHeight": "*",
+    "multiselect": "~0.9.12"
+  }
+}

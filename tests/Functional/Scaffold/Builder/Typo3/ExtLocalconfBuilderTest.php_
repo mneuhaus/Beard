@@ -1,0 +1,33 @@
+<?php
+namespace Famelo\Beard\Tests\Functional\Scaffold\Builder\Typo3;
+
+use org\bovigo\vfs\vfsStream;
+use Famelo\Beard\Scaffold\Builder\Typo3\ExtLocalconfBuilder;
+
+/**
+ * Class ExtEmconfBuilderTest
+ */
+class ExtLocalconfBuilderTest extends \PHPUnit_Framework_TestCase {
+
+	/**
+	 * @return void
+	 */
+	public static function setUpBeforeClass() {
+		vfsStream::setup('foo/');
+	}
+
+	/**
+	 * @test
+	 */
+	public function create() {
+		$filepath = vfsStream::url('foo/ext_localconf.php');
+
+		$builder = new ExtLocalconfBuilder($filepath);
+		$builder->addDependency('foo_bar', '1.0.0');
+		$builder->save($filepath);
+
+		$fileContent = file_get_contents($filepath);
+		$this->assertContains("'foo_bar' => '1.0.0'", $fileContent);
+	}
+
+}

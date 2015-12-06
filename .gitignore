@@ -4,3 +4,4 @@ Repository
 /vendor/
 test-github
 bin/beard-test
+.idea

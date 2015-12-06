@@ -1,0 +1,127 @@
+.card {
+    background: white;
+    margin-bottom: 5px;
+}
+
+.card-header,
+.card-body,
+.card-footer {
+    padding: 10px 20px;
+    position: relative;
+}
+
+.card-header {
+    background: #6C727E;
+    color: #FCFFFF;
+    overflow:hidden;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+    vertical-align: middle;
+    min-height: 50px;
+}
+
+.card-body {
+    font-size: 14px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+    -webkit-transition: max-height 200ms ease-in;
+    -moz-transition: max-height 200ms ease-in;
+    -ms-transition: max-height 200ms ease-in;
+    -o-transition: max-height 200ms ease-in;
+    transition: max-height 200ms ease-in;
+    padding: 0;
+}
+
+.card-expandable .card-body {
+    display: none;
+}
+
+.card-actions {
+    -webkit-transition: opacity 300ms ease-in;
+    transition: opacity 300ms ease-in;
+    opacity: 0;
+}
+
+.card-header:hover .card-actions{
+    opacity: 1;
+}
+
+.card .btn-add {
+    opacity: 0;
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    -ms-transition: opacity 200ms ease-in;
+    -o-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in;
+}
+
+.card:hover .btn-add {
+    opacity: 1;
+}
+
+.card-backdrop {
+    // margin-bottom: 20px;
+}
+
+.card-backdrop-header {
+    font-weight: 400;
+    font-size: 14px;
+    color: #aaa;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.card-type {
+    font-weight: 400;
+    font-size: 14px;
+    // color: #aaa;
+    opacity: 0.5;
+    text-transform: uppercase;
+    float: right;
+}
+
+.card-cyan .card-header{
+    background: #42A5F5;
+}
+
+.card-purple .card-header {
+    background: #AB47BC;
+}
+
+.card-pink .card-header{
+    background: #EC407A;
+}
+
+.card-red .card-header{
+    background: #EF5350;
+}
+
+.card-dark-purple .card-header{
+    background: #7E57C2;
+}
+
+.card-indigo .card-header{
+    background: #5C6BC0;
+}
+
+.card-blue .card-header{
+    background: #42A5F5;
+}
+
+.card-amber .card-header{
+    background: #FFCA28;
+}
+
+.card-teal .card-header{
+    background: #26A69A;
+}
+
+.card-orange .card-header{
+    background: #FFA726;
+}
+
+.card-green .card-header{
+    background: #66BB6A;
+}

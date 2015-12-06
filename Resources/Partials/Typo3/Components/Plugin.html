@@ -1,0 +1,10 @@
+<f:render partial="Card" arguments="{header: component.name, type: 'Plugin', color: 'pink'}" contentAs="content">
+	<s:form.field name="{s:form.name(name: 'name')}" label="Name" value="{component.name}" class="form-control" />
+	<s:form.field name="{s:form.name(name: 'title')}" label="Title" value="{component.title}" class="form-control card-header-field" />
+
+	<s:form.field name="{s:form.name(name: 'defaultAction')}" label="Default Action" value="{component.facade.defaultController}:{component.facade.defaultAction}" class="form-control" control="Typo3/DefaultControllerAction" />
+
+	<s:form.field name="{s:form.name(name: 'cachedActions')}[]" label="Cached Actions" value="{component.cachedControllersValue}" class="form-control card-header-field" control="ControllerActions" />
+
+	<s:form.field name="{s:form.name(name: 'uncachedActions')}[]" label="Uncached Actions" value="{component.uncachedControllersValue}" class="form-control card-header-field" control="ControllerActions" />
+</f:render>

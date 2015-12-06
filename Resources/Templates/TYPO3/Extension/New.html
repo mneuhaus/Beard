@@ -1,0 +1,31 @@
+<f:layout name="Default" />
+
+<f:section name="Main">
+<h3>TYPO3</h3>
+<form method="POST">
+	<f:render partial="Components" arguments="{components: package.components}" />
+
+	<div class="dropdown dropdown-add">
+		<button type="Submit" class="btn btn-round btn-round-big btn-add depth-4" data-toggle="dropdown">
+			<i class="material-icons">add</i>
+		</button>
+		<ul class="dropdown-menu depth-4">
+			<f:for each="{package.components}" as="componentConfiguration">
+				<f:if condition="{componentConfiguration.mandatory}">
+					<f:else>
+						<li>
+							<a href="#repeater{componentConfiguration.className -> s:format.classId()}">
+								{componentConfiguration.title}
+							</a>
+						</li>
+					</f:else>
+				</f:if>
+			</f:for>
+		</ul>
+	</div>
+
+	<button type="Submit" class="btn btn-round btn-round-big btn-save">
+		<i class="material-icons">save</i>
+	</button>
+</form>
+</f:section>

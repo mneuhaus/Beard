@@ -1,0 +1,5 @@
+<f:for each="{items}" as="fields">
+	<f:for each="{fields}" as="field" key="fieldName">
+		<s:form.field name="{fieldName}" label="{field.label}" value="{field.value}" arguments="{field}" />
+	</f:for>
+</f:for>
