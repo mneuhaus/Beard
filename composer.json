@@ -13,7 +13,10 @@
         "symfony\/console": "~2.1",
         "symfony\/finder": "~2.1",
         "symfony\/process": "~2.1",
-        "symfony\/filesystem": "~2.1"
+        "symfony\/filesystem": "~2.1",
+        "kherge\/amend": "3.*",
+        "camspiers\/json-pretty": "*",
+        "rmccue\/requests": "dev-master"
     },
     "autoload": {
         "psr-0": {
