@@ -1,0 +1,12 @@
+<select name="{name}" id="{id}" class="{class}">
+	<f:for each="{options}" key="optionKey" as="optionValue">
+		<f:if condition="{optionKey}=={value}">
+			<f:then>
+				<option value="{optionKey}" selected="selected">{optionValue}</option>
+			</f:then>
+			<f:else>
+				<option value="{optionKey}">{optionValue}</option>
+			</f:else>
+		</f:if>
+	</f:for>
+</select>

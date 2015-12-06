@@ -1,0 +1,12 @@
+<s:form.name prefix="components.{component.id}">
+	<div class="repeater-reference-data" data-namespace="{s:form.name()}">
+		<input type="hidden" name="{s:form.name(name: '_class')}" value="{className}" />
+		<f:if condition="{component.arguments}">
+			<f:for each="{component.arguments}" as="argument">
+				<input type="hidden" name="{s:form.name(name: '_arguments')}[]" value="{argument}" />
+			</f:for>
+		</f:if>
+	</div>
+
+	<f:render partial="{className -> s:format.classPartial()}" arguments="{component: component}" />
+</s:form.name>

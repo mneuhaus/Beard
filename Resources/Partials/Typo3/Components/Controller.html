@@ -1,0 +1,27 @@
+<f:render partial="Card" arguments="{header: component.name, type: 'Controller', color: 'cyan'}" contentAs="content">
+	<s:form.field name="{s:form.name(name: 'name')}" label="Controller Name" value="{component.name}" class="form-control card-header-field controller-name" arguments="{cardSuffix: 'Controller'}" />
+
+	<s:form.field label="Actions">
+		<div class="form-sub repeater">
+			<div class="repeater-items">
+				<f:for each="{component.actions}" as="action">
+					<div class="repeater-item depth-2">
+						<s:form.field name="{s:form.name(name: 'actions.{action.name}.name')}" label="Name" class="form-control controller-action" value="{action.name->s:string.cutSuffix(suffix: 'Action')}" />
+
+						<a href="#" class="btn-round btn-round-small repeater-item-remove">
+							<i class="material-icons">remove</i>
+						</a>
+					</div>
+				</f:for>
+			</div>
+
+			<div class="repeater-item repeater-template depth-2">
+				<s:form.field name="{s:form.name(name: 'actions.--id--.name')}" label="Name" class="form-control controller-action" value="" />
+
+				<a href="#" class="btn-round btn-round-small repeater-item-remove">
+					<i class="material-icons">remove</i>
+				</a>
+			</div>
+		</div>
+	</s:form.field>
+</f:render>

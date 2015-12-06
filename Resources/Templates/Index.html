@@ -1,0 +1,17 @@
+<f:layout name="Default" />
+
+<f:section name="Main">
+	<f:for each="{vendors}" as="vendor">
+		<f:for each="{vendor.packages}" key="path" as="package">
+			<div class="card">
+				<div class="card-header">
+					<a href="package/{package.type}/{package.path}">{package.name}</a>
+				</div>
+			</div>
+		</f:for>
+
+		<a href="package/new/{vendor.packageType}" class="btn-round pull-right">
+			<i class="material-icons">add</i>
+		</a>
+	</f:for>
+</f:section>

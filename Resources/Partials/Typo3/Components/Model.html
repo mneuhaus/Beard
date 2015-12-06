@@ -1,0 +1,33 @@
+<f:render partial="Card" arguments="{header: ingredient.name, type: 'Model', color: 'purple'}" contentAs="content">
+	<s:form.field name="{s:form.name(name: 'name')}" label="Name" value="{ingredient.name}" class="form-control card-header-field" />
+
+	<s:form.field label="Properties">
+		<div class="form-sub repeater">
+			<div class="repeater-items">
+				<f:for each="{ingredient.properties}" as="property">
+					<div class="repeater-item depth-2">
+						<s:form.field name="{s:form.name(name: 'properties.{property.name}.name')}" label="Name" value="{property.name}" />
+
+						<s:form.field name="{s:form.name(name: 'properties.{property.name}.type')}" label="Type" value="{property.type}" control="Select" arguments="{options: ingredient.typeOptions}" />
+
+						<s:form.field name="{s:form.name(name: 'properties.{property.name}.type')}" label="TCA" value="{property.tca}" control="Select" arguments="{options: ingredient.tcaOptions}" />
+
+						<a href="#" class="btn-round btn-round-small repeater-item-remove">
+							<i class="material-icons">remove</i>
+						</a>
+					</div>
+				</f:for>
+			</div>
+
+			<div class="repeater-item repeater-template depth-2">
+				<s:form.field name="{s:form.name(name: 'properties.--id--.name')}" label="Name"  />
+
+				<s:form.field name="{s:form.name(name: 'properties.--id--.type')}" label="Type" value="{property.type}" control="Select" arguments="{options: ingredient.typeOptions}" />
+
+				<a href="#" class="btn-round btn-round-small repeater-item-remove">
+					<i class="material-icons">remove</i>
+				</a>
+			</div>
+		</div>
+	</s:form.field>
+</f:render>

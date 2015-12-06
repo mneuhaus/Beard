@@ -1,0 +1,19 @@
+<f:render partial="Card" arguments="{header: 'Extension Information', color: 'dark-purple'}" contentAs="content">
+	<s:form.field name="{s:form.name(name: 'title')}" label="Title" placeholder="My Extension" value="{component.title}"/>
+
+	<s:form.field name="{s:form.name(name: 'extension_key')}" label="Extension Key" placeholder="my_ext" value="{component.extensionKey}" />
+
+	<s:form.field name="{s:form.name(name: 'company')}" label="Company" placeholder="Acme"  value="{component.company}"/>
+
+	<s:form.field name="{s:form.name(name: 'description')}" label="Description" value="{component.description}" />
+
+	<s:form.field name="{s:form.name(name: 'author')}" label="Author" value="{component.author}" />
+
+	<s:form.field name="{s:form.name(name: 'author_email')}" label="Author E-Mail" value="{component.authorEmail}" />
+
+	<s:form.field name="{s:form.name(name: 'version')}" label="Version" value="{component.version}" />
+
+	<s:form.field name="{s:form.name(name: 'category')}" label="Art" value="{component.extensionType}" control="Select" arguments="{options: component.extensionTypes}" />
+
+	<s:form.field name="{s:form.name(name: 'state')}" label="State" value="{component.extensionState}" control="Select" arguments="{options: component.extensionStates}" />
+</f:render>

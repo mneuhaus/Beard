@@ -1,0 +1,25 @@
+<phpunit bootstrap="tests/Bootstrap.php"
+	backupGlobals="false"
+        backupStaticAttributes="false"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertWarningsToExceptions="true"
+        forceCoversAnnotation="false"
+        processIsolation="false"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        verbose="false">
+
+        <testsuites>
+                <testsuite name="Famelo.Beard Functional">
+                        <directory>tests/Functional</directory>
+                </testsuite>
+        </testsuites>
+	<filter>
+		<whitelist>
+			<directory>src/</directory>
+		</whitelist>
+	</filter>
+</phpunit>

@@ -1,0 +1,9 @@
+<div class="form-group {groupClass}">
+	<label for="{id}" class="control-label">{label}
+	</label>
+	<div class="form-control-wrap">
+		{control -> f:format.raw()}
+
+		<f:if condition="{propertySchema.infotext}"><p class="help-block">{propertySchema.infotext}</p></f:if>
+	</div>
+</div>
