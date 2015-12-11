@@ -19,8 +19,8 @@
         "rmccue\/requests": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "Famelo\\Beard": "src"
+        "psr-4": {
+            "Famelo\\Beard\\": "src"
         }
     },
     "minimum-stability": "dev",
