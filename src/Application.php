@@ -27,7 +27,19 @@ class Application extends Base {
 	 */
 	protected function getDefaultCommands() {
 		$commands = parent::getDefaultCommands();
-		$commands[] = new Command\ClearCache();
+
+		$commands[] = new Command\Cache\Clear();
+		$commands[] = new Command\Cache\Warmup();
+
+		$commands[] = new Command\Backup();
+		$commands[] = new Command\Backup\Userdata();
+		$commands[] = new Command\Backup\Database();
+
+		$commands[] = new Command\Database\Clear();
+		$commands[] = new Command\Database\Restore();
+		$commands[] = new Command\Database\Snapshot();
+		$commands[] = new Command\Database\Truncate();
+
 		$commands[] = new Command\Patch();
 		$commands[] = new Command\Status();
 		$commands[] = new Command\Reset();

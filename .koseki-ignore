@@ -1,0 +1,12 @@
+vendor/symfony/finder/Tests/
+vendor/symfony/filesystem/Tests/
+vendor/symfony/console/Event/
+vendor/symfony/console/Logger/
+vendor/symfony/console/Tests/
+src/ConfigurationSources/Typo3.php
+# some comment and an empty line
+
+
+vendor/**/Tests/
+
+foo export-ignore

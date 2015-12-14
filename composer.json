@@ -16,13 +16,15 @@
         "symfony\/filesystem": "~2.1",
         "kherge\/amend": "3.*",
         "camspiers\/json-pretty": "*",
-        "rmccue\/requests": "dev-master"
+        "rmccue\/requests": "dev-master",
+        "mia3/koseki": "*"
     },
     "autoload": {
         "psr-4": {
             "Famelo\\Beard\\": "src"
         }
     },
+    "prefer-stable": true,
     "minimum-stability": "dev",
     "bin": [
         "bin\/beard"
