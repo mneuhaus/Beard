@@ -17,7 +17,7 @@
         "kherge\/amend": "3.*",
         "camspiers\/json-pretty": "*",
         "rmccue\/requests": "dev-master",
-        "mia3/koseki": "*"
+        "mia3\/koseki": "*"
     },
     "autoload": {
         "psr-4": {
@@ -29,5 +29,5 @@
     "bin": [
         "bin\/beard"
     ],
-    "version": "1.3.2"
+    "version": "1.4.0"
 }
