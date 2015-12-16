@@ -25,5 +25,5 @@ class AbstractSettingsCommand extends Command {
 			}
 		}
 	}
-	
+
 }

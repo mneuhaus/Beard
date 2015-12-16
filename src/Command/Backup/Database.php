@@ -49,6 +49,8 @@ class Database extends AbstractSettingsCommand {
 			return;
 		}
 
+		$this->truncateTemporaryTables($settings, $input, $output);
+
 		$command = array('mysqldump');
 		if (!empty($settings->getHost())) {
 			$command[] = '-h' . $settings->getHost();
@@ -72,6 +74,49 @@ class Database extends AbstractSettingsCommand {
 		$process->setTimeout(3600);
 		$process->run();
 		$output->writeln('created backup up of <fg=cyan;bg=black>' . $settings->getDatabase() . '</> into <fg=cyan;bg=black>' . $file . '</> (' . number_format(filesize($file) / 1024 / 1024, 2) . 'MB)');
+	}
+
+	public function truncateTemporaryTables($settings, $input, $output) {
+		$connection = new \mysqli(
+			$settings->getHost(),
+			$settings->getUsername(),
+			$settings->getPassword(),
+			$settings->getDatabase()
+		);
+
+		$patterns = $settings->getTemporaryTables();
+		if (empty($patterns)) {
+			return;
+		}
+		foreach ($patterns as $key => $pattern) {
+			$patterns[$key] = str_replace('\*', '.*', preg_quote($pattern));
+		}
+		$compiledPattern = '~^(?:' . implode(' | ', $patterns) . ')~x';
+
+		$result = $connection->query('SHOW TABLES');
+		if ($result === FALSE) {
+			return;
+		}
+		$rows = $result->fetch_all();
+		$connection->query('SET foreign_key_checks = 0;');
+		if ($output->isVerbose()) {
+			$output->writeln('Query: SET foreign_key_checks = 0;');
+		}
+
+		foreach ($rows as $row) {
+			if (preg_match($compiledPattern, $row[0]) !== 1) {
+				continue;
+			}
+			$connection->query("TRUNCATE TABLE " . $row[0]);
+			if ($output->isVerbose()) {
+				$output->writeln("TRUNCATE TABLE " . $row[0]);
+			}
+		}
+
+		$connection->query('SET foreign_key_checks = 0;');
+		if ($output->isVerbose()) {
+			$output->writeln('Query: SET foreign_key_checks = 0;');
+		}
 	}
 
 }

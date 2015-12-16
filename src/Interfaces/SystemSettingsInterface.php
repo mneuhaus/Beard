@@ -12,5 +12,6 @@ interface SystemSettingsInterface {
 	public function getPassword();
 	public function getDatabaseType();
 	public function getUserdataPaths();
+	public function getTemporaryTables();
 
 }

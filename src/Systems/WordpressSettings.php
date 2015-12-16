@@ -40,6 +40,11 @@ class WordpressSettings implements SystemSettingsInterface {
 		'wp-content/uploads'
 	);
 
+	/**
+	 * @var array
+	 */
+	protected $temporaryTables = array();
+
 	public function __construct($context = 'Development') {
 		if (!file_exists('wp-config.php')) {
 			return;
@@ -76,6 +81,10 @@ class WordpressSettings implements SystemSettingsInterface {
 
 	public function getUserdataPaths() {
 		return $this->userdataPaths;
+	}
+
+	public function getTemporaryTables() {
+		return $this->temporaryTables;
 	}
 
 }
