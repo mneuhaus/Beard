@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a9cf855a8154d37435e5d5ce53eabebd",
-    "content-hash": "f9734eb35e96a19801b0b671ca00fee0",
+    "hash": "3e964c0d48fdb35c76abf58570ac5b4d",
+    "content-hash": "b6fd3b7ba9810af1cf4caef2baa830ca",
     "packages": [
         {
             "name": "camspiers/json-pretty",
@@ -334,16 +334,16 @@
         },
         {
             "name": "mia3/koseki",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mia3/koseki.git",
-                "reference": "32d56cecf4034fdb9b09e160ab6bf19f7c7ac066"
+                "reference": "efeaa426b240775fd7c9b2edb5ab634af7b472e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mia3/koseki/zipball/32d56cecf4034fdb9b09e160ab6bf19f7c7ac066",
-                "reference": "32d56cecf4034fdb9b09e160ab6bf19f7c7ac066",
+                "url": "https://api.github.com/repos/mia3/koseki/zipball/efeaa426b240775fd7c9b2edb5ab634af7b472e9",
+                "reference": "efeaa426b240775fd7c9b2edb5ab634af7b472e9",
                 "shasum": ""
             },
             "type": "library",
@@ -360,7 +360,7 @@
                 }
             ],
             "description": "Library to quickly find classes that implement specific interfaces",
-            "time": "2015-12-11 21:13:59"
+            "time": "2015-12-14 12:08:16"
         },
         {
             "name": "rmccue/requests",
@@ -719,6 +719,55 @@
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
             "time": "2015-11-30 12:35:10"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
+                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-11-30 12:36:17"
         }
     ],
     "packages-dev": [],

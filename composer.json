@@ -17,7 +17,8 @@
         "kherge\/amend": "3.*",
         "camspiers\/json-pretty": "*",
         "rmccue\/requests": "dev-master",
-        "mia3\/koseki": "*"
+        "mia3\/koseki": "*",
+        "symfony/yaml": "^3.0"
     },
     "autoload": {
         "psr-4": {

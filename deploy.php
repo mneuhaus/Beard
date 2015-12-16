@@ -99,6 +99,18 @@ task('release:createPhar', function(){
 	runLocally('cp Repository/beard-current.phar Repository/beard-' . get('version') . '.phar');
 });
 
+task('release:setTestVersion', function(){
+	set('version', 'test');
+});
+
+task('release:moveTestPhar', function(){
+	if (file_exists('rm bin/beard-test')) {
+		runLocally('rm bin/beard-test');
+	}
+	runLocally('cp Repository/beard-' . get('version') . '.phar bin/beard-test');
+	runLocally('chmod +x bin/beard-test');
+});
+
 task('release:updateReleasesManifest', function(){
 	$manifest = json_decode(file_get_contents('releases.json'), TRUE);
 	foreach ($manifest as $key => $release) {
@@ -174,6 +186,13 @@ task('release:addPharToRelease', function(){
 
 set('username', 'mneuhaus');
 set('repository', 'Beard');
+
+
+task('release:createTestPhar', [
+	'release:setTestVersion',
+    'release:createPhar',
+	'release:moveTestPhar'
+]);
 
 task('release:patch', [
 	'release:askPasswort',
