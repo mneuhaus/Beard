@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b67e757c8888bfb13c4595336633432d",
-    "content-hash": "8943f0e4a4107c13e182163b86996fb7",
+    "hash": "ff058cada759d41f0634439203595b04",
+    "content-hash": "f0472ac5b84e408e20ebf596828dcfa7",
     "packages": [
         {
             "name": "camspiers/json-pretty",
@@ -334,16 +334,16 @@
         },
         {
             "name": "mia3/koseki",
-            "version": "1.1.0",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mia3/koseki.git",
-                "reference": "efeaa426b240775fd7c9b2edb5ab634af7b472e9"
+                "reference": "26da7fb0d0e340e39aa8d4b48aaf6c302f8ad201"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mia3/koseki/zipball/efeaa426b240775fd7c9b2edb5ab634af7b472e9",
-                "reference": "efeaa426b240775fd7c9b2edb5ab634af7b472e9",
+                "url": "https://api.github.com/repos/mia3/koseki/zipball/26da7fb0d0e340e39aa8d4b48aaf6c302f8ad201",
+                "reference": "26da7fb0d0e340e39aa8d4b48aaf6c302f8ad201",
                 "shasum": ""
             },
             "type": "library",
@@ -360,7 +360,7 @@
                 }
             ],
             "description": "Library to quickly find classes that implement specific interfaces",
-            "time": "2015-12-14 12:08:16"
+            "time": "2015-12-18 23:48:44"
         },
         {
             "name": "rmccue/requests",

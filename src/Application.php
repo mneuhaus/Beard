@@ -7,6 +7,7 @@ use Famelo\Beard\Command;
 use Famelo\Beard\Helper;
 use Symfony\Component\Console\Application as Base;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
+use Mia3\Koseki\ClassRegister;
 
 /**
  * Sets up the application.
@@ -21,6 +22,7 @@ class Application extends Base {
 	public function __construct($name = 'Beard', $version = '@git_tag@') {
 		parent::__construct($name, $version);
 		define('BEARD_ROOT_DIR', __DIR__);
+		ClassRegister::setCacheFile(__DIR__ . '/ClassRegisterCache.php');
 	}
 
 	/**
