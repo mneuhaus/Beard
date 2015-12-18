@@ -6,6 +6,7 @@ use KevinGH\Amend;
 use Famelo\Beard\Command;
 use Famelo\Beard\Helper;
 use Symfony\Component\Console\Application as Base;
+use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
 
 /**
  * Sets up the application.
@@ -45,6 +46,8 @@ class Application extends Base {
 		$commands[] = new Command\Reset();
 		$commands[] = new Command\Setup();
 		$commands[] = new Command\Lock();
+
+		$commands[] = new CompletionCommand();
 
 		if (('@' . 'git_tag@') !== $this->getVersion()) {
 			$command = new Amend\Command('update');
