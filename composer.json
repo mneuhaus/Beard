@@ -19,7 +19,7 @@
         "rmccue\/requests": "dev-master",
         "mia3\/koseki": "*",
         "symfony\/yaml": "^3.0",
-        "stecman/symfony-console-completion": "^0.6.2"
+        "stecman\/symfony-console-completion": "^0.6.2"
     },
     "autoload": {
         "psr-4": {
@@ -31,5 +31,5 @@
     "bin": [
         "bin\/beard"
     ],
-    "version": "1.4.3"
+    "version": "1.5.0"
 }
