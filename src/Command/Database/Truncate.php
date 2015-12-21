@@ -37,12 +37,12 @@ class Truncate extends Database {
 			$output->writeln('could not find any project settings');
 			return;
 		}
-		
+
 		$helper = $this->getHelper('question');
 		$question = new ConfirmationQuestion('Are you sure, you want to truncate all tables in the database <fg=cyan;bg=black>' . $settings->getDatabase() . '</>? [yes/no] ' . chr(10), false);
 
 		if (!$helper->ask($input, $output, $question)) {
-			continue;
+			return;
 		}
 
 		$this->truncateTables($settings, $input, $output);

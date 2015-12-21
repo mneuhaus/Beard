@@ -42,7 +42,7 @@ class Clear extends Database {
 		$question = new ConfirmationQuestion('Are you sure, you want to remove all tables in the database <fg=cyan;bg=black>' . $settings->getDatabase() . '</>? [yes/no] ' . chr(10), false);
 
 		if (!$helper->ask($input, $output, $question)) {
-			continue;
+			return;
 		}
 
 		$this->dropAllTables($settings, $input, $output);
