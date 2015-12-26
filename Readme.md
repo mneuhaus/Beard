@@ -216,15 +216,15 @@ You can enable cli autocomplete for commands like this:
 
 ```
 # BASH ~4.x, ZSH
-source <([program] _completion --generate-hook)
+source <(beard _completion --generate-hook)
 
 # BASH ~3.x, ZSH
-[program] _completion --generate-hook | source /dev/stdin
+beard _completion --generate-hook | source /dev/stdin
 
 # BASH (any version)
-eval $([program] _completion --generate-hook)
+eval $(beard _completion --generate-hook)
 ```
 
-If you want the completion to apply automatically for all new shell sessions, add the command from step 3 to your shell's profile (eg. ~/.bash_profile or ~/.zshrc)
+If you want the completion to apply automatically for all new shell sessions, add the command from step 3 to your shell's profile (eg. ```~/.bash_profile``` or ```~/.zshrc```)
 
 Based on: https://github.com/stecman/symfony-console-completion
