@@ -109,6 +109,15 @@ class Typo3System implements SystemSettingsInterface, ClearInterface {
 		return $this->temporaryTables;
 	}
 
+	public function isTemporaryTable($tableName) {
+		foreach ($this->temporaryTables as $key => $pattern) {
+			$patterns[$key] = str_replace('\*', '.*', preg_quote($pattern));
+		}
+		$compiledPattern = '~^(?:' . implode(' | ', $patterns) . ')~x';
+
+		return (preg_match($compiledPattern, $tableName) > 0);
+	}
+
 	/**
 	 * @param OutputInterface $output
 	 * @return void

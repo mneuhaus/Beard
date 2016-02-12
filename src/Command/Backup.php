@@ -1,6 +1,9 @@
 <?php
 namespace Famelo\Beard\Command;
 
+use Dotenv\Dotenv;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Sftp\SftpAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,50 +17,118 @@ use Famelo\Beard\Command\Backup\Userdata;
 /**
  *
  */
-class Backup extends Command {
+class Backup extends Command
+{
 
-	/**
-	 * The output handler.
-	 *
-	 * @var OutputInterface
-	 */
-	private $output;
+    /**
+     * The output handler.
+     *
+     * @var OutputInterface
+     */
+    private $output;
 
-	/**
-	 * @var string
-	 */
-	protected $baseDir;
+    /**
+     * @var string
+     */
+    protected $baseDir;
 
-	/**
-	 * @override
-	 */
-	protected function configure() {
-		parent::configure();
-		$this->setName('backup');
-		$this->setAliases(array(
-			'backup:all'
-		));
-		$this->setDescription('Backup database and userdata of the project in this directory');
+    /**
+     * @override
+     */
+    protected function configure()
+    {
+        parent::configure();
+        $this->setName('backup');
+        $this->setAliases(array(
+            'backup:all',
+        ));
+        $this->setDescription('Backup database and userdata of the project in this directory');
 
-		$this->addArgument(
-			'file',
-			InputArgument::OPTIONAL,
-			'filename to safe the backups to'
-		);
-	}
+        $this->addArgument(
+            'file',
+            InputArgument::OPTIONAL,
+            'filename to safe the backups to'
+        );
 
-	/**
-	 * @override
-	 */
-	protected function execute(InputInterface $input, OutputInterface $output) {
-		if (empty($input->getArgument('file'))) {
-			$input->setArgument('file', 'backup-' . date('d.m.Y-H.i.s'));
-		}
+        $this->addOption('send-to-remote', null, InputOption::VALUE_NONE,
+            'send this backup to the configured offsite location');
+    }
 
-		$databaseCommand = new Database();
-		$databaseCommand->execute($input, $output);
+    /**
+     * @override
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        if (empty($input->getArgument('file'))) {
+            $input->setArgument('file', 'backup-'.date('d.m.Y-H.i.s'));
+        }
 
-		$userdata = new Userdata();
-		$userdata->execute($input, $output);
-	}
+        $databaseCommand = new Database();
+        $databaseCommand->execute($input, $output);
+
+        $userdata = new Userdata();
+        $userdata->execute($input, $output);
+
+
+        if ($input->getOption('send-to-remote') === true) {
+            $this->sendToRemote($input, $output);
+        }
+    }
+
+    protected function sendToRemote($input, $output)
+    {
+        $dotenv = new Dotenv(getcwd());
+        $dotenv->load();
+
+        $config = [
+            'host' => getenv('beard_backup_host'),
+            'username' => getenv('beard_backup_username'),
+            'privateKey' => getenv('beard_backup_private_key'),
+            'timeout' => 10,
+        ];
+        $adapter = new SftpAdapter($config);
+        $filesystem = new Filesystem($adapter);
+
+        $directory = getenv('beard_backup_path');
+        if ($filesystem->has($directory) === false) {
+            $filesystem->createDir($directory);
+        }
+
+        $file = $input->getArgument('file');
+        $stream = fopen($file.'.tar.gz', 'r+');
+        $filesystem->writeStream(rtrim($directory, '/').'/'.$file.'.tar.gz', $stream);
+
+        unlink($file . '.sql');
+        unlink($file . '.tar.gz');
+
+        $this->cleanup($filesystem);
+    }
+
+    public function getMaxSize() {
+        $size = getenv('beard_backup_max_size');
+        preg_match('/([0-9]*)(kb|mb|gb|tb)/', $size, $match);
+        $units = array(
+            'kb' => 1024,
+            'mb' => pow(1024, 2),
+            'gb' => pow(1024, 3),
+            'tb' => pow(1024, 4)
+        );
+        return $match[1] * $units[$match[2]];
+    }
+
+    public function cleanup($filesystem) {
+        $directory = getenv('beard_backup_path');
+        $existingBackups = $filesystem->listContents($directory, true);
+        $maxSize = $this->getMaxSize();
+        usort($existingBackups, function($a, $b){
+            return $a['timestamp'] < $b['timestamp'];
+        });
+        $totalSize = 0;
+        foreach ($existingBackups as $key => $existingBackup) {
+            $totalSize+= $existingBackup['size'];
+            if ($totalSize > $maxSize) {
+                $filesystem->delete($existingBackup['path']);
+            }
+        }
+    }
 }

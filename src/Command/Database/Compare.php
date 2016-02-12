@@ -23,8 +23,12 @@ class Compare extends AbstractSettingsCommand {
 	/**
 	 * @var array
 	 */
-	protected $runtimeCache = array();
+	protected $uuidWordList = array('able','about','above','abuse','accept','accuse','across','act','attack','attempt','attend','battle','be','carry','case','cat','catch','cause','climb','clock','close','confirm','conflict','congratulate','Congress','connect','conservative','consider','constitution','contact','contain','container','continent','continue','direct','direction','dirt','disappear','disarm','disaster','discover','discrimination','discuss','disease','dismiss','dispute','dissident','distance','dive','divide','do','early','earn','earth','earthquake','ease','east','easy','eat','ecology','economy','edge','education','effect','effort','egg','evidence','evil','exact','examine','example','excellent','except','exchange','excuse','execute','famous','fan','far','farm','fast','fat','father','favorite','fear','federal','feed','feel','female','fence','fertile','few','field','fierce','flee','float','flood','floor','flow','flower','fluid','fly','fog','follow','food','fool','foot','for','force','foreign','forest','forget','forgive','form','former','forward','free','freedom','freeze','fresh','he','head','headquarters','heal','health','hear','heat','heavy','helicopter','help','hospital','hostage','hostile','hot','ignore','illegal','imagine','immediate','immigrant','import','interest','interfere','line','link','liquid','mass','mate','material','mathematics','matter','may','mayor','meal','mean','measure','meat','media','medicine','meet','melt','member','nation','native','natural','near','necessary','need','negotiate','nowhere','nuclear','number','parachute','parade','pardon','parent','parliament','part','partner','party','pass','peace','people','postpone','pour','poverty','power','praise','private','prize','probably','public','publication','publish','pull','pump','punish','purchase','pure','purpose','push','put','quality','question','quick','rain','raise','rare','rate','slide','slow','small','smash','smell','smoke','smooth','snow','so','suspend','swallow','swear in','sweet','swim','sympathy','system','take','talk','tall','tank','target','taste','tax','tea','teach','trial','tribe','trick','trip','troops','trouble','truce','truck','true','vaccine','valley','value','write','wrong','year','yellow','yes','yesterday','yet','you','young','zero','zoo');
 
+	/**
+	 * @var array
+	 */
+	protected $runtimeCache = array();
 
 	/**
 	 * @override
@@ -34,6 +38,9 @@ class Compare extends AbstractSettingsCommand {
 		$this->setName('db:compare');
 		$this->setDescription('Compare database states');
 		$this->addOption('baseline', null, InputOption::VALUE_NONE, 'create/update baseline');
+		$this->addOption('translate-uuids', null, InputOption::VALUE_NONE, 'show 3 words instead of uuid');
+		$this->addOption('columns', null, InputOption::VALUE_OPTIONAL, 'columns to always include');
+		$this->addOption('orderby', null, InputOption::VALUE_OPTIONAL, 'order by');
 
 		$this->addArgument(
 			'tableName',
@@ -48,24 +55,23 @@ class Compare extends AbstractSettingsCommand {
 	public function execute(InputInterface $input, OutputInterface $output) {
 		$this->input = $input;
 		$this->output = $output;
-		$settings = $this->getSettings($input, $output);
+		$this->settings = $this->getSettings($input, $output);
 
-		if ($settings === NULL) {
+		if ($this->settings === NULL) {
 			$output->writeln('could not find any project settings');
 			return;
 		}
 
 		$this->connection = new \mysqli(
-			$settings->getHost(),
-			$settings->getUsername(),
-			$settings->getPassword(),
-			$settings->getDatabase()
+			$this->settings->getHost(),
+			$this->settings->getUsername(),
+			$this->settings->getPassword(),
+			$this->settings->getDatabase()
 		);
 
 		if (!file_exists('.beard-tmp')) {
 			mkdir('.beard-tmp');
 		}
-		$this->baselineConnection = new \SQLite3('.beard-tmp/baseline.sqlite');
 
 		if ($input->getOption('baseline') === TRUE) {
 			$this->createBaseline();
@@ -83,67 +89,36 @@ class Compare extends AbstractSettingsCommand {
 		$tableNameArgument = $this->input->getArgument('tableName');
 		foreach ($tables as $table) {
 			$tableName = $table[0];
+
 			if (!empty($tableNameArgument)) {
 				if (preg_match('/(' . $tableNameArgument . ')/', $tableName, $matches) == 0) {
 					continue;
 				}
 			}
-			$this->output->writeln('processing ' . $tableName);
-			$primaryKeys = $this->getPrimaryKeys($tableName);
-			$result = $this->connection->query('SELECT * FROM ' . $tableName);
-			$currentRows = $result->fetch_all(MYSQLI_ASSOC);
-			$baselineRows = $this->getCsv($tableName);
 
-			$diffs = array();
-			$columnsUsed = array_flip($this->getColumnNames($tableName));
-			foreach ($currentRows as $row) {
-				$primaryKey = $this->createPrimaryKey($row, $tableName);
-				if (!isset($baselineRows[$primaryKey])) {
-					$diff = array();
-					foreach ($primaryKeys as $primaryKey) {
-						$diff[$primaryKey] = '<info>' . $row[$primaryKey] . '</info>';
-						$columnsUsed[$primaryKey] = TRUE;
-					}
-					$diffs[] = $diff;
-				} else {
-					if (implode('', $row) == implode('', $baselineRows[$primaryKey])) {
-						continue;
-					}
-					$diff = array();
-					foreach ($row as $column => $value) {
-						if ($baselineRows[$primaryKey][$column] != $value) {
-							$diff[$column] = $this->diffText($baselineRows[$primaryKey][$column], $value);
-							$columnsUsed[$column] = TRUE;
-						}
-					}
-					if (count($diff) > 0) {
-						$diffs[] = $diff;
-					}
-				}
-			}
-
-			if (count($diffs) === 0) {
+			if ($this->settings->isTemporaryTable($tableName) === TRUE) {
 				continue;
 			}
 
-			foreach ($columnsUsed as $key => $value) {
-				if ($value !== TRUE) {
-					unset($columnsUsed[$key]);
-				}
+			$primaryKeys = $this->getPrimaryKeys($tableName);
+			$query = 'SELECT * FROM ' . $tableName;
+			if (!empty($this->input->getOption('orderby'))) {
+				$query .= ' ORDER BY ' . $this->input->getOption('orderby');
 			}
-			$columnsUsed = array_keys($columnsUsed);
+			$result = $this->connection->query($query);
+			$diffs = $this->generateDiffs(
+				$result->fetch_all(MYSQLI_ASSOC),
+				$this->getCsv($tableName),
+				$tableName
+			);
 
-			foreach ($diffs as $key => $diff) {
-				$newDiff = array();
-				foreach ($columnsUsed as $column) {
-					if (isset($diff[$column])) {
-						$newDiff[$column] = $diff[$column];
-					} else {
-						$newDiff[$column] = '';
-					}
-				}
-				$diffs[$key] = $newDiff;
+			if (count($diffs) == 0) {
+				continue;
 			}
+
+			$this->output->writeln('found changes in:  ' . $tableName);
+
+			$columnsUsed = array_keys(current($diffs));
 
 			$columns = $primaryKeys;
 			$table = new Table($this->output);
@@ -159,81 +134,200 @@ class Compare extends AbstractSettingsCommand {
 	public function createBaseline() {
 		$result = $this->connection->query('SHOW TABLES');
 		$tables = $result->fetch_all();
+		$tableNameArgument = $this->input->getArgument('tableName');
 		foreach ($tables as $table) {
+			$start = microtime(TRUE);
 			$tableName = $table[0];
-			$this->baselineConnection->query('
-				DROP TABLE IF EXISTS ' . $tableName . '
-			');
-			$this->baselineConnection->query('
-				CREATE TABLE IF NOT EXISTS ' . $tableName . ' (id integer, primaryKey text, data text, PRIMARY KEY (id))
-			');
+
+			if (!empty($tableNameArgument)) {
+				if (preg_match('/(' . $tableNameArgument . ')/', $tableName, $matches) == 0) {
+					continue;
+				}
+			}
+			if ($this->settings->isTemporaryTable($tableName) === TRUE) {
+				continue;
+			}
+
 			$this->output->writeln('processing ' . $tableName, OutputInterface::VERBOSITY_VERBOSE);
 			$result = $this->connection->query('SELECT * FROM ' . $tableName);
-			foreach ($result->fetch_all(MYSQLI_ASSOC) as $id => $row) {
-				$statement = $this->baselineConnection->prepare('INSERT INTO ' . $tableName . ' (id, primaryKey, data) VALUES (:id, :primaryKey, :data)');
-				$statement->bindValue(':id', $id);
-				$statement->bindValue(':primaryKey', $this->createPrimaryKey($row, $tableName));
-				$statement->bindValue(':data', serialize($row));
-				$statement->execute();
+			$fileHandle = fopen('.beard-tmp/' . $tableName . '.csv', 'w');
+			foreach ($result->fetch_all(MYSQLI_ASSOC) as $row) {
+				$primaryKeys = $this->getPrimaryKeys($tableName);
+				$keys = array();
+				foreach ($primaryKeys as $primaryKey) {
+					$keys[] = $row[$primaryKey];
+				}
+				array_unshift($row, implode('', $keys));
+				fputcsv($fileHandle, $row);
 			}
+			$this->output->writeln('done in ' . (microtime(TRUE) - $start) . 's', OutputInterface::VERBOSITY_VERBOSE);
 		}
 	}
 
 	public function getCsv($tableName) {
 		$columNames = $this->getColumnNames($tableName);
 		$fileHandle = fopen('.beard-tmp/' . $tableName . '.csv', 'r');
+		array_unshift($columNames, 'primaryKey');
 		$rows = array();
-		while ($data = fgetcsv($fileHandle, 1000)) {
+		while ($data = fgetcsv($fileHandle, 99999999)) {
+			$row = array();
 			$row = array_combine($columNames, $data);
-			$rows[$this->createPrimaryKey($row, $tableName)] = $row;
+			$key = array_shift($data);
+			if ($key == 6) {
+			}
+			$rows[$key] = $row;
 		}
 		return $rows;
 	}
 
 	public function createPrimaryKey($row, $tableName) {
 		$primaryKeys = $this->getPrimaryKeys($tableName);
-		$keys = array();
-		foreach ($primaryKeys as $primaryKey) {
-			$keys[] = $row[$primaryKey];
-		}
-		return implode(' | ', $keys);
+		return implode('', array_intersect_key($row, array_flip($primaryKeys)));
 	}
 
 	public function getPrimaryKeys($tableName) {
-		if (!isset($runtimeCache['primaryKeys'][$tableName])) {
+		if (!isset($this->runtimeCache['primaryKeys'][$tableName])) {
 			$result = $this->connection->query('SHOW INDEX FROM ' . $tableName);
-			$runtimeCache['primaryKeys'][$tableName] = array();
+			$this->runtimeCache['primaryKeys'][$tableName] = array();
 			foreach ($result->fetch_all() as $row) {
 				if ($row[2] == 'PRIMARY') {
-					$runtimeCache['primaryKeys'][$tableName][] = $row[4];
+					$this->runtimeCache['primaryKeys'][$tableName][] = $row[4];
 				}
 			}
-			if (empty($runtimeCache['primaryKeys'][$tableName])) {
+			if (empty($this->runtimeCache['primaryKeys'][$tableName])) {
 				$candidates = array('id', 'uid', 'uid_local', 'uid_foreign', 'fieldname', 'hash');
 				$result = $this->connection->query('SHOW INDEX FROM ' . $tableName);
 				foreach ($result->fetch_all() as $row) {
 					if (in_array($row[4], $candidates)) {
-						$runtimeCache['primaryKeys'][$tableName][] = $row[4];
+						$this->runtimeCache['primaryKeys'][$tableName][] = $row[4];
 					}
 				}
 			}
 		}
-		return $runtimeCache['primaryKeys'][$tableName];
+		return $this->runtimeCache['primaryKeys'][$tableName];
 	}
 
 	public function getColumnNames($tableName) {
-		if (!isset($runtimeCache['colums'][$tableName])) {
+		if (!isset($this->runtimeCache['colums'][$tableName])) {
 			$result = $this->connection->query('SHOW columns FROM ' . $tableName);
-			$runtimeCache['colums'][$tableName] = array();
+			$this->runtimeCache['colums'][$tableName] = array();
 			foreach ($result->fetch_all() as $row) {
-				$runtimeCache['colums'][$tableName][] = $row[0];
+				$this->runtimeCache['colums'][$tableName][] = $row[0];
 			}
 		}
-		return $runtimeCache['colums'][$tableName];
+		return $this->runtimeCache['colums'][$tableName];
 	}
 
 	public function diffText($left, $right) {
 		$diffParser = new Diff();
 		return $diffParser->render($left, $right);
+	}
+
+	public function generateDiffs($rows, $baselineRows, $tableName) {
+		$columnsUsed = array_flip($this->getColumnNames($tableName));
+
+		$diffs = array();
+		foreach ($rows as $row) {
+			$primaryKey = $this->createPrimaryKey($row, $tableName);
+			$primaryKeys = $this->getPrimaryKeys($tableName);
+			$diff = array();
+			if (!isset($baselineRows[$primaryKey])) {
+				foreach ($primaryKeys as $primaryKey) {
+					$diff[$primaryKey] = '<info>' . $row[$primaryKey] . '</info>';
+					$columnsUsed[$primaryKey] = TRUE;
+				}
+			} else {
+				if (implode('', $row) == implode('', $baselineRows[$primaryKey])) {
+					unset($baselineRows[$primaryKey]);
+					continue;
+				}
+				foreach ($row as $column => $value) {
+					if ($baselineRows[$primaryKey][$column] != $value) {
+						if (preg_match('/([a-zA-Z0-9]{2})[a-zA-Z0-9]*-[a-zA-Z0-9]*-[a-zA-Z0-9]*-[a-zA-Z0-9]*-[a-zA-Z0-9]*([a-zA-Z0-9]{2})([a-zA-Z0-9]{2})/', $value) > 0) {
+							$diff[$column] = '<ins>' . $value . '</ins>' . '<del>' . $baselineRows[$primaryKey][$column] . '</del>';
+						} else {
+							$diff[$column] = $this->diffText($baselineRows[$primaryKey][$column], $value);
+						}
+						$columnsUsed[$column] = TRUE;
+					}
+				}
+				unset($baselineRows[$primaryKey]);
+			}
+			if (count($diff) > 0) {
+				foreach ($primaryKeys as $primaryKey) {
+					if (!isset($diff[$primaryKey])) {
+						$diff[$primaryKey] = $row[$primaryKey];
+						$columnsUsed[$primaryKey] = TRUE;
+					}
+				}
+
+				if (!empty($this->input->getOption('columns'))) {
+					foreach ($row as $key => $value) {
+						if (preg_match('/(' . str_replace(',', '|', $this->input->getOption('columns')) . ')/', $key, $matches) > 0) {
+							$diff[$key] = $value;
+							$columnsUsed[$key] = TRUE;
+						}
+					}
+				}
+				$diffs[] = $diff;
+			}
+		}
+		foreach ($baselineRows as $baselineRow) {
+			$diff = array();
+			foreach ($primaryKeys as $primaryKey) {
+				$diff[$primaryKey] = '<del>' . $baselineRow[$primaryKey] . '</del>';
+				$columnsUsed[$primaryKey] = TRUE;
+				foreach ($baselineRow as $key => $value) {
+					$diff[$key] = '<del>' . $value . '</del>';
+					$columnsUsed[$primaryKey] = TRUE;
+				}
+
+				if (!empty($this->input->getOption('columns'))) {
+					foreach ($row as $key => $value) {
+						if (preg_match('/(' . str_replace(',', '|', $this->input->getOption('columns')) . ')/', $key, $matches) > 0) {
+							$diff[$key] = $value;
+							$columnsUsed[$key] = TRUE;
+						}
+					}
+				}
+			}
+			$diffs[] = $diff;
+		}
+
+		if (count($diffs) === 0) {
+			return $diffs;
+		}
+
+		foreach ($columnsUsed as $key => $value) {
+			if ($value !== TRUE) {
+				unset($columnsUsed[$key]);
+			}
+		}
+		$columnsUsed = array_keys($columnsUsed);
+
+		foreach ($diffs as $key => $diff) {
+			$newDiff = array();
+			foreach ($columnsUsed as $column) {
+				if (isset($diff[$column])) {
+					$newDiff[$column] = $diff[$column];
+					if ($this->input->getOption('translate-uuids') === TRUE) {
+						preg_match('/([a-zA-Z0-9]{2})[a-zA-Z0-9]*-[a-zA-Z0-9]*-[a-zA-Z0-9]*-[a-zA-Z0-9]*-[a-zA-Z0-9]*([a-zA-Z0-9]{2})([a-zA-Z0-9]{2})/', $diff[$column], $match);
+						if (count($match) > 0) {
+							$search = array_shift($match);
+							foreach ($match as $index => $value) {
+								$match[$index] = $this->uuidWordList[hexdec($value)];
+							}
+							$newDiff[$column] = str_replace($search, implode('-', $match) , $newDiff[$column]) . ' (' . $search . ')';
+						}
+					}
+				} else {
+					$newDiff[$column] = '';
+				}
+				$newDiff[$column] = htmlspecialchars_decode($newDiff[$column]);
+			}
+			$diffs[$key] = $newDiff;
+		}
+
+		return $diffs;
 	}
 }

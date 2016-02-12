@@ -22,7 +22,10 @@
         "stecman\/symfony-console-completion": "^0.6.2",
         "nikic\/fast-route": "^0.6.0",
         "nikic\/php-parser": "dev-master",
-        "typo3fluid/fluid": "dev-master"
+        "typo3fluid/fluid": "dev-master",
+        "cogpowered/finediff": "^0.3.1",
+        "league/flysystem-sftp": "^1.0",
+        "vlucas/phpdotenv": "^2.2"
     },
 	"require-dev": {
 		"phpunit/phpunit": "*",

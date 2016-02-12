@@ -39,9 +39,12 @@ class Application extends Base {
 		$commands[] = new Command\Backup\Database();
 
 		$commands[] = new Command\Database\Clear();
+		$commands[] = new Command\Database\Compare();
 		$commands[] = new Command\Database\Restore();
 		$commands[] = new Command\Database\Snapshot();
 		$commands[] = new Command\Database\Truncate();
+
+		$commands[] = new Command\Site\Hash();
 
 		$commands[] = new Command\Patch();
 		$commands[] = new Command\Status();

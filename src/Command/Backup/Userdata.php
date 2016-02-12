@@ -63,11 +63,14 @@ class Userdata extends Command {
 				}
 			}
 		}
+		if (file_exists($input->getArgument('file') . '.sql')) {
+			$userdataPaths[] = $input->getArgument('file') . '.sql';
+		}
 		$command = array('tar -czf', $file);
 
 		$process = new Process(implode(' ', $command) . ' ' . implode(' ', $userdataPaths));
 		$process->setTimeout(3600);
 		$process->run();
-		$output->writeln('created backing up <fg=cyan;bg=black>' . implode(', ', $userdataPaths) . '</> into <fg=cyan;bg=black>' . $file . '</> (' . number_format(filesize($file) / 1024 / 1024, 2) . 'MB)');
+		$output->writeln('created backup of <fg=cyan;bg=black>' . implode(', ', $userdataPaths) . '</> into <fg=cyan;bg=black>' . $file . '</> (' . number_format(filesize($file) / 1024 / 1024, 2) . 'MB)');
 	}
 }

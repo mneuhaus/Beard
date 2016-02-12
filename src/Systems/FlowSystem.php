@@ -98,6 +98,10 @@ class FlowSystem implements SystemSettingsInterface, ClearInterface, WarmupInter
 		return $this->temporaryTables;
 	}
 
+	public function isTemporaryTable($tableName) {
+		return FALSE;
+	}
+
 	/**
 	 * @param OutputInterface $output
 	 * @return void
