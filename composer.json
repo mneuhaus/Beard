@@ -1,5 +1,5 @@
 {
-    "name": "famelo/beard",
+    "name": "famelo\/beard",
     "description": "cli helper for Flow development",
     "license": "MIT",
     "authors": [
@@ -22,15 +22,15 @@
         "stecman\/symfony-console-completion": "^0.6.2",
         "nikic\/fast-route": "^0.6.0",
         "nikic\/php-parser": "dev-master",
-        "typo3fluid/fluid": "dev-master",
-        "cogpowered/finediff": "^0.3.1",
-        "league/flysystem-sftp": "^1.0",
-        "vlucas/phpdotenv": "^2.2"
+        "typo3fluid\/fluid": "dev-master",
+        "cogpowered\/finediff": "^0.3.1",
+        "league\/flysystem-sftp": "^1.0",
+        "vlucas\/phpdotenv": "^2.2"
     },
-	"require-dev": {
-		"phpunit/phpunit": "*",
-		"mikey179/vfsStream": "*"
-	},
+    "require-dev": {
+        "phpunit\/phpunit": "*",
+        "mikey179\/vfsStream": "*"
+    },
     "autoload": {
         "psr-4": {
             "Famelo\\Beard\\": "src"
@@ -41,5 +41,5 @@
     "bin": [
         "bin\/beard"
     ],
-    "version": "1.5.4"
+    "version": "1.6.0"
 }
