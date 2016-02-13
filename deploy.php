@@ -146,7 +146,6 @@ task('release:createPhar', function(){
 		if (!in_array(pathinfo($file, PATHINFO_EXTENSION), $fileTypeIncludes)) {
 			continue;
 		}
-		echo $relativeFileName . chr(10);
 		$files[trim($relativeFileName, '/')] = $file;
 	}
 
