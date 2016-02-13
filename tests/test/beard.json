@@ -1,0 +1,23 @@
+{
+    "defaults": {
+        "gerrit_api_endpoint": "https://review.typo3.org/",
+        "gerrit_git": "git.typo3.org",
+        "gerrit_version": "2.7"
+    },
+    "changes": [
+        {
+            "name": "[FEATURE] Allow to use QueryBuilder in doctrine queries",
+            "type": "gerrit",
+            "path": "Packages/Framework/TYPO3.Flow",
+            "change_id": "33941,1"
+        },
+        {
+            "name": "ACL Refactoring",
+            "type": "gerrit",
+            "topic": "acl",
+            "paths": {
+                "Packages/TYPO3.Flow": "Packages/Framework/TYPO3.Flow"
+            }
+        }
+    ]
+}
