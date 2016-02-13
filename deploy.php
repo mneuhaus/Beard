@@ -35,6 +35,32 @@ function getGithubCurl() {
 	return $ch;
 }
 
+function getUnixStylePath($path) {
+	if (strpos($path, ':') === FALSE) {
+		return str_replace(array('//', '\\'), '/', $path);
+	} else {
+		return preg_replace('/^([a-z]{2,}):\//', '$1://', str_replace(array('//', '\\'), '/', $path));
+	}
+}
+
+function readDirectoryRecursively($path, $suffix = NULL, $returnRealPath = TRUE, $returnDotFiles = FALSE, &$filenames = array()) {
+	$directoryIterator = new \DirectoryIterator($path);
+	$suffixLength = strlen($suffix);
+	foreach ($directoryIterator as $fileInfo) {
+		$filename = $fileInfo->getFilename();
+		if ($filename === '.' || $filename === '..' || ($returnDotFiles === FALSE && $filename[0] === '.')) {
+			continue;
+		}
+		if ($fileInfo->isFile() && ($suffix === NULL || substr($filename, -$suffixLength) === $suffix)) {
+			$filenames[] = getUnixStylePath(($returnRealPath === TRUE ? realpath($fileInfo->getPathname()) : $fileInfo->getPathname()));
+		}
+		if ($fileInfo->isDir()) {
+			readDirectoryRecursively($fileInfo->getPathname(), $suffix, $returnRealPath, $returnDotFiles, $filenames);
+		}
+	}
+	return $filenames;
+}
+
 task('release:askPasswort', function(){
 	$password = askHiddenResponse('Passwort for ' . get('username') . ':');
 	set('password', $password);
@@ -89,14 +115,53 @@ task('release:removeCurrentTagFromRemote', function () {
 });
 
 task('release:createPhar', function(){
-	if (file_exists('Repository/beard-current.phar')) {
-		runLocally('rm Repository/beard-current.phar');
+//	if (file_exists('Repository/beard-current.phar')) {
+//		runLocally('rm Repository/beard-current.phar');
+//	}
+//	if (file_exists('Repository/beard-' . get('version') . '.phar')) {
+//		runLocally('rm Repository/beard-' . get('version') . '.phar');
+//	}
+//	runLocally('box build');
+//	runLocally('cp Repository/beard-current.phar Repository/beard-' . get('version') . '.phar');
+
+	$pharFilename = 'Repository/beard-' . get('version') . '.phar';
+	if (file_exists($pharFilename)) {
+		runLocally('rm ' . $pharFilename);
 	}
-	if (file_exists('Repository/beard-' . get('version') . '.phar')) {
-		runLocally('rm Repository/beard-' . get('version') . '.phar');
+
+	set('releaseFilename', $pharFilename);
+
+	$phar = new \Phar($pharFilename, 0);
+
+	$fileTypeIncludes = explode(',', 'php,html,css,js,eot,ttf,woff,woff2,pem,json');
+	$excludePattern = '#(Tests/.*|Resources/Cache/.*|vendor/.*/vendor|vendor/.*/tests|vendor/phpunit|vendor/phpspec|Repository/.*)#';
+	$files = [];
+	foreach (readDirectoryRecursively(__DIR__) as $file) {
+		$relativeFileName = str_replace(__DIR__, '', $file);
+
+		if (preg_match($excludePattern, $relativeFileName)) {
+			continue;
+		}
+
+		if (!in_array(pathinfo($file, PATHINFO_EXTENSION), $fileTypeIncludes)) {
+			continue;
+		}
+		echo $relativeFileName . chr(10);
+		$files[trim($relativeFileName, '/')] = $file;
 	}
-	runLocally('box build');
-	runLocally('cp Repository/beard-current.phar Repository/beard-' . get('version') . '.phar');
+
+	$phar->buildFromIterator(new \ArrayIterator($files));
+	$phar->setStub(str_replace(
+		array(
+			'require __DIR__ . \'/../vendor/autoload.php\';',
+			'$app = new Famelo\Beard\Application();'
+		),
+		array(
+			'Phar::mapPhar();require \'phar://\' . __FILE__ . \'/vendor/autoload.php\';',
+			'$app = new Famelo\Beard\Application("Beard", "' . get('version') . '");'
+		),
+		file_get_contents('bin/beard')
+	));
 });
 
 task('release:setTestVersion', function(){
