@@ -1,344 +1,344 @@
-{
-    "0": {
+[
+    {
         "name": "beard.phar",
         "sha1": "d3cc64c1c93825de027c4004c9084f4e56d73d21",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.0.1\/beard-0.0.1.phar",
         "version": "0.0.1"
     },
-    "1": {
+    {
         "name": "beard.phar",
         "sha1": "fa46754fbcb83be8f0a2c57ea6f8fe2504d1cbed",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.0.2\/beard-0.0.2.phar",
         "version": "0.0.2"
     },
-    "2": {
+    {
         "name": "beard.phar",
         "sha1": "9642563042395a24c3f3b1bf85fa70b98b747ac9",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.0.3\/beard-0.0.3.phar",
         "version": "0.0.3"
     },
-    "3": {
+    {
         "name": "beard.phar",
         "sha1": "7f60640e35a1478eb84253e9f412aa0089c9da30",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.1.0\/beard-0.1.0.phar",
         "version": "0.1.0"
     },
-    "4": {
+    {
         "name": "beard.phar",
         "sha1": "bdcc52ec84d542b02c7e85c17c2e7de95a80ddf0",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.1.1\/beard-0.1.1.phar",
         "version": "0.1.1"
     },
-    "5": {
+    {
         "name": "beard.phar",
         "sha1": "d3a81b138467925e5111342d0f22cf7047b140b4",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.11.0\/beard-0.11.0.phar",
         "version": "0.11.0"
     },
-    "6": {
+    {
         "name": "beard.phar",
         "sha1": "83dc2037e725b9ad0e5bc0b8dc77be2fa181720e",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.11.1\/beard-0.11.1.phar",
         "version": "0.11.1"
     },
-    "7": {
+    {
         "name": "beard.phar",
         "sha1": "21fa5e46b2da5f16b8f4308f72f284554f8e9c97",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.11.2\/beard-0.11.2.phar",
         "version": "0.11.2"
     },
-    "8": {
+    {
         "name": "beard.phar",
         "sha1": "27193323038828b03bc923b5c183cb8c27381538",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.11.3\/beard-0.11.3.phar",
         "version": "0.11.3"
     },
-    "9": {
+    {
         "name": "beard.phar",
         "sha1": "d2c76b71b992f425040f6f1f796372fdfa5d1578",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.2.0\/beard-0.2.0.phar",
         "version": "0.2.0"
     },
-    "10": {
+    {
         "name": "beard.phar",
         "sha1": "c4bf6f38df576a653f1eaf42c9704209cb23de3a",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.2.2\/beard-0.2.2.phar",
         "version": "0.2.2"
     },
-    "11": {
+    {
         "name": "beard.phar",
         "sha1": "2d02f2ba4a78f560a8174bd5afcb4546520ad3c2",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.2.3\/beard-0.2.3.phar",
         "version": "0.2.3"
     },
-    "12": {
+    {
         "name": "beard.phar",
         "sha1": "eda34414a2f30338724c1ecb39394a2336187fe0",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.2.4\/beard-0.2.4.phar",
         "version": "0.2.4"
     },
-    "13": {
+    {
         "name": "beard.phar",
         "sha1": "9289525af73c79bce06996f4ecf6e977d0d4582c",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.2.5\/beard-0.2.5.phar",
         "version": "0.2.5"
     },
-    "14": {
+    {
         "name": "beard.phar",
         "sha1": "184bcf6cde19684f4f237913a0d885e58a4bb4bf",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.3.0\/beard-0.3.0.phar",
         "version": "0.3.0"
     },
-    "15": {
+    {
         "name": "beard.phar",
         "sha1": "75714be6ea32644126b1a09118b87cd729f470de",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.3.1\/beard-0.3.1.phar",
         "version": "0.3.1"
     },
-    "16": {
+    {
         "name": "beard.phar",
         "sha1": "f10e96fcd050ec3b611aa8a91b438b16767dca1f",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.4.0\/beard-0.4.0.phar",
         "version": "0.4.0"
     },
-    "17": {
+    {
         "name": "beard.phar",
         "sha1": "0cd89d11204d2d9486cc1408179a4546f251fa38",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.5.0\/beard-0.5.0.phar",
         "version": "0.5.0"
     },
-    "18": {
+    {
         "name": "beard.phar",
         "sha1": "74303bedf4e82fd940f63ee556bb5190ea6ea859",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.6.0\/beard-0.6.0.phar",
         "version": "0.6.0"
     },
-    "19": {
+    {
         "name": "beard.phar",
         "sha1": "e3abb4e633d792d6312e301a11416562f8dd1e83",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.6.1\/beard-0.6.1.phar",
         "version": "0.6.1"
     },
-    "20": {
+    {
         "name": "beard.phar",
         "sha1": "b7a9db894bc2dfb2d906e42083987b33f65b60b7",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.0\/beard-0.7.0.phar",
         "version": "0.7.0"
     },
-    "21": {
+    {
         "name": "beard.phar",
         "sha1": "af0e68b548d9a64dbe2fb675c622eb31b240e13e",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.1\/beard-0.7.1.phar",
         "version": "0.7.1"
     },
-    "22": {
+    {
         "name": "beard.phar",
         "sha1": "635f4c809cbdf89395cac7b78e3f6435f6cc7c19",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.10\/beard-0.7.10.phar",
         "version": "0.7.10"
     },
-    "23": {
+    {
         "name": "beard.phar",
         "sha1": "4b06f86b166f70bf63d1e5f76e750353ef3af62f",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.11\/beard-0.7.11.phar",
         "version": "0.7.11"
     },
-    "24": {
+    {
         "name": "beard.phar",
         "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.12\/beard-0.7.12.phar",
         "version": "0.7.12"
     },
-    "25": {
+    {
         "name": "beard.phar",
         "sha1": "f667174f4244f477ffe2368e332d7eb66fbc55a6",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.13\/beard-0.7.13.phar",
         "version": "0.7.13"
     },
-    "26": {
+    {
         "name": "beard.phar",
         "sha1": "9356250fe12c0238fb13df7eec489829aad32c87",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.14\/beard-0.7.14.phar",
         "version": "0.7.14"
     },
-    "27": {
+    {
         "name": "beard.phar",
         "sha1": "4f1be60435724c348545b653f760da1739b79bf7",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.2\/beard-0.7.2.phar",
         "version": "0.7.2"
     },
-    "28": {
+    {
         "name": "beard.phar",
         "sha1": "33eca1ba954e09ff9e30c4a0c1d21d466662e100",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.3\/beard-0.7.3.phar",
         "version": "0.7.3"
     },
-    "29": {
+    {
         "name": "beard.phar",
         "sha1": "0f0e4664c30e32aae49008fa604c63fafa2da02a",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.4\/beard-0.7.4.phar",
         "version": "0.7.4"
     },
-    "30": {
+    {
         "name": "beard.phar",
         "sha1": "4132d2d5416b83fc66170aa28392895e0aff1731",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.5\/beard-0.7.5.phar",
         "version": "0.7.5"
     },
-    "31": {
+    {
         "name": "beard.phar",
         "sha1": "9ca01bb458dbbbeed2f8cee95eed8a9590240d49",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.6\/beard-0.7.6.phar",
         "version": "0.7.6"
     },
-    "32": {
+    {
         "name": "beard.phar",
         "sha1": "1a006879cae7bfb4b15d6e3bc3a75e44131af274",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.7\/beard-0.7.7.phar",
         "version": "0.7.7"
     },
-    "33": {
+    {
         "name": "beard.phar",
         "sha1": "0e758e5bbe6dd4afa71b10245cf581cf71df21b0",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.8\/beard-0.7.8.phar",
         "version": "0.7.8"
     },
-    "34": {
+    {
         "name": "beard.phar",
         "sha1": "3865ccaaa6bfeaf98a621e8949abcf661a53a438",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.7.9\/beard-0.7.9.phar",
         "version": "0.7.9"
     },
-    "35": {
+    {
         "name": "beard.phar",
         "sha1": "01fd3e63a34109a89ec392387389ab8d16f53adf",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/0.8.0\/beard-0.8.0.phar",
         "version": "0.8.0"
     },
-    "36": {
+    {
         "name": "beard.phar",
         "sha1": "5dc8634a3fb40d8bb0bf8783f8b04cb868ba8ac7",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.0.0\/beard-1.0.0.phar",
         "version": "1.0.0"
     },
-    "37": {
+    {
         "name": "beard.phar",
         "sha1": "0571fb94bbb5309ceecc598820ac0d74257ff411",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.0.1\/beard-1.0.1.phar",
         "version": "1.0.1"
     },
-    "38": {
+    {
         "name": "beard.phar",
         "sha1": "c2b92c50a52d314bf6dd3c42f945799482d99941",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.0.2\/beard-1.0.2.phar",
         "version": "1.0.2"
     },
-    "39": {
+    {
         "name": "beard.phar",
         "sha1": "11c55fed5b0e450edd6cf4da1787ad8d32ef1582",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.1.0\/beard-1.1.0.phar",
         "version": "1.1.0"
     },
-    "40": {
+    {
         "name": "beard.phar",
         "sha1": "a48826670d6447323c5a3bf310f8168dab41e393",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.1.1\/beard-1.1.1.phar",
         "version": "1.1.1"
     },
-    "41": {
+    {
         "name": "beard.phar",
         "sha1": "415a8e2e81a8f97851b796fcafee7b060527f800",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.1.3\/beard-1.1.3.phar",
         "version": "1.1.3"
     },
-    "42": {
+    {
         "name": "beard.phar",
         "sha1": "cf1d5abd2a4367e3072ba86e1cc8d4534af9b563",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.1.4\/beard-1.1.4.phar",
         "version": "1.1.4"
     },
-    "43": {
+    {
         "name": "beard.phar",
         "sha1": "e1fd34ed0553510746b912d8aa45db212ff18c38",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.1.6\/beard-1.1.6.phar",
         "version": "1.1.6"
     },
-    "44": {
+    {
         "name": "beard.phar",
         "sha1": "e734ad593df7c153907fdf58e92edc4247c16d09",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.2.0\/beard-1.2.0.phar",
         "version": "1.2.0"
     },
-    "45": {
+    {
         "name": "beard.phar",
         "sha1": "819f9faac0f536412c8d0dbb190c6cd4fd1f17cd",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.3.0\/beard-1.3.0.phar",
         "version": "1.3.0"
     },
-    "46": {
+    {
         "name": "beard.phar",
         "sha1": "68f8f066d622b83ef0d24c2893dd1c2db78103fb",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.3.2\/beard-1.3.2.phar",
         "version": "1.3.2"
     },
-    "47": {
+    {
         "name": "beard.phar",
         "sha1": "3cec654ffcbdecda772ead545afc9fe3d37577dc",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.4.0\/beard-1.4.0.phar",
         "version": "1.4.0"
     },
-    "48": {
+    {
         "name": "beard.phar",
         "sha1": "827723a1cf643a9cd710045bd2907fa8ef87d70d",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.4.1\/beard-1.4.1.phar",
         "version": "1.4.1"
     },
-    "49": {
+    {
         "name": "beard.phar",
         "sha1": "2e277bbcf0ee7a0b8b5ae9e4280c6100fab510e2",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.4.2\/beard-1.4.2.phar",
         "version": "1.4.2"
     },
-    "50": {
+    {
         "name": "beard.phar",
         "sha1": "9c72234b8e694899beeba5d5e480c897c59f6be1",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.4.3\/beard-1.4.3.phar",
         "version": "1.4.3"
     },
-    "51": {
+    {
         "name": "beard.phar",
         "sha1": "db1ae96b7e5990c62e60c0138c6d017153f7c350",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.5.0\/beard-1.5.0.phar",
         "version": "1.5.0"
     },
-    "52": {
+    {
         "name": "beard.phar",
         "sha1": "4edec650b2f2718a8e4a224814ccf0f6e218d59b",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.5.1\/beard-1.5.1.phar",
         "version": "1.5.1"
     },
-    "53": {
+    {
         "name": "beard.phar",
         "sha1": "d7957f9719d2fdbbd2248ee6e95ce772c3afb711",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.5.2\/beard-1.5.2.phar",
         "version": "1.5.2"
     },
-    "54": {
+    {
         "name": "beard.phar",
         "sha1": "60c14b595eafe84d956295d5723ca624e501eddf",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.5.3\/beard-1.5.3.phar",
         "version": "1.5.3"
     },
-    "55": {
+    {
         "name": "beard.phar",
         "sha1": "1bcee8d2afdc7b536bb2e564ebf39c5ebb37643d",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.5.4\/beard-1.5.4.phar",
         "version": "1.5.4"
     },
-    "60": {
+    {
         "name": "beard.phar",
-        "sha1": "7733893d445c8b81c865fc47d081b90256e8a638",
+        "sha1": "f205a4f86b34c3002323450a0a81d32379902cfb",
         "url": "https:\/\/github.com\/mneuhaus\/Beard\/releases\/download\/1.6.0\/beard-1.6.0.phar",
         "version": "1.6.0"
     }
-}
+]
