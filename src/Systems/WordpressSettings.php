@@ -1,5 +1,5 @@
 <?php
-namespace Famelo\Beard\SystemSettings;
+namespace Famelo\Beard\Systems;
 
 use Famelo\Beard\Interfaces\SystemSettingsInterface;
 

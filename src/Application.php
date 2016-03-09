@@ -57,7 +57,7 @@ class Application extends Base {
 
 		if (('@' . 'git_tag@') !== $this->getVersion()) {
 			$command = new Amend\Command('update');
-			$command->setManifestUri('@manifest_url@');
+			$command->setManifestUri('https://raw.github.com/mneuhaus/Beard/master/releases.json');
 
 			$commands[] = $command;
 		}

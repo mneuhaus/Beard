@@ -6,14 +6,11 @@
  *
  * @var string
  */
+ini_set("phar.readonly", 1);
 define('BOX_PATH', dirname(__DIR__));
-define('PHAR_MODE', boolval(Phar::running()));
+define('PHAR_MODE', FALSE);
 
-if ($uri = Phar::running()) {
-    require "$uri/vendor/autoload.php";
-} else {
-    require __DIR__ . '/../vendor/autoload.php';
-}
+require __DIR__ . '/../vendor/autoload.php';
 
 $app = new Famelo\Beard\Application();
 $app->run();

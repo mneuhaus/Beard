@@ -133,10 +133,10 @@ task('release:createPhar', function(){
 
 	$phar = new \Phar($pharFilename, 0);
 
-	$fileTypeIncludes = explode(',', 'php,html,css,js,eot,ttf,woff,woff2,pem,json');
+	$fileTypeIncludes = explode(',', 'php,html,css,js,eot,ttf,woff,woff2,pem,json,koseki-ignore');
 	$excludePattern = '#(Tests/.*|Resources/Cache/.*|vendor/.*/vendor|vendor/.*/tests|vendor/phpunit|vendor/phpspec|Repository/.*)#';
 	$files = [];
-	foreach (readDirectoryRecursively(__DIR__) as $file) {
+	foreach (readDirectoryRecursively(__DIR__, NULL, TRUE, TRUE) as $file) {
 		$relativeFileName = str_replace(__DIR__, '', $file);
 
 		if (preg_match($excludePattern, $relativeFileName)) {
@@ -153,14 +153,17 @@ task('release:createPhar', function(){
 	$phar->setStub(str_replace(
 		array(
 			'require __DIR__ . \'/../vendor/autoload.php\';',
-			'$app = new Famelo\Beard\Application();'
+			'$app = new Famelo\Beard\Application();',
+			'define(\'PHAR_MODE\', FALSE);'
 		),
 		array(
 			'Phar::mapPhar();require \'phar://\' . __FILE__ . \'/vendor/autoload.php\';',
-			'$app = new Famelo\Beard\Application("Beard", "' . get('version') . '");'
+			'$app = new Famelo\Beard\Application("Beard", "' . get('version') . '");',
+			'define(\'PHAR_MODE\', TRUE);'
 		),
 		file_get_contents('bin/beard')
 	));
+//	$phar->compressFiles(Phar::GZ);
 });
 
 task('release:setTestVersion', function(){
@@ -183,7 +186,7 @@ task('release:updateReleasesManifest', function(){
 		}
 	}
 
-	$sha1 = sha1_file('Repository/beard-current.phar');
+	$sha1 = sha1_file('Repository/beard-' . get('version') . '.phar');
 	$file = 'beard-' . get('version') . '.phar';
 	$baseUrl = 'https://github.com/' . get('username') . '/' . get('repository') . '/releases/download/';
 	$manifest[] = array(
@@ -193,7 +196,7 @@ task('release:updateReleasesManifest', function(){
 		'version' => get('version')
 	);
 
-	file_put_contents('releases.json', json_encode($manifest, JSON_PRETTY_PRINT));
+	file_put_contents('releases.json', json_encode(array_values($manifest), JSON_PRETTY_PRINT));
 
 	runLocally('git add releases.json');
 	runLocally('git commit -m "Added Version: ' . get('version') . '"');
