@@ -48,9 +48,7 @@ class Typo3System implements SystemSettingsInterface, ClearInterface {
 	 */
 	protected $temporaryTables = array(
 		'cf_*',
-		'cache_*',
-		'sys_log',
-		'tx_extensionmanager_domain_model_extension'
+		'cache_*'
 	);
 
 
