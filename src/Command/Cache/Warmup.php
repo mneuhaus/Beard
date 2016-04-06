@@ -1,17 +1,18 @@
 <?php
 namespace Famelo\Beard\Command\Cache;
 
+use Famelo\Beard\Command\AbstractSettingsCommand;
+use Mia3\Koseki\ClassRegister;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Mia3\Koseki\ClassRegister;
 
 /**
  *
  */
-class Warmup extends Command {
+class Warmup extends AbstractSettingsCommand {
 
 	/**
 	 * The output handler.
@@ -43,7 +44,7 @@ class Warmup extends Command {
 
 		$implementations = ClassRegister::getImplementations('Famelo\Beard\Interfaces\Cache\WarmupInterface', !PHAR_MODE);
 		foreach ($implementations as $implementationClassName) {
-			$implementation = new $implementationClassName();
+			$implementation = new $implementationClassName($input->getOption('context'));
 			if ($implementation->canWarmup()) {
 				$implementation->warmup($output);
 			}

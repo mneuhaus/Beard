@@ -1,18 +1,19 @@
 <?php
 namespace Famelo\Beard\Command\Backup;
 
+use Famelo\Beard\Command\AbstractSettingsCommand;
+use Mia3\Koseki\ClassRegister;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
-use Mia3\Koseki\ClassRegister;
 
 /**
  *
  */
-class Userdata extends Command {
+class Userdata extends AbstractSettingsCommand {
 
 	/**
 	 * The output handler.
@@ -54,7 +55,7 @@ class Userdata extends Command {
 		$implementations = ClassRegister::getImplementations('Famelo\Beard\Interfaces\SystemSettingsInterface', !PHAR_MODE);
 		$userdataPaths = array();
 		foreach ($implementations as $implementationClassName) {
-			$settings = new $implementationClassName();
+			$settings = new $implementationClassName($input->getOption('context'));
 			if (count($settings->getUserdataPaths()) > 0) {
 				foreach ($settings->getUserdataPaths() as $userdataPath) {
 					if (file_exists($userdataPath)) {

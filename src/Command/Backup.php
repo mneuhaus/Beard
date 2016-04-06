@@ -2,22 +2,23 @@
 namespace Famelo\Beard\Command;
 
 use Dotenv\Dotenv;
+use Famelo\Beard\Command\AbstractSettingsCommand;
+use Famelo\Beard\Command\Backup\Database;
+use Famelo\Beard\Command\Backup\Userdata;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Sftp\SftpAdapter;
+use Mia3\Koseki\ClassRegister;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
-use Mia3\Koseki\ClassRegister;
-use Famelo\Beard\Command\Backup\Database;
-use Famelo\Beard\Command\Backup\Userdata;
 
 /**
  *
  */
-class Backup extends Command
+class Backup extends AbstractSettingsCommand
 {
 
     /**
@@ -68,7 +69,6 @@ class Backup extends Command
 
         $userdata = new Userdata();
         $userdata->execute($input, $output);
-
 
         if ($input->getOption('send-to-remote') === true) {
             $this->sendToRemote($input, $output);

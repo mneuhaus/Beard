@@ -1,20 +1,21 @@
 <?php
 namespace Famelo\Beard\Command\Database;
 
+use Famelo\Beard\Command\AbstractSettingsCommand;
+use Famelo\Beard\Command\Backup\Database;
+use Mia3\Koseki\ClassRegister;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
-use Mia3\Koseki\ClassRegister;
-use Famelo\Beard\Command\Backup\Database;
 
 /**
  *
  */
-class Snapshot extends Command {
+class Snapshot extends AbstractSettingsCommand {
 
 	/**
 	 * @override
@@ -39,7 +40,7 @@ class Snapshot extends Command {
 		$file = 'snapshots/' . date('d.m.Y-H.i.s') . $comment;
 
 		$databaseCommand = new Database();
-		$input = new ArrayInput(array('file' => $file), $databaseCommand->getDefinition());
+		$input = new ArrayInput(array('file' => $file, '--context' => $input->getOption('context')), $databaseCommand->getDefinition());
 		$databaseCommand->execute($input, $output);
 	}
 }
