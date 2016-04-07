@@ -71,7 +71,7 @@ class Database extends AbstractSettingsCommand
         if (!file_exists(dirname($file))) {
             mkdir(dirname($file), 0775, true);
         }
-        echo implode(' ', $command);
+
         $process = new Process(implode(' ', $command));
         $process->setTimeout(3600);
         $process->run();
