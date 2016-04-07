@@ -67,7 +67,7 @@ class Userdata extends AbstractSettingsCommand {
 		if (file_exists($input->getArgument('file') . '.sql')) {
 			$userdataPaths[] = $input->getArgument('file') . '.sql';
 		}
-		$command = array('tar -czf --dereference', $file);
+		$command = array('tar --dereference --hard-dereference  -czf', $file);
 
 		$process = new Process(implode(' ', $command) . ' ' . implode(' ', $userdataPaths));
 		$process->setTimeout(3600);
