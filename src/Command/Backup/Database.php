@@ -55,13 +55,13 @@ class Database extends AbstractSettingsCommand
 
         $command = array('mysqldump');
         if (!empty($settings->getHost())) {
-            $command[] = '-h' . $settings->getHost();
+            $command[] = '-h"' . $settings->getHost() . '"';
         }
         if (!empty($settings->getUsername())) {
-            $command[] = '-u' . $settings->getUsername();
+            $command[] = '-u"' . $settings->getUsername() . '"';
         }
         if (!empty($settings->getPassword())) {
-            $command[] = '-p' . $settings->getPassword();
+            $command[] = '-p"' . $settings->getPassword() . '"';
         }
         if (!empty($settings->getDatabase())) {
             $command[] = $settings->getDatabase();
@@ -71,7 +71,7 @@ class Database extends AbstractSettingsCommand
         if (!file_exists(dirname($file))) {
             mkdir(dirname($file), 0775, true);
         }
-
+        echo implode(' ', $command);
         $process = new Process(implode(' ', $command));
         $process->setTimeout(3600);
         $process->run();
