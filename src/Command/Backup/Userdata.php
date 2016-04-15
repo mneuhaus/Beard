@@ -59,7 +59,7 @@ class Userdata extends AbstractSettingsCommand {
 			if (count($settings->getUserdataPaths()) > 0) {
 				foreach ($settings->getUserdataPaths() as $userdataPath) {
 					if (file_exists($userdataPath)) {
-						$userdataPaths[] = $userdataPath;
+						$userdataPaths[] = '"' . $userdataPath . '"';
 					}
 				}
 			}
@@ -67,7 +67,7 @@ class Userdata extends AbstractSettingsCommand {
 		if (file_exists($input->getArgument('file') . '.sql')) {
 			$userdataPaths[] = $input->getArgument('file') . '.sql';
 		}
-		$command = array('tar --dereference --hard-dereference  -czf', $file);
+		$command = array('tar --dereference -czf', $file);
 
 		$process = new Process(implode(' ', $command) . ' ' . implode(' ', $userdataPaths));
 		$process->setTimeout(3600);
