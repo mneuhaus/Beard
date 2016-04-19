@@ -188,22 +188,22 @@ return array (
     49 => 'PharData',
     50 => 'SimpleXMLElement',
     51 => 'SimpleXMLIterator',
-    52 => 'Symfony\\Component\\Finder\\Finder',
-    53 => 'Symfony\\Component\\Finder\\Iterator\\FilterIterator',
-    54 => 'Symfony\\Component\\Finder\\Iterator\\CustomFilterIterator',
-    55 => 'Symfony\\Component\\Finder\\Iterator\\DateRangeFilterIterator',
-    56 => 'Symfony\\Component\\Finder\\Iterator\\DepthRangeFilterIterator',
-    57 => 'Symfony\\Component\\Finder\\Iterator\\ExcludeDirectoryFilterIterator',
-    58 => 'Symfony\\Component\\Finder\\Iterator\\MultiplePcreFilterIterator',
-    59 => 'Symfony\\Component\\Finder\\Iterator\\FilecontentFilterIterator',
-    60 => 'Symfony\\Component\\Finder\\Iterator\\FilenameFilterIterator',
-    61 => 'Symfony\\Component\\Finder\\Iterator\\FilePathsIterator',
-    62 => 'Symfony\\Component\\Finder\\Iterator\\FileTypeFilterIterator',
-    63 => 'Symfony\\Component\\Finder\\Iterator\\PathFilterIterator',
-    64 => 'Symfony\\Component\\Finder\\Iterator\\RecursiveDirectoryIterator',
-    65 => 'Symfony\\Component\\Finder\\Iterator\\SizeRangeFilterIterator',
-    66 => 'Symfony\\Component\\Finder\\Iterator\\SortableIterator',
-    67 => 'Symfony\\Component\\Console\\Helper\\HelperSet',
+    52 => 'Symfony\\Component\\Console\\Helper\\HelperSet',
+    53 => 'Symfony\\Component\\Finder\\Finder',
+    54 => 'Symfony\\Component\\Finder\\Iterator\\FilterIterator',
+    55 => 'Symfony\\Component\\Finder\\Iterator\\CustomFilterIterator',
+    56 => 'Symfony\\Component\\Finder\\Iterator\\DateRangeFilterIterator',
+    57 => 'Symfony\\Component\\Finder\\Iterator\\DepthRangeFilterIterator',
+    58 => 'Symfony\\Component\\Finder\\Iterator\\ExcludeDirectoryFilterIterator',
+    59 => 'Symfony\\Component\\Finder\\Iterator\\MultiplePcreFilterIterator',
+    60 => 'Symfony\\Component\\Finder\\Iterator\\FilecontentFilterIterator',
+    61 => 'Symfony\\Component\\Finder\\Iterator\\FilenameFilterIterator',
+    62 => 'Symfony\\Component\\Finder\\Iterator\\FilePathsIterator',
+    63 => 'Symfony\\Component\\Finder\\Iterator\\FileTypeFilterIterator',
+    64 => 'Symfony\\Component\\Finder\\Iterator\\PathFilterIterator',
+    65 => 'Symfony\\Component\\Finder\\Iterator\\RecursiveDirectoryIterator',
+    66 => 'Symfony\\Component\\Finder\\Iterator\\SizeRangeFilterIterator',
+    67 => 'Symfony\\Component\\Finder\\Iterator\\SortableIterator',
   ),
   'DateTimeInterface' => 
   array (
@@ -465,9 +465,9 @@ return array (
   'IteratorAggregate' => 
   array (
     0 => 'ArrayObject',
-    1 => 'Symfony\\Component\\Finder\\Finder',
-    2 => 'Symfony\\Component\\Finder\\Iterator\\SortableIterator',
-    3 => 'Symfony\\Component\\Console\\Helper\\HelperSet',
+    1 => 'Symfony\\Component\\Console\\Helper\\HelperSet',
+    2 => 'Symfony\\Component\\Finder\\Finder',
+    3 => 'Symfony\\Component\\Finder\\Iterator\\SortableIterator',
   ),
   'Serializable' => 
   array (
@@ -597,39 +597,162 @@ return array (
   array (
     0 => 'SimpleXMLIterator',
   ),
-  'FastRoute\\RouteParser' => 
+  'Symfony\\Component\\Console\\Application' => 
   array (
-    0 => 'FastRoute\\RouteParser\\Std',
+    0 => 'Famelo\\Beard\\Application',
   ),
-  'FastRoute\\DataGenerator' => 
+  'Symfony\\Component\\Console\\Helper\\HelperInterface' => 
   array (
-    0 => 'FastRoute\\DataGenerator\\RegexBasedAbstract',
-    1 => 'FastRoute\\DataGenerator\\GroupCountBased',
-    2 => 'FastRoute\\DataGenerator\\CharCountBased',
-    3 => 'FastRoute\\DataGenerator\\GroupPosBased',
-    4 => 'FastRoute\\DataGenerator\\MarkBased',
+    0 => 'Symfony\\Component\\Console\\Helper\\Helper',
+    1 => 'Symfony\\Component\\Console\\Helper\\FormatterHelper',
+    2 => 'Symfony\\Component\\Console\\Helper\\InputAwareHelper',
+    3 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
+    4 => 'Symfony\\Component\\Console\\Helper\\ProgressHelper',
+    5 => 'Symfony\\Component\\Console\\Helper\\TableHelper',
+    6 => 'Symfony\\Component\\Console\\Helper\\DebugFormatterHelper',
+    7 => 'Symfony\\Component\\Console\\Helper\\ProcessHelper',
+    8 => 'Symfony\\Component\\Console\\Helper\\QuestionHelper',
+    9 => 'Famelo\\Beard\\Helper\\ConfigurationHelper',
+    10 => 'Symfony\\Component\\Console\\Helper\\DescriptorHelper',
+    11 => 'Symfony\\Component\\Console\\Helper\\SymfonyQuestionHelper',
   ),
-  'FastRoute\\DataGenerator\\RegexBasedAbstract' => 
+  'Symfony\\Component\\Console\\Helper\\Helper' => 
   array (
-    0 => 'FastRoute\\DataGenerator\\GroupCountBased',
-    1 => 'FastRoute\\DataGenerator\\CharCountBased',
-    2 => 'FastRoute\\DataGenerator\\GroupPosBased',
-    3 => 'FastRoute\\DataGenerator\\MarkBased',
+    0 => 'Symfony\\Component\\Console\\Helper\\FormatterHelper',
+    1 => 'Symfony\\Component\\Console\\Helper\\InputAwareHelper',
+    2 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
+    3 => 'Symfony\\Component\\Console\\Helper\\ProgressHelper',
+    4 => 'Symfony\\Component\\Console\\Helper\\TableHelper',
+    5 => 'Symfony\\Component\\Console\\Helper\\DebugFormatterHelper',
+    6 => 'Symfony\\Component\\Console\\Helper\\ProcessHelper',
+    7 => 'Symfony\\Component\\Console\\Helper\\QuestionHelper',
+    8 => 'Famelo\\Beard\\Helper\\ConfigurationHelper',
+    9 => 'Symfony\\Component\\Console\\Helper\\DescriptorHelper',
+    10 => 'Symfony\\Component\\Console\\Helper\\SymfonyQuestionHelper',
   ),
-  'FastRoute\\Dispatcher' => 
+  'Symfony\\Component\\Console\\Input\\InputAwareInterface' => 
   array (
-    0 => 'FastRoute\\Dispatcher\\RegexBasedAbstract',
-    1 => 'FastRoute\\Dispatcher\\GroupCountBased',
-    2 => 'FastRoute\\Dispatcher\\CharCountBased',
-    3 => 'FastRoute\\Dispatcher\\GroupPosBased',
-    4 => 'FastRoute\\Dispatcher\\MarkBased',
+    0 => 'Symfony\\Component\\Console\\Helper\\InputAwareHelper',
+    1 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
   ),
-  'FastRoute\\Dispatcher\\RegexBasedAbstract' => 
+  'Symfony\\Component\\Console\\Helper\\InputAwareHelper' => 
   array (
-    0 => 'FastRoute\\Dispatcher\\GroupCountBased',
-    1 => 'FastRoute\\Dispatcher\\CharCountBased',
-    2 => 'FastRoute\\Dispatcher\\GroupPosBased',
-    3 => 'FastRoute\\Dispatcher\\MarkBased',
+    0 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
+  ),
+  'Symfony\\Component\\Console\\Output\\OutputInterface' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Output\\NullOutput',
+    1 => 'Symfony\\Component\\Console\\Output\\Output',
+    2 => 'Symfony\\Component\\Console\\Output\\StreamOutput',
+    3 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
+    4 => 'Symfony\\Component\\Console\\Output\\BufferedOutput',
+    5 => 'Symfony\\Component\\Console\\Style\\OutputStyle',
+    6 => 'Symfony\\Component\\Console\\Style\\SymfonyStyle',
+  ),
+  'JsonSchema\\Constraints\\ConstraintInterface' => 
+  array (
+    0 => 'JsonSchema\\Constraints\\Constraint',
+    1 => 'JsonSchema\\Validator',
+    2 => 'JsonSchema\\Constraints\\CollectionConstraint',
+    3 => 'JsonSchema\\Constraints\\EnumConstraint',
+    4 => 'JsonSchema\\Constraints\\FormatConstraint',
+    5 => 'JsonSchema\\Constraints\\NumberConstraint',
+    6 => 'JsonSchema\\Constraints\\ObjectConstraint',
+    7 => 'JsonSchema\\Constraints\\SchemaConstraint',
+    8 => 'JsonSchema\\Constraints\\StringConstraint',
+    9 => 'JsonSchema\\Constraints\\TypeConstraint',
+    10 => 'JsonSchema\\Constraints\\UndefinedConstraint',
+  ),
+  'JsonSchema\\Constraints\\Constraint' => 
+  array (
+    0 => 'JsonSchema\\Validator',
+    1 => 'JsonSchema\\Constraints\\CollectionConstraint',
+    2 => 'JsonSchema\\Constraints\\EnumConstraint',
+    3 => 'JsonSchema\\Constraints\\FormatConstraint',
+    4 => 'JsonSchema\\Constraints\\NumberConstraint',
+    5 => 'JsonSchema\\Constraints\\ObjectConstraint',
+    6 => 'JsonSchema\\Constraints\\SchemaConstraint',
+    7 => 'JsonSchema\\Constraints\\StringConstraint',
+    8 => 'JsonSchema\\Constraints\\TypeConstraint',
+    9 => 'JsonSchema\\Constraints\\UndefinedConstraint',
+  ),
+  'Symfony\\Component\\Console\\Command\\Command' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Command\\HelpCommand',
+    1 => 'Symfony\\Component\\Console\\Command\\ListCommand',
+    2 => 'Famelo\\Beard\\Command\\AbstractSettingsCommand',
+    3 => 'Famelo\\Beard\\Command\\Cache\\Clear',
+    4 => 'Famelo\\Beard\\Command\\Cache\\Warmup',
+    5 => 'Famelo\\Beard\\Command\\Backup',
+    6 => 'Famelo\\Beard\\Command\\Backup\\Userdata',
+    7 => 'Famelo\\Beard\\Command\\Backup\\Database',
+    8 => 'Famelo\\Beard\\Command\\Database\\Clear',
+    9 => 'Famelo\\Beard\\Command\\Database\\Compare',
+    10 => 'Famelo\\Beard\\Command\\Database\\Restore',
+    11 => 'Famelo\\Beard\\Command\\Database\\Snapshot',
+    12 => 'Famelo\\Beard\\Command\\Database\\Truncate',
+    13 => 'Famelo\\Beard\\Command\\Site\\Hash',
+    14 => 'Famelo\\Beard\\Command\\Patch',
+    15 => 'Famelo\\Beard\\Command\\Status',
+    16 => 'Famelo\\Beard\\Command\\Reset',
+    17 => 'Famelo\\Beard\\Command\\Setup',
+    18 => 'Famelo\\Beard\\Command\\Lock',
+    19 => 'Famelo\\Beard\\Command\\Scaffold',
+    20 => 'Famelo\\Beard\\Command\\Ssh\\Keygen',
+    21 => 'Stecman\\Component\\Symfony\\Console\\BashCompletion\\CompletionCommand',
+  ),
+  'Famelo\\Beard\\Command\\AbstractSettingsCommand' => 
+  array (
+    0 => 'Famelo\\Beard\\Command\\Cache\\Clear',
+    1 => 'Famelo\\Beard\\Command\\Cache\\Warmup',
+    2 => 'Famelo\\Beard\\Command\\Backup',
+    3 => 'Famelo\\Beard\\Command\\Backup\\Userdata',
+    4 => 'Famelo\\Beard\\Command\\Backup\\Database',
+    5 => 'Famelo\\Beard\\Command\\Database\\Clear',
+    6 => 'Famelo\\Beard\\Command\\Database\\Compare',
+    7 => 'Famelo\\Beard\\Command\\Database\\Restore',
+    8 => 'Famelo\\Beard\\Command\\Database\\Snapshot',
+    9 => 'Famelo\\Beard\\Command\\Database\\Truncate',
+  ),
+  'Famelo\\Beard\\Command\\Backup\\Database' => 
+  array (
+    0 => 'Famelo\\Beard\\Command\\Database\\Clear',
+    1 => 'Famelo\\Beard\\Command\\Database\\Truncate',
+  ),
+  'Symfony\\Component\\Console\\Input\\InputInterface' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Input\\Input',
+    1 => 'Symfony\\Component\\Console\\Input\\ArgvInput',
+    2 => 'Symfony\\Component\\Console\\Input\\ArrayInput',
+    3 => 'Symfony\\Component\\Console\\Input\\StringInput',
+  ),
+  'Symfony\\Component\\Console\\Input\\Input' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Input\\ArgvInput',
+    1 => 'Symfony\\Component\\Console\\Input\\ArrayInput',
+    2 => 'Symfony\\Component\\Console\\Input\\StringInput',
+  ),
+  'Symfony\\Component\\Console\\Output\\Output' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Output\\StreamOutput',
+    1 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
+    2 => 'Symfony\\Component\\Console\\Output\\BufferedOutput',
+  ),
+  'Symfony\\Component\\Console\\Output\\ConsoleOutputInterface' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
+  ),
+  'Symfony\\Component\\Console\\Output\\StreamOutput' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
+  ),
+  'Symfony\\Component\\Console\\Formatter\\OutputFormatterInterface' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Formatter\\OutputFormatter',
+  ),
+  'Symfony\\Component\\Console\\Formatter\\OutputFormatterStyleInterface' => 
+  array (
+    0 => 'Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle',
   ),
   'phpseclib\\Crypt\\Base' => 
   array (
@@ -982,31 +1105,6 @@ return array (
   array (
     0 => 'Symfony\\Component\\Filesystem\\Exception\\FileNotFoundException',
   ),
-  'Symfony\\Component\\Console\\Command\\Command' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Command\\HelpCommand',
-    1 => 'Symfony\\Component\\Console\\Command\\ListCommand',
-    2 => 'Stecman\\Component\\Symfony\\Console\\BashCompletion\\CompletionCommand',
-    3 => 'Famelo\\Beard\\Command\\AbstractSettingsCommand',
-    4 => 'Famelo\\Beard\\Command\\Backup\\Database',
-    5 => 'Famelo\\Beard\\Command\\Backup\\Userdata',
-    6 => 'Famelo\\Beard\\Command\\Backup',
-    7 => 'Famelo\\Beard\\Command\\Cache\\Clear',
-    8 => 'Famelo\\Beard\\Command\\Cache\\Warmup',
-    9 => 'Famelo\\Beard\\Command\\Database\\Clear',
-    10 => 'Famelo\\Beard\\Command\\Database\\Compare',
-    11 => 'Famelo\\Beard\\Command\\Database\\Restore',
-    12 => 'Famelo\\Beard\\Command\\Database\\Snapshot',
-    13 => 'Famelo\\Beard\\Command\\Database\\Truncate',
-    14 => 'Famelo\\Beard\\Command\\Lock',
-    15 => 'Famelo\\Beard\\Command\\Patch',
-    16 => 'Famelo\\Beard\\Command\\Reset',
-    17 => 'Famelo\\Beard\\Command\\Scaffold',
-    18 => 'Famelo\\Beard\\Command\\Setup',
-    19 => 'Famelo\\Beard\\Command\\Site\\Hash',
-    20 => 'Famelo\\Beard\\Command\\Ssh\\Keygen',
-    21 => 'Famelo\\Beard\\Command\\Status',
-  ),
   'Symfony\\Component\\Console\\Descriptor\\DescriptorInterface' => 
   array (
     0 => 'Symfony\\Component\\Console\\Descriptor\\Descriptor',
@@ -1030,52 +1128,6 @@ return array (
     3 => 'Symfony\\Component\\Console\\Exception\\LogicException',
     4 => 'Symfony\\Component\\Console\\Exception\\RuntimeException',
   ),
-  'Symfony\\Component\\Console\\Formatter\\OutputFormatterInterface' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Formatter\\OutputFormatter',
-  ),
-  'Symfony\\Component\\Console\\Formatter\\OutputFormatterStyleInterface' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle',
-  ),
-  'Symfony\\Component\\Console\\Helper\\HelperInterface' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Helper\\Helper',
-    1 => 'Symfony\\Component\\Console\\Helper\\DebugFormatterHelper',
-    2 => 'Symfony\\Component\\Console\\Helper\\DescriptorHelper',
-    3 => 'Symfony\\Component\\Console\\Helper\\InputAwareHelper',
-    4 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
-    5 => 'Symfony\\Component\\Console\\Helper\\FormatterHelper',
-    6 => 'Symfony\\Component\\Console\\Helper\\ProcessHelper',
-    7 => 'Symfony\\Component\\Console\\Helper\\ProgressHelper',
-    8 => 'Symfony\\Component\\Console\\Helper\\QuestionHelper',
-    9 => 'Symfony\\Component\\Console\\Helper\\SymfonyQuestionHelper',
-    10 => 'Symfony\\Component\\Console\\Helper\\TableHelper',
-    11 => 'Famelo\\Beard\\Helper\\ConfigurationHelper',
-  ),
-  'Symfony\\Component\\Console\\Helper\\Helper' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Helper\\DebugFormatterHelper',
-    1 => 'Symfony\\Component\\Console\\Helper\\DescriptorHelper',
-    2 => 'Symfony\\Component\\Console\\Helper\\InputAwareHelper',
-    3 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
-    4 => 'Symfony\\Component\\Console\\Helper\\FormatterHelper',
-    5 => 'Symfony\\Component\\Console\\Helper\\ProcessHelper',
-    6 => 'Symfony\\Component\\Console\\Helper\\ProgressHelper',
-    7 => 'Symfony\\Component\\Console\\Helper\\QuestionHelper',
-    8 => 'Symfony\\Component\\Console\\Helper\\SymfonyQuestionHelper',
-    9 => 'Symfony\\Component\\Console\\Helper\\TableHelper',
-    10 => 'Famelo\\Beard\\Helper\\ConfigurationHelper',
-  ),
-  'Symfony\\Component\\Console\\Input\\InputAwareInterface' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Helper\\InputAwareHelper',
-    1 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
-  ),
-  'Symfony\\Component\\Console\\Helper\\InputAwareHelper' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Helper\\DialogHelper',
-  ),
   'Symfony\\Component\\Console\\Helper\\QuestionHelper' => 
   array (
     0 => 'Symfony\\Component\\Console\\Helper\\SymfonyQuestionHelper',
@@ -1084,46 +1136,9 @@ return array (
   array (
     0 => 'Symfony\\Component\\Console\\Helper\\TableSeparator',
   ),
-  'Symfony\\Component\\Console\\Input\\InputInterface' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Input\\Input',
-    1 => 'Symfony\\Component\\Console\\Input\\ArgvInput',
-    2 => 'Symfony\\Component\\Console\\Input\\ArrayInput',
-    3 => 'Symfony\\Component\\Console\\Input\\StringInput',
-  ),
-  'Symfony\\Component\\Console\\Input\\Input' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Input\\ArgvInput',
-    1 => 'Symfony\\Component\\Console\\Input\\ArrayInput',
-    2 => 'Symfony\\Component\\Console\\Input\\StringInput',
-  ),
   'Symfony\\Component\\Console\\Input\\ArgvInput' => 
   array (
     0 => 'Symfony\\Component\\Console\\Input\\StringInput',
-  ),
-  'Symfony\\Component\\Console\\Output\\OutputInterface' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Output\\Output',
-    1 => 'Symfony\\Component\\Console\\Output\\BufferedOutput',
-    2 => 'Symfony\\Component\\Console\\Output\\StreamOutput',
-    3 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
-    4 => 'Symfony\\Component\\Console\\Output\\NullOutput',
-    5 => 'Symfony\\Component\\Console\\Style\\OutputStyle',
-    6 => 'Symfony\\Component\\Console\\Style\\SymfonyStyle',
-  ),
-  'Symfony\\Component\\Console\\Output\\Output' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Output\\BufferedOutput',
-    1 => 'Symfony\\Component\\Console\\Output\\StreamOutput',
-    2 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
-  ),
-  'Symfony\\Component\\Console\\Output\\ConsoleOutputInterface' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
-  ),
-  'Symfony\\Component\\Console\\Output\\StreamOutput' => 
-  array (
-    0 => 'Symfony\\Component\\Console\\Output\\ConsoleOutput',
   ),
   'Symfony\\Component\\Console\\Question\\Question' => 
   array (
@@ -1896,33 +1911,6 @@ return array (
     3 => 'League\\Flysystem\\Plugin\\ListPaths',
     4 => 'League\\Flysystem\\Plugin\\ListWith',
   ),
-  'JsonSchema\\Constraints\\ConstraintInterface' => 
-  array (
-    0 => 'JsonSchema\\Constraints\\Constraint',
-    1 => 'JsonSchema\\Constraints\\CollectionConstraint',
-    2 => 'JsonSchema\\Constraints\\EnumConstraint',
-    3 => 'JsonSchema\\Constraints\\FormatConstraint',
-    4 => 'JsonSchema\\Constraints\\NumberConstraint',
-    5 => 'JsonSchema\\Constraints\\ObjectConstraint',
-    6 => 'JsonSchema\\Constraints\\SchemaConstraint',
-    7 => 'JsonSchema\\Constraints\\StringConstraint',
-    8 => 'JsonSchema\\Constraints\\TypeConstraint',
-    9 => 'JsonSchema\\Constraints\\UndefinedConstraint',
-    10 => 'JsonSchema\\Validator',
-  ),
-  'JsonSchema\\Constraints\\Constraint' => 
-  array (
-    0 => 'JsonSchema\\Constraints\\CollectionConstraint',
-    1 => 'JsonSchema\\Constraints\\EnumConstraint',
-    2 => 'JsonSchema\\Constraints\\FormatConstraint',
-    3 => 'JsonSchema\\Constraints\\NumberConstraint',
-    4 => 'JsonSchema\\Constraints\\ObjectConstraint',
-    5 => 'JsonSchema\\Constraints\\SchemaConstraint',
-    6 => 'JsonSchema\\Constraints\\StringConstraint',
-    7 => 'JsonSchema\\Constraints\\TypeConstraint',
-    8 => 'JsonSchema\\Constraints\\UndefinedConstraint',
-    9 => 'JsonSchema\\Validator',
-  ),
   'JsonSchema\\Exception\\InvalidArgumentException' => 
   array (
     0 => 'JsonSchema\\Exception\\InvalidSourceUriException',
@@ -1940,27 +1928,39 @@ return array (
     1 => 'JsonSchema\\Uri\\Retrievers\\FileGetContents',
     2 => 'JsonSchema\\Uri\\Retrievers\\PredefinedArray',
   ),
-  'Symfony\\Component\\Console\\Application' => 
+  'FastRoute\\DataGenerator' => 
   array (
-    0 => 'Famelo\\Beard\\Application',
+    0 => 'FastRoute\\DataGenerator\\RegexBasedAbstract',
+    1 => 'FastRoute\\DataGenerator\\CharCountBased',
+    2 => 'FastRoute\\DataGenerator\\GroupCountBased',
+    3 => 'FastRoute\\DataGenerator\\GroupPosBased',
+    4 => 'FastRoute\\DataGenerator\\MarkBased',
   ),
-  'Famelo\\Beard\\Command\\AbstractSettingsCommand' => 
+  'FastRoute\\DataGenerator\\RegexBasedAbstract' => 
   array (
-    0 => 'Famelo\\Beard\\Command\\Backup\\Database',
-    1 => 'Famelo\\Beard\\Command\\Backup\\Userdata',
-    2 => 'Famelo\\Beard\\Command\\Backup',
-    3 => 'Famelo\\Beard\\Command\\Cache\\Clear',
-    4 => 'Famelo\\Beard\\Command\\Cache\\Warmup',
-    5 => 'Famelo\\Beard\\Command\\Database\\Clear',
-    6 => 'Famelo\\Beard\\Command\\Database\\Compare',
-    7 => 'Famelo\\Beard\\Command\\Database\\Restore',
-    8 => 'Famelo\\Beard\\Command\\Database\\Snapshot',
-    9 => 'Famelo\\Beard\\Command\\Database\\Truncate',
+    0 => 'FastRoute\\DataGenerator\\CharCountBased',
+    1 => 'FastRoute\\DataGenerator\\GroupCountBased',
+    2 => 'FastRoute\\DataGenerator\\GroupPosBased',
+    3 => 'FastRoute\\DataGenerator\\MarkBased',
   ),
-  'Famelo\\Beard\\Command\\Backup\\Database' => 
+  'FastRoute\\Dispatcher' => 
   array (
-    0 => 'Famelo\\Beard\\Command\\Database\\Clear',
-    1 => 'Famelo\\Beard\\Command\\Database\\Truncate',
+    0 => 'FastRoute\\Dispatcher\\RegexBasedAbstract',
+    1 => 'FastRoute\\Dispatcher\\CharCountBased',
+    2 => 'FastRoute\\Dispatcher\\GroupCountBased',
+    3 => 'FastRoute\\Dispatcher\\GroupPosBased',
+    4 => 'FastRoute\\Dispatcher\\MarkBased',
+  ),
+  'FastRoute\\Dispatcher\\RegexBasedAbstract' => 
+  array (
+    0 => 'FastRoute\\Dispatcher\\CharCountBased',
+    1 => 'FastRoute\\Dispatcher\\GroupCountBased',
+    2 => 'FastRoute\\Dispatcher\\GroupPosBased',
+    3 => 'FastRoute\\Dispatcher\\MarkBased',
+  ),
+  'FastRoute\\RouteParser' => 
+  array (
+    0 => 'FastRoute\\RouteParser\\Std',
   ),
   'Famelo\\Beard\\Scaffold\\Builder\\Php\\AbstractClassBuilder' => 
   array (

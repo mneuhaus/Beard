@@ -53,6 +53,17 @@ class Clear extends AbstractSettingsCommand {
 		if (function_exists('apc_clear_cache')) {
 			apc_clear_cache();
 			apc_clear_cache('user');
+			$output->writeln('cleared apc cache');
+		}
+
+		if (function_exists('apcu_clear_cache')) {
+			apcu_clear_cache();
+			$output->writeln('cleared apcu cache');
+		}
+
+		if (function_exists('opcache_reset')) {
+			opcache_reset();
+			$output->writeln('cleared opcache cache');
 		}
 	}
 }
