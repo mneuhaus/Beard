@@ -67,6 +67,7 @@ class Userdata extends AbstractSettingsCommand {
 		if (file_exists($input->getArgument('file') . '.sql')) {
 			$userdataPaths[] = $input->getArgument('file') . '.sql';
 		}
+		// --hard-dereference? :(
 		$command = array('tar --dereference -czf', $file);
 
 		$process = new Process(implode(' ', $command) . ' ' . implode(' ', $userdataPaths));
