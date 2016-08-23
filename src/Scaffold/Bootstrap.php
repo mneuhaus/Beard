@@ -1,10 +1,18 @@
 <?php
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-define('WORKING_DIRECTORY', $_ENV['PWD']);
-define('BASE_DIRECTORY', __DIR__);
-define('PHAR_MODE', boolval(Phar::running()));
-define('BOX_PATH', dirname(dirname(__DIR__)));
+if (!defined('WORKING_DIRECTORY')) {
+    define('WORKING_DIRECTORY', $_ENV['PWD']);
+}
+if (!defined('BASE_DIRECTORY')) {
+    define('BASE_DIRECTORY', __DIR__);
+}
+if (!defined('PHAR_MODE')) {
+    define('PHAR_MODE', boolval(Phar::running()));
+}
+if (!defined('BOX_PATH')) {
+    define('BOX_PATH', dirname(dirname(__DIR__)));
+}
 
 \Mia3\Koseki\ClassRegister::setCacheFile(__DIR__ . '/../ClassRegisterCache.php');
 
@@ -18,8 +26,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 });
 
 // Fetch method and URI from somewhere
-$httpMethod = $_SERVER['REQUEST_METHOD'];
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$httpMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : NULL;
+$uri = parse_url(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : NULL, PHP_URL_PATH);
 
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {

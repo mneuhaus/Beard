@@ -37,6 +37,7 @@ class Application extends Base {
 		$commands[] = new Command\Backup();
 		$commands[] = new Command\Backup\Userdata();
 		$commands[] = new Command\Backup\Database();
+		$commands[] = new Command\Backup\Test();
 
 		$commands[] = new Command\Database\Clear();
 		$commands[] = new Command\Database\Compare();
