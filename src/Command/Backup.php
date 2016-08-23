@@ -83,7 +83,7 @@ class Backup extends AbstractSettingsCommand
         $config = [
             'host' => getenv('beard_backup_host'),
             'username' => getenv('beard_backup_username'),
-            'port' => getenv('beard_backup_port') ? getenv('beard_backup_port') : 21,
+            'port' => getenv('beard_backup_port') ? getenv('beard_backup_port') : 22,
             'privateKey' => getenv('beard_backup_private_key'),
             'timeout' => 60,
         ];
