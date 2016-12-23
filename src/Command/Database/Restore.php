@@ -62,16 +62,16 @@ class Restore extends AbstractSettingsCommand {
 	public function restore($file, $settings, $input, $output) {
 		$command = array('mysql');
 		if (!empty($settings->getHost())) {
-			$command[] = '-h' . $settings->getHost();
+			$command[] = '-h"' . $settings->getHost() . '"';
 		}
 		if (!empty($settings->getUsername())) {
-			$command[] = '-u' . $settings->getUsername();
+			$command[] = '-u"' . $settings->getUsername() . '"';
 		}
 		if (!empty($settings->getPassword())) {
-			$command[] = '-p' . $settings->getPassword();
+			$command[] = '-p"' . $settings->getPassword() . '"';
 		}
 		if (!empty($settings->getDatabase())) {
-			$command[] = $settings->getDatabase();
+			$command[] = '"' . $settings->getDatabase() . '"';
 		}
 		$command[] = '< "' . $file . '"';
 
