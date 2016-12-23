@@ -57,7 +57,9 @@ class Clear extends Database {
 		);
 
 		$result = $connection->query('SHOW TABLES');
-		if ($result === FALSE) {
+		if (!$result instanceof \mysqli) {
+			$output->writeln('Failed to connect to Database!!!');
+			exit();
 			return;
 		}
 		$rows = $result->fetch_all();
