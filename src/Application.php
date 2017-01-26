@@ -45,6 +45,9 @@ class Application extends Base {
 		$commands[] = new Command\Database\Snapshot();
 		$commands[] = new Command\Database\Truncate();
 
+		$commands[] = new Command\Regression\Baseline();
+		$commands[] = new Command\Regression\Compare();
+
 		$commands[] = new Command\Site\Hash();
 
 		$commands[] = new Command\Patch();

@@ -128,6 +128,8 @@ class Typo3System implements SystemSettingsInterface, ClearInterface {
 
 		$fileCount = 0;
 		foreach ($finder as $file) {
+			echo $file->getRealpath();
+			continue;
 			unlink($file->getRealpath());
 			$fileCount++;
 		}
