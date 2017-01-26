@@ -3,10 +3,11 @@ vendor/symfony/filesystem/Tests/
 vendor/symfony/console/Event/
 vendor/symfony/console/Logger/
 vendor/symfony/console/Tests/
+vendor/composer/../symfony/finder/Tests/
+vendor/composer/../symfony/filesystem/Tests/
+vendor/composer/../symfony/console/Event/
+vendor/composer/../symfony/console/Logger/
+vendor/composer/../symfony/console/Tests/
 src/ConfigurationSources/Typo3.php
-# some comment and an empty line
-
-
 vendor/**/Tests/
-
 foo export-ignore
