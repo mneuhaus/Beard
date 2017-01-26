@@ -52,7 +52,7 @@ class Application extends Base {
 		$commands[] = new Command\Reset();
 		$commands[] = new Command\Setup();
 		$commands[] = new Command\Lock();
-		$commands[] = new Command\Scaffold();
+		// $commands[] = new Command\Scaffold();
 
 		$commands[] = new Command\Ssh\Keygen();
 
