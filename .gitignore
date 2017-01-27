@@ -5,3 +5,4 @@ Repository
 test-github
 bin/beard-test
 .idea
+src/Utility/*

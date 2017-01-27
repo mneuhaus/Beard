@@ -5,7 +5,7 @@ use Famelo\Beard\Scaffold\Core\Packages\AbstractPackage;
 use Famelo\Beard\Scaffold\Core\Packages\PackageInterface;
 use Famelo\Beard\Scaffold\Typo3\Components\MetadataComponent;
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use Symfony\Component\Finder\Finder;
 
 /*
@@ -60,7 +60,7 @@ class ExtensionPackage extends AbstractPackage implements PackageInterface {
 	}
 
 	public function getType() {
-		return String::relativeClass(get_class($this));
+		return StringUtility::relativeClass(get_class($this));
 	}
 
 	public function getPath() {

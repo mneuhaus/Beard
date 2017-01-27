@@ -4,7 +4,7 @@ namespace Famelo\Beard\Scaffold\Typo3\Components;
 use Famelo\Beard\Scaffold\Builder\Typo3\ExtLocalconfBuilder;
 use Famelo\Beard\Scaffold\Builder\Typo3\PluginBuilder;
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use Famelo\Beard\Scaffold\Core\Components\AbstractComponent;
 use Symfony\Component\Finder\Finder;
 
@@ -54,7 +54,7 @@ class PluginComponent extends AbstractComponent {
 		$value = array();
 		foreach ($this->facade->cachedControllers as $controller => $actions) {
 			foreach ($actions as $action) {
-				$value[] = String::cutSuffix($controller, 'Controller') . ':' . String::cutSuffix($action, 'Action');
+				$value[] = StringUtility::cutSuffix($controller, 'Controller') . ':' . StringUtility::cutSuffix($action, 'Action');
 			}
 		}
 		return implode(',', $value);
@@ -68,7 +68,7 @@ class PluginComponent extends AbstractComponent {
 		$value = array();
 		foreach ($this->facade->uncachedControllers as $controller => $actions) {
 			foreach ($actions as $action) {
-				$value[] = String::cutSuffix($controller, 'Controller') . ':' . String::cutSuffix($action, 'Action');
+				$value[] = StringUtility::cutSuffix($controller, 'Controller') . ':' . StringUtility::cutSuffix($action, 'Action');
 			}
 		}
 		return implode(',', $value);

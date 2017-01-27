@@ -2,7 +2,7 @@
 namespace Famelo\Beard\Scaffold\Typo3\Components;
 
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use Famelo\Beard\Scaffold\Core\Components\AbstractComponent;
 use Famelo\Beard\Scaffold\Builder\ComposerBuilder;
 use Symfony\Component\Finder\Finder;
@@ -132,7 +132,7 @@ $EM_CONF[$_EXTKEY] = %s;',
 		if (!empty($fieldValues['company'])) {
 			$namespace = $fieldValues['company'] . '\\';
 		}
-		$namespace.= String::underscoreToCamelcase($fieldValues['extension_key']) . '\\';
+		$namespace.= StringUtility::underscoreToCamelcase($fieldValues['extension_key']) . '\\';
 		$this->composer->setNamespace($namespace, 'Classes/');
 		$this->composer->save();
 	}

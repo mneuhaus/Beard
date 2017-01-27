@@ -3,7 +3,7 @@ namespace Famelo\Beard\Scaffold\Builder\Typo3;
 
 use Famelo\Beard\Scaffold\Builder\Php\ClassBuilder;
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use PhpParser\BuilderFactory;
 use PhpParser\ParserFactory;
 
@@ -70,7 +70,7 @@ class FooController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 			$this->namespace = $this->getNamespace();
 
 			foreach ($this->getMethods() as $method) {
-				$this->actions[] = String::cutSuffix($method->getName(), 'Action');
+				$this->actions[] = StringUtility::cutSuffix($method->getName(), 'Action');
 			}
 		} else {
 			$this->parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
@@ -86,7 +86,7 @@ class FooController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 * @return boolean
 	 */
 	public function hasAction($name) {
-		return in_array(String::cutSuffix($name, 'Action'), $this->actions);
+		return in_array(StringUtility::cutSuffix($name, 'Action'), $this->actions);
 	}
 
 	/**
@@ -98,8 +98,8 @@ class FooController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 */
 	public function renameAction($oldName, $newName) {
 		$this->renameMethod(
-			String::addSuffix($oldName, 'Action'),
-			String::addSuffix($newName, 'Action')
+			StringUtility::addSuffix($oldName, 'Action'),
+			StringUtility::addSuffix($newName, 'Action')
 		);
 	}
 
@@ -110,7 +110,7 @@ class FooController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 * @return void
 	 */
 	public function addAction($name) {
-		$this->addMethod(String::addSuffix($name, 'Action'));
+		$this->addMethod(StringUtility::addSuffix($name, 'Action'));
 	}
 
 	/**
@@ -120,7 +120,7 @@ class FooController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 * @return void
 	 */
 	public function removeAction($name) {
-		$this->removeMethod(String::addSuffix($name, 'Action'));
+		$this->removeMethod(StringUtility::addSuffix($name, 'Action'));
 	}
 
 	/**
@@ -129,7 +129,7 @@ class FooController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 * @param string $targetPath
 	 */
 	public function save($targetPath = 'Classes/Controller/') {
-		$className = ucfirst(String::addSuffix($this->name, 'Controller'));
+		$className = ucfirst(StringUtility::addSuffix($this->name, 'Controller'));
 		$targetFileName = $targetPath . $className . '.php';
 		if ($targetFileName !== $this->filepath && file_exists($this->filepath)) {
 			unlink($this->filepath);

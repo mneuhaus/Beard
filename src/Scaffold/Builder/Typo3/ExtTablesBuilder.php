@@ -2,7 +2,7 @@
 namespace Famelo\Beard\Scaffold\Builder\Typo3;
 
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 
 
 /**

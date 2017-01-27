@@ -1,7 +1,7 @@
 <?php
 namespace Famelo\Beard\ViewHelpers\String;
 
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -30,7 +30,7 @@ class CutSuffixViewHelper extends AbstractViewHelper {
 		if ($string === NULL) {
 			$string = $this->renderChildren();
 		}
-		return String::cutSuffix($string, $this->arguments['suffix']);
+		return StringUtility::cutSuffix($string, $this->arguments['suffix']);
 	}
 }
 

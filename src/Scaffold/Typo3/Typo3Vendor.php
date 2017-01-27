@@ -3,7 +3,7 @@ namespace Famelo\Beard\Scaffold\TYPO3;
 
 use Famelo\Beard\Scaffold\Core\Vendor\VendorInterface;
 use Famelo\Beard\Scaffold\Typo3\ExtensionPackage;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use Famelo\Beard\Utility\Path;
 use Symfony\Component\Finder\Finder;
 
@@ -40,6 +40,6 @@ class Typo3Vendor implements VendorInterface {
 	}
 
 	public function getPackageType() {
-		return String::relativeClass('\Famelo\Beard\Scaffold\Typo3\ExtensionPackage');
+		return StringUtility::relativeClass('\Famelo\Beard\Scaffold\Typo3\ExtensionPackage');
 	}
 }

@@ -4,7 +4,7 @@ namespace Famelo\Beard\Scaffold\Typo3\Components;
 use Famelo\Beard\Scaffold\Builder\Typo3\ExtEmconfBuilder;
 use Famelo\Beard\Scaffold\Builder\Typo3\ExtTablesBuilder;
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use Famelo\Beard\Scaffold\Core\Components\AbstractComponent;
 use Symfony\Component\Finder\Finder;
 

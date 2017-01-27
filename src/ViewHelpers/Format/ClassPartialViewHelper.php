@@ -2,7 +2,7 @@
 namespace Famelo\Beard\ViewHelpers\Format;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 
 /**
  */
@@ -34,7 +34,7 @@ class ClassPartialViewHelper extends AbstractViewHelper {
 		if ($className === NULL) {
 			$className = $this->renderChildren();
 		}
-		return String::cutSuffix(
+		return StringUtility::cutSuffix(
 			trim(
 				str_replace(
 					array('\Famelo\Beard\Scaffold', '\\'),

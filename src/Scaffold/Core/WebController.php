@@ -2,7 +2,7 @@
 namespace Famelo\Beard\Scaffold\Core;
 
 use Famelo\Beard\Scaffold\Core\Vendor\VendorManager;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use TYPO3Fluid\Fluid\View\TemplateView;
 
 /*
@@ -31,16 +31,16 @@ class WebController {
 	 * @param $arguments
 	 */
 	public function newPackage($arguments) {
-		$packageClassName = String::classNameFromPath($arguments['package']);
+		$packageClassName = StringUtility::classNameFromPath($arguments['package']);
 		$package = new $packageClassName();
 
-		$this->render(str_replace('.', '/', String::cutSuffix($arguments['package'], 'Package')) . '/New', array(
+		$this->render(str_replace('.', '/', StringUtility::cutSuffix($arguments['package'], 'Package')) . '/New', array(
 			'package' => $package
 		));
 	}
 
 	public function createPackage($arguments) {
-		$packageClassName = String::classNameFromPath($arguments['package']);
+		$packageClassName = StringUtility::classNameFromPath($arguments['package']);
 		$package = new $packageClassName();
 		$package->create($_POST);
 
@@ -48,17 +48,17 @@ class WebController {
 	}
 
 	public function editPackage($arguments) {
-		$packageClassName = String::classNameFromPath($arguments['package']);
+		$packageClassName = StringUtility::classNameFromPath($arguments['package']);
 		$package = new $packageClassName();
 		chdir($arguments['path']);
 
-		$this->render(str_replace('.', '/', String::cutSuffix($arguments['package'], 'Package')) . '/Edit', array(
+		$this->render(str_replace('.', '/', StringUtility::cutSuffix($arguments['package'], 'Package')) . '/Edit', array(
 			'package' => $package
 		));
 	}
 
 	public function savePackage($arguments) {
-		$packageClassName = String::classNameFromPath($arguments['package']);
+		$packageClassName = StringUtility::classNameFromPath($arguments['package']);
 		$package = new $packageClassName();
 		chdir($arguments['path']);
 		$package->saveFields($_POST);

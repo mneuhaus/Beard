@@ -31,6 +31,6 @@ abstract class AbstractComponent {
             ),
             '-'
         ) . '.' . $this->getId();
-        return String::pathToformName($path);
+        return StringUtility::pathToformName($path);
     }
 }

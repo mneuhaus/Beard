@@ -4,7 +4,7 @@ namespace Famelo\Beard\Scaffold\Builder\Typo3;
 use Famelo\Beard\Scaffold\Builder\Typo3\ExtLocalconfBuilder;
 use Famelo\Beard\Scaffold\Builder\Typo3\ExtTablesBuilder;
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 
 
 /**
@@ -102,7 +102,7 @@ class PluginBuilder {
 			$this->configurationCode = $pluginConfiguration['code'];
 
 			if (count($this->cachedControllers) > 0) {
-				$this->defaultController = String::cutSuffix(key($this->cachedControllers), 'Controller');
+				$this->defaultController = StringUtility::cutSuffix(key($this->cachedControllers), 'Controller');
 				$this->defaultAction = reset($this->cachedControllers[$this->defaultController . 'Controller']);
 			}
 		}
@@ -122,20 +122,20 @@ class PluginBuilder {
 	public function save() {
 		$cachedControllers = array();
 		foreach ($this->cachedControllers as $controllerName => $actions) {
-			$cachedControllers[String::addSuffix($controllerName, 'Controller')] = implode(',', $actions);
+			$cachedControllers[StringUtility::addSuffix($controllerName, 'Controller')] = implode(',', $actions);
 		}
 
 		$uncachedControllers = array();
 		foreach ($this->uncachedControllers as $controllerName => $actions) {
-			$uncachedControllers[String::addSuffix($controllerName, 'Controller')] = implode(',', $actions);
+			$uncachedControllers[StringUtility::addSuffix($controllerName, 'Controller')] = implode(',', $actions);
 		}
 
 		$arguments = array(
 			'company' => $this->company,
 			'name' => $this->name,
 			'title' => $this->title,
-			'cachedControllers' => trim(String::prefixLinesWith(var_export($cachedControllers, TRUE), "\t"), "\t"),
-			'uncachedControllers' => trim(String::prefixLinesWith(var_export($uncachedControllers, TRUE), "\t"), "\t")
+			'cachedControllers' => trim(StringUtility::prefixLinesWith(var_export($cachedControllers, TRUE), "\t"), "\t"),
+			'uncachedControllers' => trim(StringUtility::prefixLinesWith(var_export($uncachedControllers, TRUE), "\t"), "\t")
 		);
 
 		$extLocalconfBuilder = new ExtLocalconfBuilder(Path::joinPaths($this->basepath, 'ext_localconf.php'));
@@ -174,8 +174,8 @@ class PluginBuilder {
 	}
 
 	public function addAction($controllerName, $action, $uncached = FALSE) {
-		$controllerName = String::addSuffix($controllerName, 'Controller');
-		$action = String::cutSuffix($action, 'Action');
+		$controllerName = StringUtility::addSuffix($controllerName, 'Controller');
+		$action = StringUtility::cutSuffix($action, 'Action');
 		$actions = array();
 		if (isset($this->cachedControllers[$controllerName])) {
 			$actions = $this->cachedControllers[$controllerName];
@@ -196,7 +196,7 @@ class PluginBuilder {
 	}
 
 	public function setDefaultAction($controllerName, $action) {
-		$controllerName = String::addSuffix($controllerName, 'Controller');
+		$controllerName = StringUtility::addSuffix($controllerName, 'Controller');
 
 		$controllerItem = $this->cachedControllers[$controllerName];
 		unset($this->cachedControllers[$controllerName]);

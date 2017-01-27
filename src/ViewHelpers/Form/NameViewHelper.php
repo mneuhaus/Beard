@@ -1,7 +1,7 @@
 <?php
 namespace Famelo\Beard\ViewHelpers\Form;
 
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -42,7 +42,7 @@ class NameViewHelper extends AbstractViewHelper {
 		if ($this->arguments['name'] !== NULL) {
 			$name.= '.' . $this->arguments['name'];
 		}
-		return String::pathToformName($name);
+		return StringUtility::pathToformName($name);
 	}
 
 	public function pushPrefix($prefix) {

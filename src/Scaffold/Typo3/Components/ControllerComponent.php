@@ -3,7 +3,7 @@ namespace Famelo\Beard\Scaffold\Typo3\Components;
 
 use Famelo\Beard\Scaffold\Builder\ComposerBuilder;
 use Famelo\Beard\Utility\Path;
-use Famelo\Beard\Utility\String;
+use Famelo\Beard\Utility\StringUtility;
 use Famelo\Beard\Scaffold\Builder\Typo3\ControllerBuilder;
 use Famelo\Beard\Scaffold\Core\Components\AbstractComponent;
 use Symfony\Component\Finder\Finder;
@@ -32,7 +32,7 @@ class ControllerComponent extends AbstractComponent {
 
 	public function __construct($filepath = NULL) {
 		$this->facade = new ControllerBuilder($filepath);
-		$this->name = String::cutSuffix($this->facade->name, 'Controller');
+		$this->name = StringUtility::cutSuffix($this->facade->name, 'Controller');
 		$this->filepath = $filepath;
 	}
 
@@ -57,7 +57,7 @@ class ControllerComponent extends AbstractComponent {
 	public function getActions() {
 		$actions = array();
 		foreach ($this->facade->getMethods() as $method) {
-			if (!String::endsWith($method->getName(), 'Action')) {
+			if (!StringUtility::endsWith($method->getName(), 'Action')) {
 				continue;
 			}
 			$actions[$method->getName()] = $method;
