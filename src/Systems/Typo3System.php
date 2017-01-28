@@ -65,10 +65,17 @@ class Typo3System implements SystemSettingsInterface, ClearInterface {
 			}
 		}
 
-		$this->host = $localConfiguration['DB']['host'];
-		$this->database = $localConfiguration['DB']['database'];
-		$this->username = $localConfiguration['DB']['username'];
-		$this->password = $localConfiguration['DB']['password'];
+		if (isset($localConfiguration['DB']['Connections']['Default'])) {
+			$this->host = $localConfiguration['DB']['Connections']['Default']['host'];
+			$this->database = $localConfiguration['DB']['Connections']['Default']['dbname'];
+			$this->username = $localConfiguration['DB']['Connections']['Default']['user'];
+			$this->password = $localConfiguration['DB']['Connections']['Default']['password'];
+		} else {
+			$this->host = $localConfiguration['DB']['host'];
+			$this->database = $localConfiguration['DB']['database'];
+			$this->username = $localConfiguration['DB']['username'];
+			$this->password = $localConfiguration['DB']['password'];
+		}
 	}
 
 	public static function load($context = 'Development') {
