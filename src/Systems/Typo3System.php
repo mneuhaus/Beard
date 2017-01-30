@@ -135,7 +135,8 @@ class Typo3System implements SystemSettingsInterface, ClearInterface {
 
 		$fileCount = 0;
 		foreach ($finder as $file) {
-			unlink($file->getRelativePathname());
+			$filePath = 'typo3temp/' . $file->getRelativePathname();
+			unlink($filePath);
 			$fileCount++;
 		}
 		if ($fileCount > 0) {
