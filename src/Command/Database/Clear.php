@@ -62,13 +62,13 @@ class Clear extends Database {
 			exit();
 			return;
 		}
-		$rows = $result->fetch_all();
+
 		$connection->query('SET foreign_key_checks = 0;');
 		if ($output->isVerbose()) {
 			$output->writeln('Query: SET foreign_key_checks = 0;');
 		}
 
-		foreach ($rows as $row) {
+		while ($row = $result->fetch_assoc()) {
 			$connection->query("DROP TABLE " . $row[0]);
 			if ($output->isVerbose()) {
 				$output->writeln("DROP TABLE " . $row[0]);
