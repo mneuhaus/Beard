@@ -151,12 +151,12 @@ class Typo3System implements SystemSettingsInterface, ClearInterface {
 		);
 		$result = $db->query('SHOW TABLES');
 		$regex = '(cf_.*|cache_*)';
-		foreach ($result->fetch_all(MYSQLI_ASSOC) as $table) {
+		while ($table = $result->fetch_assoc()) {
 			$tableName = current($table);
 			preg_match('/' . $regex . '/', $tableName);
 			if (preg_match('/' . $regex . '/', $tableName) > 0) {
-				$result = $db->query('SELECT count(*) as total FROM ' . $tableName);
-				$total = $result->fetch_assoc()['total'];
+				$resultCount = $db->query('SELECT count(*) as total FROM ' . $tableName);
+				$total = $resultCount->fetch_assoc()['total'];
 				if ($total > 0) {
 					$db->query('TRUNCATE ' . $tableName);
 					$output->writeln('cleared ' . $total . ' rows in the table ' . $tableName);
