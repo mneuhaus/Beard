@@ -62,16 +62,18 @@ class Clear extends Database {
 			exit();
 			return;
 		}
-
 		$connection->query('SET foreign_key_checks = 0;');
 		if ($output->isVerbose()) {
 			$output->writeln('Query: SET foreign_key_checks = 0;');
 		}
 
+		$counter = 0;
 		while ($row = $result->fetch_assoc()) {
-			$connection->query("DROP TABLE " . $row[0]);
+			$counter++;
+			$tableName = current($row);
+			$connection->query("DROP TABLE " . $tableName);
 			if ($output->isVerbose()) {
-				$output->writeln("DROP TABLE " . $row[0]);
+				$output->writeln("DROP TABLE " . $tableName);
 			}
 		}
 
@@ -80,6 +82,6 @@ class Clear extends Database {
 		}
 		$connection->query('SET foreign_key_checks = 1;');
 
-		$output->writeln('dropped <fg=yellow;bg=black>' . count($rows) . '</> tables in <fg=cyan;bg=black>' . $settings->getDatabase() . '</>');
+		$output->writeln('dropped <fg=yellow;bg=black>' . $counter . '</> tables in <fg=cyan;bg=black>' . $settings->getDatabase() . '</>');
 	}
 }
