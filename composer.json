@@ -27,7 +27,8 @@
         "league\/flysystem-sftp": "^1.0",
         "vlucas\/phpdotenv": "^2.2",
         "phpseclib\/phpseclib": "^2.0",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "duncan3dc/fork-helper": "^2.1"
     },
     "require-dev": {
         "phpunit\/phpunit": "*",

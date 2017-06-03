@@ -2,6 +2,7 @@
 
 namespace Famelo\Beard\Command\Regression;
 
+use Famelo\Beard\Process\ProcessPool;
 use Famelo\Beard\Utility\StringUtility;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -34,8 +35,8 @@ class Baseline extends Command {
 		parent::configure();
 		$this->setName('regression:baseline');
 		$this->addArgument('source');
-		// $this->addOption('url', NULL, InputOption::VALUE_OPTIONAL);
-		// $this->addOption('list', NULL, InputOption::VALUE_OPTIONAL);
+        $this->addOption('threads', 't', InputOption::VALUE_OPTIONAL,
+            'Number of Threads used if source is a file with urls (default: 8)', 8);
 		$this->setDescription('Create baseline to compare against');
 	}
 
@@ -44,22 +45,27 @@ class Baseline extends Command {
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$this->output = $output;
-		$source = $input->getArgument('source');
-		if (file_exists($source)) {
-			$source = explode(chr(10), file_get_contents($source));
-		} elseif (is_string($source)) {
-			$source = array($source);
-		}
-		$phantomJsPath = BOX_PATH . '/Resources/Tools/phantomjs-macosx/';
-		$phantomCommand = $phantomJsPath . 'bin/phantomjs ' . $phantomJsPath . 'examples/rasterize.js';
-		if (!file_exists('.beard-regression')) {
-			mkdir('.beard-regression');
-		}
-		foreach ($source as $uri) {
-			echo $uri . chr(10);
-			$fileName = '.beard-regression/' . StringUtility::slugify($uri) . '.baseline.png';
-			$this->executeShellCommand($phantomCommand . ' "' . $uri . '" ' . $fileName);
-		}
+        $this->output = $output;
+        $source = $input->getArgument('source');
+        if (file_exists($source)) {
+            $sources = explode(chr(10), file_get_contents($source));
+            $pool = new ProcessPool($input->getOption('threads'));
+            $scriptPath = $_SERVER['SCRIPT_NAME'];
+            foreach ($sources as $uri) {
+                $pool->call($scriptPath . ' regression:baseline "' . $uri . '"');
+            }
+            $pool->run();
+        } elseif (is_string($source)) {
+            $start = microtime(true);
+            $phantomJsPath = BOX_PATH . '/Resources/Tools/phantomjs-macosx/';
+            $phantomCommand = $phantomJsPath . 'bin/phantomjs ' . $phantomJsPath . 'examples/rasterize.js';
+            if (!file_exists('.beard-regression')) {
+                mkdir('.beard-regression');
+            }
+            $fileName = '.beard-regression/' . StringUtility::slugify($source) . '.baseline.png';
+            $this->executeShellCommand($phantomCommand . ' "' . $source . '" ' . $fileName);
+            $output->writeln($source . ' (' . number_format(microtime(true) - $start) . 's)');
+        }
 	}
 
 	public function executeShellCommand($command) {
